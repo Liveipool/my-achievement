@@ -1,7 +1,6 @@
 module.exports =  病患:
   type: 'datatable'
-  # data: require '../../../../../../bin/index' .广州.中山大学附属第六医院.病患
-  data: require 'gfc-schema-hcp-basic' .广州.中山大学附属第六医院.病患
+  data:  require '../form/ui.gfc' .病患.data
   columns-in-a-row: 12
 
   header:

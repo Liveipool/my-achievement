@@ -1,15 +1,14 @@
 gfc = require '../../../../../../hcp-basic/bin/index'
 # gfc = require 'gfc-schema-hcp-basic'
 b = gfc.basic
+u = gfc.util
 
 module.exports = 设备:
   type: 'grid-form'
-  data:   
-    namespace: "中山大学.人机物智能融合实验室"
-    id: "设备"
+  data:  u.create-based-on b, (b)-> 
+    id: "中山大学.人机物智能融合实验室.设备"
     description: "HCP系统中使用的设备信息"
     type: "object"
-    $faker: b.faker
     properties:
       类型:   enum: ['工作站', '台式机', '笔记本', '显卡', '投影仪']
       厂商:   enum: ['IBM', 'HP', '华为', 'CISCO'] # TODO
