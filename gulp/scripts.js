@@ -24,7 +24,10 @@ gulp.task('scripts', function ()
 function buildScripts()
 {
     var _livescript = conf.livescript();
-    var _javascript = gulp.src(path.join(conf.paths.src, '/app/**/*.js'))
+    var _javascript = gulp.src([
+        path.join(conf.paths.src, '/app/**/*.js'),
+        path.join(conf.paths.gfc, '/adapters/**/*.js')
+    ]);
     return $.mergeStream(_javascript, _livescript)
         // Enable the following two lines if you want linter
         // to check your code every time the scripts reloaded

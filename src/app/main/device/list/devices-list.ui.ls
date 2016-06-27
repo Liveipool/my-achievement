@@ -1,6 +1,6 @@
 module.exports =  设备:
   type: 'datatable'
-  data:  require '../form/ui.gfc' .设备.data
+  data:  require '../form/device-form.ui' .设备.data
   # data: require 'gfc-schema-hcp-basic' .广州.中山大学附属第六医院.病患
   columns-in-a-row: 12
 
@@ -8,7 +8,7 @@ module.exports =  设备:
     # '姓名@搜索栏(6.4居右), 初诊时间#时间@搜索栏(4), #添加病患@按钮(2)'
 
   table-head:
-    '类型, 厂商, 型号, 使用者.姓名#使用者, 供应商.名称#供应商, 维修服务.名称#维修服务, 维修服务.电话#维修服务电话'
+    '类型, 厂商, 型号, 使用者.姓名#使用者, 供应商.名称#供应商, 维修服务.名称#维修服务23, 维修服务.电话#维修服务电话'
   
   footer:
     # "@每页行数选择器(4), @当前页数据位置信息(居右), @分页浏览按钮(居右)"

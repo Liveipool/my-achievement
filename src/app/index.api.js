@@ -175,7 +175,7 @@
 
         // Base Url
         api.baseUrl = 'app/data/';
-        api.gfcUrl = 'app/gfc/data/'
+        api.gfcUrl = '/'
 
         // console.log("API get services defined by GFC: ", GFC.services);
         for (name in GFC.services) {

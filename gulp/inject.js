@@ -32,6 +32,8 @@ gulp.task('inject', ['scripts', 'styles'], function ()
     var _javascripts = gulp.src([
             path.join(conf.paths.src, '/app/**/*.module.js'),
             path.join(conf.paths.src, '/app/**/*.js'),
+            path.join(conf.paths.gfc, '/adapters/**/*.js'),
+            path.join(conf.paths.gfc, '/schema/**/*.js'),
             path.join('!' + conf.paths.src, '/app/**/*.spec.js'),
             path.join('!' + conf.paths.src, '/app/**/*.mock.js'),
         ]);
@@ -45,7 +47,12 @@ gulp.task('inject', ['scripts', 'styles'], function ()
 
 
     var injectOptions = {
-        ignorePath  : [conf.paths.src, path.join(conf.paths.tmp, '/serve')],
+        ignorePath  : [
+            conf.paths.src, 
+            path.join(conf.paths.tmp, '/serve'), 
+            path.join(conf.paths.gfc, '/adapters'),
+            path.join(conf.paths.gfc, '/schema')
+        ],
         addRootSlash: false
     };
 

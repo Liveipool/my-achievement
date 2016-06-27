@@ -17,7 +17,7 @@ gulp.task('styles-reload', ['styles'], function ()
         .pipe(browserSync.stream());
 });
 
-gulp.task('styles', ['gfc'], function ()
+gulp.task('styles', function ()
 {
     return buildStyles();
 });
@@ -32,6 +32,7 @@ var buildStyles = function ()
         path.join(conf.paths.src, '/app/core/scss/**/*.scss'),
         path.join(conf.paths.src, '/app/core/**/*.scss'),
         path.join(conf.paths.src, '/app/**/*.{scss,sass}'),
+        path.join(conf.paths.gfc, '/adapters/**/*.{scss,sass}'),
         path.join('!' + conf.paths.src, '/app/main/components/material-docs/demo-partials/**/*.scss'),
         path.join('!' + conf.paths.src, '/app/core/scss/partials/**/*.scss'),
         path.join('!' + conf.paths.src, '/app/index.sass')

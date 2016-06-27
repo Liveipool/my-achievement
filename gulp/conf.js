@@ -19,7 +19,8 @@ exports.paths = {
     src : 'src',
     dist: 'dist',
     tmp : '.tmp',
-    e2e : 'e2e'
+    e2e : 'e2e',
+    gfc : '.tmp/gfc'
 };
 
 /**
@@ -52,12 +53,12 @@ exports.jade = function()
 {
     return gulp.src([
             path.join(exports.paths.src, '/app/**/*.jade'),
-            path.join(exports.paths.tmp, '/serve/app/**/*.jade'),
+            path.join(exports.paths.gfc, '/widgets/**/*.jade'),
             '!' + path.join(exports.paths.src, 'app/**/*.partial.jade')
         ])
         .pipe($.jade({pretty: true, basedir: '.'}))
             .pipe($.size())
-        .on('error', exports.errorHandler('livescript'))
+        .on('error', exports.errorHandler('jade'))
 }
 
 /**
@@ -66,7 +67,10 @@ exports.jade = function()
 
 exports.livescript = function()
 {
-    return gulp.src(path.join(exports.paths.src, '/app/**/*.ls'))
+    return gulp.src([
+            path.join(exports.paths.src, '/app/**/*.ls'),
+            path.join('!' + exports.paths.src, '/app/**/*.ui.ls'),
+        ])
         .pipe($.livescript({bare: false}))
         .on('error', exports.errorHandler('livescript'))
         .pipe(gulp.dest(path.join(exports.paths.tmp, '/serve/app')));

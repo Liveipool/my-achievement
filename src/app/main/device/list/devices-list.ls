@@ -3,7 +3,7 @@ GFC.Widget.create 'list', {
   module:
     name: 'app.devices', 
     schema: "中山大学.人机物智能融合实验室.设备"
-    template-url: 'app/main/device/list/ui.gfc.html'
+    template-url: 'app/main/device/list/devices-list.ui.html'
     item-state: 'app.device'
 
   menu:
