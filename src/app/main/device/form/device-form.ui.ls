@@ -1,5 +1,5 @@
-gfc = require '../../../../../../hcp-basic/bin/index'
-# gfc = require 'gfc-schema-hcp-basic'
+# gfc = require '../../../../../../hcp-basic/bin/index'
+gfc = require 'gfc-schema-hcp-basic'
 b = gfc.basic
 u = gfc.util
 
