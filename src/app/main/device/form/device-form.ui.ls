@@ -3,7 +3,8 @@ gfc = require '../../../../../../hcp-basic/bin/index'
 b = gfc.basic
 u = gfc.util
 
-module.exports = 设备:
+module.exports = 
+  name: '设备表单'
   type: 'grid-form'
   data:  u.create-based-on b, (b)-> # console.log "b.系统常用.引用用户: ", b.系统常用.引用用户 ; schema =
     id: "中山大学.人机物智能融合实验室.设备"

@@ -1,6 +1,7 @@
-module.exports =  病患:
+module.exports =  
+  name: "病患列表"
   type: 'datatable'
-  data:  require '../form/patient-form.ui' .病患.data
+  data:  require '../form/patient-form.ui' .data
 
   columns-in-a-row: 12
 

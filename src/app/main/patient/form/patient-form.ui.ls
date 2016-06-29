@@ -1,4 +1,5 @@
-module.exports =  病患:
+module.exports =  
+  name: "病患表单"
   type: 'grid-form'
   data: require '../../../../../../hcp-basic/bin/index' .广州.中山大学附属第六医院.病患
   # data: require 'gfc-schema-hcp-basic' .广州.中山大学附属第六医院.病患

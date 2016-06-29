@@ -1,6 +1,7 @@
-module.exports =  设备:
+module.exports =  
+  name: '设备列表'
   type: 'datatable'
-  data:  require '../form/device-form.ui' .设备.data
+  data:  require '../form/device-form.ui' .data
   # data: require 'gfc-schema-hcp-basic' .广州.中山大学附属第六医院.病患
   columns-in-a-row: 12
 
