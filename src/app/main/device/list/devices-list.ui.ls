@@ -1,7 +1,9 @@
+data = require '../form/device-form.ui' .data
+console.log "data: ", JSON.stringify data
 module.exports =  
   name: '设备列表'
   type: 'datatable'
-  data:  require '../form/device-form.ui' .data
+  data:  data
   # data: require 'gfc-schema-hcp-basic' .广州.中山大学附属第六医院.病患
   columns-in-a-row: 12
 
