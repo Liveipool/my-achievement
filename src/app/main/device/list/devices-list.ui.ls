@@ -1,5 +1,5 @@
 data = require '../form/device-form.ui' .data
-console.log "data: ", JSON.stringify data
+# console.log "data: ", JSON.stringify data
 module.exports =  
   name: '设备列表'
   type: 'datatable'
