@@ -2,9 +2,9 @@
   "name": "fuse-angular-material",
   "version": "1.2.2",
   "dependencies": {
-    "ajv": "^4.1.3",
+    "ajv": "^4.1.5",
     "gulp-angular-templatecache": "^1.8.1",
-    "karma": "^1.0.0"
+    "karma": "^1.1.0"
   },
   "scripts": {
     "test": "gulp test"
@@ -16,8 +16,8 @@
     "del": "~2.0.2",
     "eslint-plugin-angular": "~0.12.0",
     "estraverse": "~4.1.0",
-    "gfc-fuse-render": "^1.0.15",
-    "gfc-schema-hcp-basic": "^0.1.2",
+    "gfc-fuse-render": "^1.0.20",
+    "gfc-schema-hcp-basic": "^0.1.3",
     "gulp": "^3.9.1",
     "gulp-angular-filesort": "~1.1.1",
     "gulp-angular-templatecache": "~1.8.0",

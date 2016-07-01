@@ -9,8 +9,8 @@
 var gulp = require('gulp');
 var wrench = require('wrench');
 var conf = require('./gulp/conf');
-// var gfcTask = require('gfc-fuse-render') 
-var gfcTask = require('../..') 
+var gfcTask = require('gfc-fuse-render') 
+// var gfcTask = require('../..') 
 
 /**
  *  Add GFC tasks wrapped a task  'gfc'
