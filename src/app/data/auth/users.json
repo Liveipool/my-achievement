@@ -1,0 +1,30 @@
+{
+  "data": {
+    "users": [
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "roles": ["user"],
+        "password": "12345678"
+      },
+      {
+        "email": "lisi@test.com",
+        "username": "lisi",
+        "fullname": "李思",
+        "avatar": "assets/images/avatars/katherine.jpg",
+        "roles": ["user"],
+        "password": "12345678"
+      },
+      {
+        "email": "zhaowu@test.com",
+        "username": "zhaowu",
+        "fullname": "赵武",
+        "avatar": "assets/images/avatars/andrew.jpg",
+        "roles": ["user", "admin"],
+        "password": "12345678"
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+
+// toolbar 和 side-navigation
+// md-toolbar#toolbar
+//   display: none
+
+// md-content#content
+//   top: 0 !important
+//   padding-top: 10px 
+
+// md-sidenav#vertical-navigation
+//   width: 300px
+//   max-width: 300px
+
+#vertical-navigation  md-toolbar
+  padding-left: 16px !important
+  width: 300px
+  max-width: 300px
+
+
+#vertical-navigation ms-navigation
+  position: static !important
+  li
+    width: 100%
+
+    img
+      width: 20px
+      min-width: 20px
+      height: 20px
+
+  li.user
+    position: absolute
+    bottom: 10px
+
+  li.profile
+    // bottom: 58px
+    a
+      padding-left: 21px
+
+    img
+      height: 24px
+      width: 24px
+      min-width: 24px

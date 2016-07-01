@@ -1,0 +1,52 @@
+#login.flex-scrollable(layout='column', ms-scroll='')
+  #login-form-wrapper(layout='column', layout-align='center center')
+    #login-form.md-whiteframe-8dp
+      .logo.md-accent-bg
+        span F
+      .title(translate='LOGIN.TITLE' ng-hide='vm.invalidUser') Log in to your account
+      .title.is-invalid(translate='LOGIN.INVALID' ng-show='vm.invalidUser') Username or password error!
+
+        div(ng-messages='loginForm.password.$error', ng-show='loginForm.password.$touched', role='alert')
+          div(ng-message='required')
+            span(translate='LOGIN.ERRORS.PASSWORD_REQUIRED') Password field is required
+
+      form(name='loginForm', novalidate='')
+        
+        md-input-container.md-block(md-no-float='')
+          input(name='username', ng-model='vm.form.username', placeholder='username', translate='', translate-attr-placeholder='LOGIN.username', required='')
+          div(ng-messages='loginForm.username.$error', ng-show='loginForm.username.$touched', role='alert', multiple='')
+            div(ng-message='required')
+              span(translate='LOGIN.ERRORS.username_REQUIRED') username field is required
+        
+        md-input-container.md-block(md-no-float='')
+          input(type='password', name='password', ng-model='vm.form.password', placeholder='Password', translate='', translate-attr-placeholder='LOGIN.PASSWORD', required='')
+          div(ng-messages='loginForm.password.$error', ng-show='loginForm.password.$touched', role='alert')
+            div(ng-message='required')
+              span(translate='LOGIN.ERRORS.PASSWORD_REQUIRED') Password field is required
+        
+        .remember-forgot-password(layout='row', layout-xs='column', layout-align='space-between center')
+          md-checkbox.remember-me(ng-model='data.cb1', aria-label='Remember Me')
+            span(translate='LOGIN.REMEMBER_ME') Remember Me
+          a.forgot-password.md-accent-color(ui-sref='app.pages_auth_forgot-password', translate='LOGIN.FORGOT_PASSWORD') Forgot Password?
+        
+        md-button.md-raised.md-accent(type='submit', aria-label='LOG IN', ng-disabled='loginForm.$invalid || loginForm.$pristine', translate='LOGIN.LOG_IN', translate-attr-aria-label='LOGIN.LOG_IN' ng-click='vm.login()')
+          | LOG IN
+      
+      .separator
+        span.text(translate='LOGIN.OR') OR
+      
+      md-button.md-raised.google
+        div(layout='row', layout-align='center center')
+          span
+            md-icon.s16(md-font-icon='icon-google-plus')
+            span(translate='LOGIN.WITH_GOOGLE') Log in with Google
+      
+      md-button.md-raised.facebook
+        div(layout='row', layout-align='center center')
+          span
+            md-icon.s16(md-font-icon='icon-facebook')
+            span(translate='LOGIN.WITH_FACEBOOK') Log in with Facebook
+      
+      .register(layout='row', layout-sm='column', layout-align='center center')
+        span.text(translate='LOGIN.DONT_HAVE_ACCOUNT') Don't have an account?
+        a.link(ui-sref='app.auth.register', translate='LOGIN.CREATE_ACCOUNT') Create an account
