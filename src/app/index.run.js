@@ -14,12 +14,12 @@
         {
             $rootScope.loadingProgress = true;
 
-            // 每次跳转时都要判断是否有用户已登录
+            // // 每次跳转时都要判断是否有用户已登录
             if (!Authentication.isExists()) {
                 //如果没有则查询cookie中是否有用户信息
                 Authentication.getCookieUser().then(function(user) {
                     //如果没有则前往登录页面
-                    if (!user) {
+                    if (!user && toState.name !== 'app.login') {
                         $state.go("app.login");
                         event.preventDefault();
                     }
