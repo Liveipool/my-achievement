@@ -12,21 +12,11 @@ module.exports =
     properties:
       类型:   enum: ['工作站', '台式机', '笔记本', '显卡', '投影仪']
       厂商:   enum: ['IBM', 'HP', '华为', 'CISCO'] # TODO
-      型号:   type: "string", pattern: "^\\S{1,20}$"
+      型号:   type: "string", pattern: "^\\S{1,50}$", faker: 'random.uuid'
       使用者:  b.系统常用.引用用户
-      供应商:  
-        type: "object"
-        properties:
-          名称:  type: "string", min-length: 2, max-length: 20, pattern: b.regexp.中文字符
-          电话:  b.中国电话
-        required: ['名称']
-      维修服务:  
-        type: "object" 
-        properties:
-          名称:  type: "string", max-length: 20
-          电话:  b.中国电话
-        required: ['名称', '电话']
-      价格:    type: "number", minimum: 0
+      供应商:  b.公司
+      维修服务:  b.公司 <<< required: ['名称', '电话']
+      价格:    type: "string", faker: 'commerce.price'
       固定资产编号: gfc.中山大学.固定资产编号
       维修记录: 
         type: "array"
@@ -42,7 +32,7 @@ module.exports =
         items:
           type: "object",
           properties:
-            开始日期: b.日期.二十年内
+            开始日期: b.日期.二十年内 
             结束日期: b.日期.二十年内
             使用人: b.系统常用.引用用户
             状态: enum: ['申请中', '使用中', '使用结束']
