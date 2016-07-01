@@ -16,3 +16,4 @@ module.exports =
   footer:
     # "@每页行数选择器(4), @当前页数据位置信息(居右), @分页浏览按钮(居右)"
     "rt<'bottom'<'left'<'length'l>><'right'<'info'i><'pagination'p>>>" # data-table DSL https://datatables.net/reference/option/dom
+ 
