@@ -190,8 +190,8 @@
                .then(function(result){
                   var users = result.data.users
                   for (var i = users.length - 1 ; i >= 0 ; i--){
-                     if(users[i].username === params.username && users[i].password === params.password ) 
-                        return Promise.resolve({isRegisted: true, user: users[i]}); 
+                     if(users[i].username === params.username && users[i].password === params.password )
+                        return Promise.resolve({isRegisted: true, user: users[i]});
                   }
                   return Promise.resolve({isRegisted: false});
                });
