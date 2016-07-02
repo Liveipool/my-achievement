@@ -16,7 +16,7 @@
         // otherwise, the login guard (@see login.ls) will be in infinite loop
         $urlRouterProvider.otherwise( function($injector, $location) {
             var $state = $injector.get("$state");
-            $state.go("app.login");
+            $state.go("app.patients");
         });
 
 

@@ -12,6 +12,7 @@
         // Activate loading indicator
         var stateChangeStartEvent = $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams)
         {
+            console.log("state change start");
             $rootScope.loadingProgress = true;
 
         });
@@ -21,6 +22,7 @@
         {
             $timeout(function ()
             {
+                console.log("state change success");
                 $rootScope.loadingProgress = false;
             });
         });

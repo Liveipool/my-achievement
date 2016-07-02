@@ -28,15 +28,15 @@ angular.module 'app.auth.login', []
 .run ($root-scope, $state, Authentication)!->
   $root-scope.$on '$stateChangeStart', (event, to-state, to-params, from-state)!->
 
-    console.log "state change start"
+    # console.log "state change start"
     # 同步不同标签页之间的状态
     if !Authentication.is-exists!
 
-      console.log 'user isnt exists'
+      # console.log 'user isnt exists'
       Authentication.get-cookie-user! .then (user)!~>
         if user?
           $state.go 'app.patients'
-          event.prevent-default!
+
         else if !user and to-state.name isnt 'app.login'
           $state.go 'app.login'
           event.prevent-default!
