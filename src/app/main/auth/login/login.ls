@@ -28,23 +28,33 @@ angular.module 'app.auth.login', []
 .run ($root-scope, $state, Authentication)!->
   $root-scope.$on '$stateChangeStart', (event, to-state, to-params, from-state)!->
 
+    console.log "state change start"
     # 同步不同标签页之间的状态
     if !Authentication.is-exists!
 
+      console.log 'user isnt exists'
       Authentication.get-cookie-user! .then (user)!~>
         if user?
           $state.go 'app.patients'
           event.prevent-default!
+        else if !user and to-state.name isnt 'app.login'
+          $state.go 'app.login'
+          event.prevent-default!
 
-    #退出登录
-    if Authentication.is-exists!
+ # TODO
+ # 每次页面跳转都会运行下面代码，所以该方案不可行
+  # $root-scope.$on '$stateChangeSuccess', (event, to-state, to-params, from-state)!->
 
-      from-state-path = from-state.name
-      ancestor-paths = from-state-path.split '.'
-      if ancestor-paths and ancestor-paths[0] is 'app' and from-state-path isnt 'app.login'
-        Authentication.logout!
+  #   console.log 'state change success'
 
+    # #退出登录
+    # if Authentication.is-exists!
 
+    #   from-state-path = from-state.name
+    #   ancestor-paths = from-state-path.split '.'
+
+    #   if ancestor-paths and ancestor-paths[0] is 'app' and from-state-path isnt 'app.login'
+    #     Authentication.logout!
 
 
   $root-scope.$on '$logout', (event)!->
