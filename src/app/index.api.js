@@ -1,5 +1,4 @@
-(function ()
-{
+(function() {
     'use strict';
 
     angular
@@ -7,8 +6,7 @@
         .factory('api', apiService);
 
     /** @ngInject */
-    function apiService($resource)
-    {
+    function apiService($resource) {
         /**
          * You can use this service to define your API urls. The "api" service
          * is designed to work in parallel with "apiResolver" service which you can
@@ -185,24 +183,29 @@
 
 
         api.auth = {
-         isRegistedUser: function(params){
-            return $resource(api.baseUrl + 'auth/users.json').get().$promise
-               .then(function(result){
-                  var users = result.data.users
-                  for (var i = users.length - 1 ; i >= 0 ; i--){
-                     if(users[i].username === params.username && users[i].password === params.password )
-                        return Promise.resolve({isRegisted: true, user: users[i]});
-                  }
-                  return Promise.resolve({isRegisted: false});
-               });
-         }
+            isRegistedUser: function(params) {
+                return $resource(api.baseUrl + 'auth/users.json').get().$promise
+                    .then(function(result) {
+                        var users = result.data.users
+                        for (var i = users.length - 1; i >= 0; i--) {
+                            if (users[i].username === params.username && users[i].password === params.password)
+                                return Promise.resolve({
+                                    isRegisted: true,
+                                    user: users[i]
+                                });
+                        }
+                        return Promise.resolve({
+                            isRegisted: false
+                        });
+                    });
+            }
         }
 
         api.quickPanel = {
             activities: $resource(api.baseUrl + 'quick-panel/activities.json'),
-            contacts  : $resource(api.baseUrl + 'quick-panel/contacts.json'),
-            events    : $resource(api.baseUrl + 'quick-panel/events.json'),
-            notes     : $resource(api.baseUrl + 'quick-panel/notes.json')
+            contacts: $resource(api.baseUrl + 'quick-panel/contacts.json'),
+            events: $resource(api.baseUrl + 'quick-panel/events.json'),
+            notes: $resource(api.baseUrl + 'quick-panel/notes.json')
         };
 
         return api;
