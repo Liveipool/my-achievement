@@ -18,7 +18,7 @@ angular.module 'app.auth.login', []
         controller              : ($scope, $root-scope, Authentication, $state)->
           $scope.$on '$stateChangeSuccess', (event, to-state, to-params, from-state)!->
 
-            console.log 'state change success'
+            console.log '退出登录!'
             # #退出登录
             if Authentication.is-exists!
 
@@ -32,7 +32,7 @@ angular.module 'app.auth.login', []
             console.log user
             if user
               @invalid-user = false
-              $state.go 'app.patients'
+              $state.go 'app.homework.dashboard'
             else
               @invalid-user = true
   }
@@ -47,14 +47,9 @@ angular.module 'app.auth.login', []
       # console.log 'user isnt exists'
       Authentication.get-cookie-user! .then (user)!~>
         if user?
-          $state.go 'app.patients'
+          $state.go 'app.homework.dashboard'
 
         else if !user and to-state.name isnt 'app.login'
           $state.go 'app.login'
           event.prevent-default!
-
-
-  $root-scope.$on '$logout', (event)!->
-    authService.current-user = $root-scope.current-user = null
-    $state.go 'app.login'
 
