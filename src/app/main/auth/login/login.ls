@@ -16,6 +16,18 @@ angular.module 'app.auth.login', []
         template-url            : 'app/main/auth/login/login.html'
         controller-as           : 'vm'
         controller              : ($scope, $root-scope, Authentication, $state)->
+          $scope.$on '$stateChangeSuccess', (event, to-state, to-params, from-state)!->
+
+            console.log 'state change success'
+            # #退出登录
+            if Authentication.is-exists!
+
+              from-state-path = from-state.name
+              ancestor-paths = from-state-path.split '.'
+
+              if ancestor-paths and ancestor-paths[0] is 'app' and from-state-path isnt 'app.login'
+                Authentication.logout!
+
           login: -> Authentication.login @form .then (user)~>
             console.log user
             if user
@@ -41,22 +53,8 @@ angular.module 'app.auth.login', []
           $state.go 'app.login'
           event.prevent-default!
 
- # TODO
- # 每次页面跳转都会运行下面代码，所以该方案不可行
-  # $root-scope.$on '$stateChangeSuccess', (event, to-state, to-params, from-state)!->
-
-  #   console.log 'state change success'
-
-    # #退出登录
-    # if Authentication.is-exists!
-
-    #   from-state-path = from-state.name
-    #   ancestor-paths = from-state-path.split '.'
-
-    #   if ancestor-paths and ancestor-paths[0] is 'app' and from-state-path isnt 'app.login'
-    #     Authentication.logout!
-
 
   $root-scope.$on '$logout', (event)!->
     authService.current-user = $root-scope.current-user = null
     $state.go 'app.login'
+

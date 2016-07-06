@@ -21,7 +21,6 @@
         {
             $timeout(function ()
             {
-                console.log("state change success");
                 $rootScope.loadingProgress = false;
             });
         });
