@@ -6,7 +6,8 @@
     .factory('Authentication', AuthenticationService);
 
   function AuthenticationService($resource, $q, $cookies) {
-    var authticatedUser = null;
+    var self = this,
+        authticatedUser = null;
 
     return {
 
@@ -53,7 +54,6 @@
         authticatedUser = null;
         $cookies.remove("cookieUser");
       }
-
     }
   }
 

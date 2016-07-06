@@ -4,7 +4,7 @@
     min-height: 160px;
     max-height: 106px;
     padding: 0 24px;
-    padding-bottom: 0px;
+    padding-bottom: 32px;
     background-image: url(/assets/images/backgrounds/header-bg.png);
     background-size: cover;
   }
@@ -15,6 +15,37 @@
     background-color: #ffffff;
   }
   .md-tab-content {
-    background-color: #F5F5F5
+    background-color: #F5F5F5;
   }
+  ms-widget {
+    .ms-wiget-front {
+       box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
+    }
+    .ms-widget-content {
+      min-height: 134px;
+      padding-top: 34px;
+      text-align: center;
+    }
+    .ms-widget-footer {
+      height: 52px;
+      border-top: 1px solid #DDDDDD;
+      background-color: #FAFAFA;
+    }
+  }
+  .p-12 {
+  padding: 12px;
+  }
+  .p-24 {
+    padding: 24px;
+  }
+  .ph-12 {
+    padding: 0px 12px;
+  }
+  .ph-24 {
+    padding: 0px 24px;
+  }
+  .m-12 {
+    margin: 12px;
+  }
+
 }

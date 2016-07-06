@@ -29,7 +29,7 @@ angular.module 'fuse'
     nav.save-item 'user.profile',  {title : " #{user.fullname}，您好！"   , image: user.avatar,   state : 'app.profile',    weight   : 2,  class: 'profile' }
     nav.save-item 'user.logout',  {title : '退出'   , icon: 'icon-logout',   state : 'app.login',   weight   : 2,  class: 'login'  } if user?
     nav.delete-item 'user.login'
-    if user? and 'admin' in user.roles
+    if user? and user.role is 'admin'
       nav.save-item 'admin',            {title : '系统管理'   , group : true,  weight: 1 }
       nav.save-item 'admin.users',      {title : '用户'      , icon  : 'icon-account-multiple',   state : 'app.admin.users',    weight   : 1 }
     else

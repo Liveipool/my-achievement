@@ -6,7 +6,7 @@
         "username": "zhangshan",
         "fullname": "张珊",
         "avatar": "assets/images/avatars/alice.jpg",
-        "roles": ["user"],
+        "role": "student",
         "password": "12345678"
       },
       {
@@ -14,7 +14,7 @@
         "username": "lisi",
         "fullname": "李思",
         "avatar": "assets/images/avatars/katherine.jpg",
-        "roles": ["user"],
+        "role": "teacher",
         "password": "12345678"
       },
       {
@@ -22,7 +22,7 @@
         "username": "zhaowu",
         "fullname": "赵武",
         "avatar": "assets/images/avatars/andrew.jpg",
-        "roles": ["user", "admin"],
+        "role": "admin",
         "password": "12345678"
       }
     ]
