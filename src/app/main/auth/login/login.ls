@@ -32,7 +32,7 @@ angular.module 'app.auth.login', []
             console.log user
             if user
               @invalid-user = false
-              $state.go 'app.homework.dashboard'
+              $state.go 'app.student.homework.dashboard'
             else
               @invalid-user = true
   }
@@ -47,7 +47,7 @@ angular.module 'app.auth.login', []
       # console.log 'user isnt exists'
       Authentication.get-cookie-user! .then (user)!~>
         if user?
-          $state.go 'app.homework.dashboard'
+          $state.go 'app.student.homework.dashboard'
 
         else if !user and to-state.name isnt 'app.login'
           $state.go 'app.login'
