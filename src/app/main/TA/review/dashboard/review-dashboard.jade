@@ -1,0 +1,29 @@
+mixin headline
+  header.header.md-accent-bg(layout='column', layout-align='end')
+    span.md-display-1.font-weight-300 作业X
+
+div#review-dashboard(layout="column")
+  +headline
+  div.content
+    md-tabs(md-dynamic-height, md-boder-bottom)
+      md-tabs-wrapper
+        md-tab(label="班级{{$index + 1}}" ng-repeat='class in vm.classes')
+          md-content.md-tab-content.p-12
+            table(datatable="ng", dt-options="vm.dtOptions", class="row-border hover")
+              thead
+                tr
+                  th 姓名
+                  th 学号
+                  th 小组
+                  th 评审
+              tbody
+                tr(ng-repeat="student in class")
+                  td {{ student.name }}
+                  td {{ student.number }}
+                  td Group {{ student.group }}
+                  td(ng-hide='student.TAscore')
+                    a() 评审
+                  td(ng-show='student.TAscore')
+                    a() 重评
+                    |  (已评: {{student.TAscore}}分)
+
