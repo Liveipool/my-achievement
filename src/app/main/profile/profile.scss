@@ -119,17 +119,26 @@
             }
         }
     }
-    
+
     md-tabs-wrapper {
         padding: 0px 24px;
+    }
+    .avatar-container {
+        box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
     }
     .info-content {
         background-color: #F5F5F5 !important;
         padding: 12px;
         padding-bottom: 0px;
     }
+    .pb-16 {
+        padding-bottom: 16px !important;
+    }
     .p-12 {
-        padding: 12px;
+        padding: 12px !important;
+    }
+    .p-8 {
+        padding: 8px !important;
     }
     .left, .right {
         margin: 0px;
@@ -139,11 +148,8 @@
         font-weight: bold;
     }
     .big-font {
-        font-size: 24px;
-        font-weight: bold;
-    }
-    .small-font {
-        font-size: 18px;
+        font-size: 15px;
+        font-weight: 500;
     }
     .m-100 {
       margin: 70px 0 0 0;

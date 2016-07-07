@@ -12,68 +12,62 @@ mixin person-information
       header.md-accent-bg
         .title 基本信息
       .content
-        div.p-12(layout="row")
+        div.pb-16(layout="row")
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
             .title.big-font 姓名
-            .info.small-font.pt-10 {{vm.user.fullname}}
+            .info.pt-10 {{vm.user.fullname}}
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
             .title.big-font 学号
-            .info.small-font.pt-10 {{vm.user.sid}}
+            .info.pt-10 {{vm.user.sid}}
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
             .title.big-font 性别
-            .info.small-font.pt-10 {{vm.user.gender}}
-        div.p-12(layout="row")
+            .info.pt-10 {{vm.user.gender}}
+        div.pb-16(layout="row")
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
             .title.big-font 班级
-            .info.small-font.pt-10 {{vm.user.class}}班
+            .info.pt-10 {{vm.user.class}}班
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
             .title.big-font 组号
-            .info.small-font.pt-10 第{{vm.user.group}}组
-          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title.big-font  QQ
-            .info.small-font.pt-10 123653079
-        div.p-12(layout="row")
-          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title.big-font 手机号
-            .info.small-font.pt-10 18826072459
+            .info.pt-10 第{{vm.user.group}}组
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
             .title.big-font 邮箱
-            .info.small-font.pt-10 {{vm.user.email}}
-          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title.big-font 个人网址
-            .info.small-font.pt-10 www.baidu.com
-        div.p-12(layout="row")
+            .info.pt-10 {{vm.user.email}}
+        div(layout="row")
           div
             .title.big-font 个人简介
-            .info.small-font.pt-10 吃饭、睡觉、踢球、打代码
+            .info.pt-10 吃饭、睡觉、踢球、打代码
 
 mixin group-classmates
   .about-sidebar(layout="column", flex="100")
     .profile-box.friends.md-whiteframe-1dp(layout="column")
       header.md-accent-bg(layout="row", layout-align="space-between center")
         .title 小组成员
-      .content(layout="row", layout-wrap)
-        .friend.p-5(flex="25")
-          img(src="assets/images/avatars/alice.jpg")
-        .friend.p-5(flex="25")
-          img(src="assets/images/avatars/andrew.jpg")
-        .friend.p-5(flex="25")
-          img(src="assets/images/avatars/carl.jpg")
-        .friend.p-5(flex="25")
-          img(src="assets/images/avatars/joyce.jpg")
+      .content.p-8(layout="row", layout-wrap)
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
+          .avatar-container
+            img(src="assets/images/avatars/alice.jpg")
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
+          .avatar-container
+            img(src="assets/images/avatars/andrew.jpg")
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
+          .avatar-container
+            img(src="assets/images/avatars/carl.jpg")
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
+          .avatar-container
+            img(src="assets/images/avatars/joyce.jpg")
 
 mixin TA
   .about-sidebar(layout="column", flex="100")
     .profile-box.friends.md-whiteframe-1dp(layout="column")
       header.md-accent-bg(layout="row", layout-align="space-between center")
         .title TA
-      .content(layout="row", layout-wrap)
-        .friend.p-5(flex="25")
+      .content.p-8(layout="row", layout-wrap)
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
           img(src="assets/images/avatars/alice.jpg")
-        .friend.p-5(flex="25")
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
           img(src="assets/images/avatars/andrew.jpg")
-        .friend.p-5(flex="25")  
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
           img(src="assets/images/avatars/carl.jpg")
-        .friend.p-5(flex="25")
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
           img(src="assets/images/avatars/joyce.jpg")
 

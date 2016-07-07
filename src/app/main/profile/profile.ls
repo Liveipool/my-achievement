@@ -13,8 +13,9 @@ angular.module 'app.profile', []
         controller: (Authentication) !->
           # console.log Authentication.get-user!
           @raw-user-data = Authentication.get-user!
+          console.log @raw-user-data
           @user = _.update @raw-user-data, 'gender', (gender)-> if gender is 'male' then '男' else '女'
-          # console.log @user
+          console.log @user
           @bg = "bg" + Math.ceil(12 * (Math.random!))
           # console.log("bg: ", @bg)
           @change-password-count = 0
