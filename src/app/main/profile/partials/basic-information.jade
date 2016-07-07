@@ -14,38 +14,38 @@ mixin person-information
       .content
         div.p-12(layout="row")
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title 姓名
-            .info 李为
+            .title.big-font 姓名
+            .info.small-font {{vm.user.fullname}}
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title 学号
-            .info 1433113
+            .title.big-font 学号
+            .info.small-font {{vm.user.sid}}
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title 性别
-            .info 男
+            .title.big-font 性别
+            .info.small-font {{vm.user.gender}}
         div.p-12(layout="row")
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title 班级
-            .info 周四晚上班
+            .title.big-font 班级
+            .info.small-font {{vm.user.class}}班
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title 组号
-            .info 第4组
+            .title.big-font 组号
+            .info.small-font 第{{vm.user.group}}组
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title  QQ
-            .info 123653079
+            .title.big-font  QQ
+            .info.small-font 123653079
         div.p-12(layout="row")
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title 手机号
-            .info 18826072459
+            .title.big-font 手机号
+            .info.small-font 18826072459
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title 邮箱
-            .info 123653079@qq.com
+            .title.big-font 邮箱
+            .info.small-font {{vm.user.email}}
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title 个人网址
-            .info www.baidu.com
+            .title.big-font 个人网址
+            .info.small-font www.baidu.com
         div.p-12(layout="row")
           .info-line
-            .title 个人简介
-            .info 吃饭、睡觉、踢球、打代码
+            .title.big-font 个人简介
+            .info.small-font 吃饭、睡觉、踢球、打代码
 
 mixin group-classmates
   .about-sidebar(layout="column", flex="100")
@@ -53,13 +53,13 @@ mixin group-classmates
       header.md-accent-bg(layout="row", layout-align="space-between center")
         .title 小组成员
       .content(layout="row", layout-wrap)
-        .friend(flex="25")
+        .friend.p-5(flex="25")
           img(src="assets/images/avatars/alice.jpg")
-        .friend(flex="25")
+        .friend.p-5(flex="25")
           img(src="assets/images/avatars/andrew.jpg")
-        .friend(flex="25")
+        .friend.p-5(flex="25")
           img(src="assets/images/avatars/carl.jpg")
-        .friend(flex="25")
+        .friend.p-5(flex="25")
           img(src="assets/images/avatars/joyce.jpg")
 
 mixin TA
@@ -68,12 +68,12 @@ mixin TA
       header.md-accent-bg(layout="row", layout-align="space-between center")
         .title TA
       .content(layout="row", layout-wrap)
-        .friend(flex="25")
+        .friend.p-5(flex="25")
           img(src="assets/images/avatars/alice.jpg")
-        .friend(flex="25")
+        .friend.p-5(flex="25")
           img(src="assets/images/avatars/andrew.jpg")
-        .friend(flex="25")  
+        .friend.p-5(flex="25")  
           img(src="assets/images/avatars/carl.jpg")
-        .friend(flex="25")
+        .friend.p-5(flex="25")
           img(src="assets/images/avatars/joyce.jpg")
 

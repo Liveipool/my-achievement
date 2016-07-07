@@ -7,7 +7,11 @@
         "fullname": "张珊",
         "avatar": "assets/images/avatars/alice.jpg",
         "role": "student",
-        "password": "12345678"
+        "password": "12345678",
+        "sid": "15214181",
+        "gender": "female",
+        "class": "1",
+        "group": "4"
       },
       {
         "email": "lisi@test.com",
@@ -15,7 +19,8 @@
         "fullname": "李思",
         "avatar": "assets/images/avatars/katherine.jpg",
         "role": "teacher",
-        "password": "12345678"
+        "password": "12345678",
+        "gender": "female"
       },
       {
         "email": "zhaowu@test.com",
@@ -23,7 +28,18 @@
         "fullname": "赵武",
         "avatar": "assets/images/avatars/andrew.jpg",
         "role": "admin",
-        "password": "12345678"
+        "password": "12345678",
+        "gender": "male"
+      },
+      {
+        "email": "liwe@test.com",
+        "username": "liwei",
+        "fullname": "李为",
+        "avatar": "assets/images/avatars/vincent.jpg",
+        "role": "ta",
+        "password": "12345678",
+        "sid": "14331136",
+        "gender": "male"
       }
     ]
   }
