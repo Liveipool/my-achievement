@@ -53,7 +53,29 @@
       logout: function() {
         authticatedUser = null;
         $cookies.remove("cookieUser");
+      },
+
+      filterRoute: function(user) {
+        switch (user.role) {
+          case 'student':
+            return 'app.student.homework.dashboard';
+            break;
+          case 'teacher':
+            return 'app.student.homework.dashboard' //'app.teacher.homework.dashboard';
+            break;
+          case 'admin':
+            return 'app.student.homework.dashboard' // 'app.admin.dashboard';
+            break;
+          case 'ta':
+            return 'app.student.homework.dashboard' // 'app.ta.homework.dashboard';
+            break;
+          default:
+            return 'app.login';
+            break;
+        }
+
       }
+
     }
   }
 
