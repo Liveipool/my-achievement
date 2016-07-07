@@ -1,0 +1,26 @@
+//- {{vm.homeworks}}
+//- TODO: rename the id name, don't forget the content class name also to be renamed
+#all-homeworks.page-layout.simple.fullwidth.doc-page.element-doc-page
+	.header.md-accent-bg(layout='row', layout-align='space-between')
+		div(layout='column', layout-align='center start')
+			.breadcrumb(layout='row', layout-align='start center')
+				md-icon.s16(md-font-icon='icon-home')
+				md-icon.s16.separator(md-font-icon='icon-chevron-right')
+				span.parent 
+			.title 欢迎回来 {{vm.greeting}}
+
+	.content
+		.white-bg.md-whiteframe-4dp.all-homeworks-container.md-padding(layout='row' layout-wrap layout-align='start')
+			.homework-container.white-bg.md-whiteframe-1dp.m-10.min-width(ng-repeat='homework in vm.homeworks' layout='column' flex-gt-xs='47' flex-gt-md='23')
+				.md-subhead.p-5.pl-20(class='{{homework.status}}') 作业: {{homework.title}}
+				.class-container.m-5.ml-10(layout='row' layout-align='start center' ng-repeat='class in homework.classes')
+					.info-container.md-title.pl-10(class='{{class.status + "-pl"}}' layout='column' flex) class {{class.id}}
+						.date.md-subhead 开始日期: {{class['start-date'] | date: 'yyyy-MM-dd HH:mm:ss' }}
+						.date.md-subhead 结束日期: {{class['end-date'] | date: 'yyyy-MM-dd HH:mm:ss' }}
+						.md-subhead 状态: {{class.status}}
+						md-divider
+				.actions(layout='row')
+					a(href="http://www.baidu.com")
+						md-button.md-primary link
+					md-button.md-primary(ng-click='vm.editHomework(homework.id)') edit
+					md-button.md-primary(ng-click='vm.reviewHomework(homework.id)' ng-hide="homework.status == 'future'") review
