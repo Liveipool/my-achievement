@@ -15,37 +15,37 @@ mixin person-information
         div.p-12(layout="row")
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
             .title.big-font 姓名
-            .info.small-font {{vm.user.fullname}}
+            .info.small-font.pt-10 {{vm.user.fullname}}
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
             .title.big-font 学号
-            .info.small-font {{vm.user.sid}}
+            .info.small-font.pt-10 {{vm.user.sid}}
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
             .title.big-font 性别
-            .info.small-font {{vm.user.gender}}
+            .info.small-font.pt-10 {{vm.user.gender}}
         div.p-12(layout="row")
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
             .title.big-font 班级
-            .info.small-font {{vm.user.class}}班
+            .info.small-font.pt-10 {{vm.user.class}}班
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
             .title.big-font 组号
-            .info.small-font 第{{vm.user.group}}组
+            .info.small-font.pt-10 第{{vm.user.group}}组
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
             .title.big-font  QQ
-            .info.small-font 123653079
+            .info.small-font.pt-10 123653079
         div.p-12(layout="row")
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
             .title.big-font 手机号
-            .info.small-font 18826072459
+            .info.small-font.pt-10 18826072459
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
             .title.big-font 邮箱
-            .info.small-font {{vm.user.email}}
+            .info.small-font.pt-10 {{vm.user.email}}
           div(flex="100" flex-gt-sm="50" flex-gt-md="33")
             .title.big-font 个人网址
-            .info.small-font www.baidu.com
+            .info.small-font.pt-10 www.baidu.com
         div.p-12(layout="row")
-          .info-line
+          div
             .title.big-font 个人简介
-            .info.small-font 吃饭、睡觉、踢球、打代码
+            .info.small-font.pt-10 吃饭、睡觉、踢球、打代码
 
 mixin group-classmates
   .about-sidebar(layout="column", flex="100")

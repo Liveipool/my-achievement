@@ -22,6 +22,10 @@ angular.module 'app.profile', []
           that = @
           @change-password = ->
             that.change-password-count++
-            console.log("change-password-count: ", change-password-count)
+            # console.log("change-password-count: ", that.change-password-count)
+            that.change-password-hint = if that.change-password-count is 2 then '确认更改' else '下一步'
+          # console.log(@change-password-count)
+          @clear = ->
+            that.change-password-count = 0
     }
 

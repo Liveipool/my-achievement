@@ -40,29 +40,30 @@ mixin left
 
 mixin middle
   div.middle(flex="100" layout="column" layout-align="center center")
-    div.p-12.label-font-size(layout="row" layout-align="center center") 更改密码
-    div(layout="row")
+    div.p-12.huge-font(layout="row" layout-align="center center") 更改密码
+    div(layout="row" ng-show="vm.changePasswordCount==0")
       div(flex="100")
-        md-input-container.md-block
-          label 请输入旧密码
-          input(type="password")
+        md-input-container.md-block.input-margin
+          label.big-font 一、请输入旧密码
+          input.input-size(type="password")
+    div(layout="row" ng-show="vm.changePasswordCount==1")
+      div(flex="100")
+        md-input-container.md-block.input-margin
+          label.big-font 二、请输入新密码
+          input.input-size(type="password")
+    div(layout="row", ng-show="vm.changePasswordCount>=2")
+      div(flex="100")
+        md-input-container.md-block.input-margin
+          label.big-font 三、请重复输入新密码
+          input.input-size(type="password")
     div(layout="row")
-      md-button.md-accent.md-raised.md-hue-1(ng-click="change-password()") {{vm.change-password-hint}}
-      md-button.md-raised.md-primary 重置
-    //- div(layout="row" ng-show="vm.temp==1")
-    //-   div(flex="100")
-    //-     md-input-container.md-block
-    //-       label 请输入新密码
-    //-       input(type="password")
-    //- div(layout="row", ng-show="vm.temp==2")
-    //-   div(flex="100")
-    //-     md-input-container.md-block
-    //-       label 请重复输入新密码
-    //-       input(type="password")
+      md-button.md-accent.md-raised.md-hue-1.button-font-color.font-weight(ng-click="vm.changePassword()") {{vm.changePasswordHint}}
+      md-button.md-raised.md-primary.font-weight(ng-click="vm.clear()") 重置
 
 mixin right
   div.right(flex="100" flex-gt-md="15" layout="column")
-    img.p-12(src="{{vm.user.avatar}}")
-    md-button.md-raised.md-primary 更改头像
+    div(layout="column" layout-align="center center")
+      img.p-12.width-120.height-120(src="{{vm.user.avatar}}")
+      md-button.md-raised.md-primary.width-120 更改头像
     div.m-100(layout="row" layout-align="center center")
-      md-button.md-accent.md-raised.md-hue-1.button-size.label-font-size.button-font-color 提交修改
+      md-button.md-accent.md-raised.md-hue-1.button-size.label-font-size.button-font-color.width-140 提交修改
