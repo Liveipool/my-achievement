@@ -1,25 +1,25 @@
 mixin edit-information
-  .about(layout="column", flex="100")
+  .p-12.about(layout="column", flex="100")
     .profile-box.info-box.general.md-whiteframe-1dp(layout="column")
       header.md-accent-bg
         .title 修改信息
       .content(layout="row")
-        div.left(flex="100" flex-gt-sm="60" flex-gt-md="60")
+        div.left(flex="100" flex-gt-md="60")
           div.p-12(layout="row")
-            div(flex="100" flex-gt-sm="50" flex-gt-md="50")
+            div(flex="100" flex-gt-md="50")
               md-input-container.md-block
                 label.label-font-size 手机号
                 input(value="18826072459")
-            div(flex="100" flex-gt-sm="50" flex-gt-md="50")
+            div(flex="100" flex-gt-md="50")
               md-input-container.md-block
                 label.label-font-size 邮箱
                 input(value="123653079@qq.com")
           div.p-12(layout="row")
-            div(flex="100" flex-gt-sm="50" flex-gt-md="50")
+            div(flex="100" flex-gt-md="50")
               md-input-container.md-block
                 label.label-font-size QQ
                 input(value="123653079")
-            div(flex="100" flex-gt-sm="50" flex-gt-md="50")
+            div(flex="100" flex-gt-md="50")
               md-input-container.md-block
                 label.label-font-size 个人网址
                 input(value="www.baidu.com")
@@ -28,8 +28,8 @@ mixin edit-information
               md-input-container.md-block
                 label.label-font-size 个人简介
                 input(value="吃饭、睡觉、踢球、打代码")
-        div.middle(flex="100" flex-gt-sm="30" flex-gt-md="30" layout="column")
-          div.p-12 更改密码
+        div.middle(flex="100" flex-gt-md="30" layout="column")
+          div.p-12.label-font-size(layout="row" layout-align="center center") 更改密码
           div(layout="row")
             div(flex="100")
               md-input-container.md-block
@@ -45,10 +45,11 @@ mixin edit-information
               md-input-container.md-block
                 label 请重复输入新密码
                 input(type="password")
-        div.right(flex="100" flex-gt-sm="10" flex-gt-md="10" layout="column")
+        div.right(flex="100" flex-gt-md="10" layout="column")
           img.p-12(src="assets/images/avatars/vincent.jpg")
           md-button.md-raised.md-primary 更改头像
-          md-button.md-fab.m-100.label-font-size.button-font-color 提交修改
+          div.m-100(layout="row" layout-align="center center")
+            md-button.md-accent.md-raised.md-hue-1.button-size.label-font-size.button-font-color 提交修改
         //- .info-line
         //-   .title 姓名
         //-   input(value="李为")
