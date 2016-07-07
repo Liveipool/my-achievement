@@ -14,6 +14,19 @@
         {
             $rootScope.loadingProgress = true;
 
+            if (!Authentication.isExists()) {
+                console.log("statr authenticate");
+                Authentication.getCookieUser().then(function(user) {
+                    if (user !== null) {
+                        $state.go('app.student.homework.dashboard');
+                    }
+                    else if (user === null && toState.name !== 'app.login') {
+                        $state.go('app.login');
+                        event.preventDefault();
+                    }
+                });
+            }
+
         });
 
         // De-activate loading indicator

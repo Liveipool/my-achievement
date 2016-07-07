@@ -54,6 +54,7 @@
         authticatedUser = null;
         $cookies.remove("cookieUser");
       }
+
     }
   }
 
