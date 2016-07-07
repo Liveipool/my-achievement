@@ -2,10 +2,10 @@ include ./partials/basic-information.jade
 include ./partials/edit-information.jade
 
 mixin top-part
-  .header.md-accent-bg(layout="column", layout-align="center center", layout-gt-sm="row", layout-align-gt-sm="space-between end")
+  .header.md-accent-bg(layout="column", layout-align="center center", layout-gt-sm="row", layout-align-gt-sm="space-between end" ng-class="vm.bg")
     .user-info(layout="column", layout-align="center center", layout-gt-sm="row", layout-align-gt-sm="start center")
-      img.profile-image.avatar.huge(src="assets/images/avatars/katherine.jpg")
-      .name Katherine Wilson
+      img.profile-image.avatar.huge(src="{{vm.user.avatar}}")
+      .name {{vm.user.fullname}}
 
 mixin body-part
   md-content

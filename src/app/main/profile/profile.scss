@@ -1,10 +1,46 @@
 #profile {
-    
+    .bg1 {
+        background: url('/assets/images/backgrounds/april.jpg') no-repeat 0 45%;
+    }
+    .bg2 {
+        background: url('/assets/images/backgrounds/august.jpg') no-repeat 0 45%;
+    }
+    .bg3 {
+        background: url('/assets/images/backgrounds/december.jpg') no-repeat 0 45%;
+    }
+    .bg4 {
+        background: url('/assets/images/backgrounds/february.jpg') no-repeat 0 45%;
+    }
+    .bg5 {
+        background: url('/assets/images/backgrounds/january.jpg') no-repeat 0 45%;
+    }
+    .bg6 {
+        background: url('/assets/images/backgrounds/july.jpg') no-repeat 0 45%;
+    }
+    .bg7 {
+        background: url('/assets/images/backgrounds/june.jpg') no-repeat 0 45%;
+    }
+    .bg8 {
+        background: url('/assets/images/backgrounds/march.jpg') no-repeat 0 45%;
+    }
+    .bg9 {
+        background: url('/assets/images/backgrounds/may.jpg') no-repeat 0 45%;
+    }
+    .bg10 {
+        background: url('/assets/images/backgrounds/november.jpg') no-repeat 0 45%;
+    }
+    .bg11 {
+        background: url('/assets/images/backgrounds/october.jpg') no-repeat 0 45%;
+    }
+    .bg12 {
+        background: url('/assets/images/backgrounds/september.jpg') no-repeat 0 45%;
+    }
+
     .header {
         height: 320px;
         min-height: 320px;
         max-height: 320px;
-        background: url('/assets/images/backgrounds/march.jpg') no-repeat 0 45%;
+        // background: url('/assets/images/backgrounds/march.jpg') no-repeat 0 45%;
         background-size: 100% auto;
 
         .profile-image {
@@ -99,8 +135,15 @@
         margin: 0px;
     }
     .label-font-size {
-        font-size: 20px;
+        font-size: 28px;
         font-weight: bold;
+    }
+    .big-font {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .small-font {
+        font-size: 16px;
     }
     .m-100 {
       margin: 70px 0 0 0;
@@ -111,6 +154,9 @@
     }
     .button-font-color {
         color: rgb(255, 255, 255) !important;
+    }
+    .height-386 {
+        height: 386px;
     }
 }
 
