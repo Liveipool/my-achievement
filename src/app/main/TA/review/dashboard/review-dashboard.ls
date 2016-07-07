@@ -11,11 +11,27 @@ angular.module 'app.TA'
       'content@app':
         template-url: 'app/main/TA/review/dashboard/review-dashboard.html'
         controller-as : 'vm'
-        controller: ($scope, Authentication, data, DTOptionsBuilder)!->
+        controller: ($scope, $filter, Authentication, data, DTOptionsBuilder)!->
           console.log "review-dashboard"
           #console.log(data.data);
           @user = Authentication.get-user!
-          @classes = data.data
-          @dtOptions = DTOptionsBuilder.newOptions! .withDisplayLength 10 .withPaginationType 'simple'
-          console.log @dtOptions
+          @classes = data.data.slice 0
+          @dtInstance = {}
+          @dtOptions = DTOptionsBuilder.newOptions! .withDisplayLength 10 .withPaginationType 'simple' .withDOM 'tip'
+          @search = (index) !~>
+            @classes[index] = ($filter 'searchName') data.data[index].slice(0), @nameSearch
+            #console.log @dtInstance.column(0)
+          # console.log @dtOptions
   }
+
+.filter 'searchName', ->
+  (datas, name)->
+    console.log datas
+    console.log name
+    console.log name.length
+
+    newData = []
+    for data in datas
+      if (!name || name.length == 0 || data.name.includes name)
+        newData.push data
+    newData
