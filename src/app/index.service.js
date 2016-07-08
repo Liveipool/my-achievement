@@ -67,7 +67,7 @@
             return 'app.student.homework.dashboard' // 'app.admin.dashboard';
             break;
           case 'ta':
-            return 'app.student.homework.dashboard' // 'app.ta.homework.dashboard';
+            return 'app.TA.review.dashboard' // 'app.ta.homework.dashboard';
             break;
           default:
             return 'app.login';
