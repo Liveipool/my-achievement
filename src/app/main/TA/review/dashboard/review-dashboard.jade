@@ -40,7 +40,7 @@ div#review-dashboard(layout="column")
                     span.md-subhead 90~100：{{vm.scoreCounter[$index][0]}}人
                     span.md-subhead 80~90：{{vm.scoreCounter[$index][1]}}人
                     span.md-subhead 70~80：{{vm.scoreCounter[$index][2]}}人
-                    span.md-subhead  60~70：{{vm.scoreCounter[$index][3]}}人
+                    span.md-subhead 60~70：{{vm.scoreCounter[$index][3]}}人
                   c3chart(bindto-id='pie-plot{{$index}}-chart', flex='70')
                     chart-column(column-id="90~100", column-values='{{vm.scoreCounter[$index][0]}}', column-type='pie')
                     chart-column(column-id="80~90", column-values='{{vm.scoreCounter[$index][1]}}', column-type='pie')

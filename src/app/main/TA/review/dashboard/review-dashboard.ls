@@ -61,8 +61,8 @@ angular.module 'app.TA'
           @dtOptions = DTOptionsBuilder.newOptions! .withDisplayLength 10 .withPaginationType 'simple' .withDOM 'tip'
 
           @search = (index)!~>
-            #@dtInstances[index] .DataTable .columns 0 .search @searchWords[index] .draw!
-            $state.go('app.student.homework.dashboard')
+            @dtInstances[index] .DataTable .columns 0 .search @searchWords[index] .draw!
+
 
 
   }
