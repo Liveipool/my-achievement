@@ -1,3 +1,6 @@
+// md-input-container {
+//   margin: 0px 12px;
+// }
 #homework-dashboar {
   header {
     height: 160px;
@@ -47,5 +50,45 @@
   .m-12 {
     margin: 12px;
   }
+  .m-24 {
+    margin: 24px;
+  }
+  .mh-12 {
+    margin: 0px 12px;
+  }
+  .blueBorder {
+    border: 1px solid blue;
+  }
+}
 
+.mh-12 {
+  margin: 0px 12px;
+}
+
+.p-12 {
+padding: 12px;
+}
+
+.mt-12 {
+  margin-top: 12px;
+}
+
+.pb-12 {
+  padding-bottom: 12px;
+}
+
+.pb-24 {
+  padding-bottom: 24px;
+}
+
+.m-0 {
+  margin: 0px;
+}
+
+md-dialog {
+  min-width: 400px;
+}
+
+.pointer {
+  cursor: pointer;
 }
