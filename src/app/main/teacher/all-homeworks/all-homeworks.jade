@@ -1,0 +1,40 @@
+#all-homeworks-header.page-layout.simple.fullwidth.doc-page.element-doc-page
+	.header.md-accent-bg(layout='row', layout-align='space-between')
+		div(layout='column', layout-align='end start')
+			.breadcrumb(layout='row', layout-align='start center')
+			.title 欢迎回来, {{vm.greeting}}!
+
+
+#all-homeworks-container(layout-wrap layout='row' flex='100')
+	.homework-container(flex='100' flex-gt-sm='50' flex-gt-md='33' flex-gt-lg="25" ng-repeat='homework in vm.homeworks' layout='column')
+		md-card.white-bg
+			.image-div(ng-class='homework.bg')
+			md-card-title
+				md-card-title-text
+					.md-headline 作业{{homework.id}}: {{homework.title}}
+
+			md-card-content
+				.classes-container(layout='row' layout-align='start center' ng-repeat='class in homework.classes')
+					.class-container(flex)
+						.pl-10(class='{{"AH-" + class.status + "-pl"}}' layout='column' flex)
+							.class.md-subhead(layout-align='start') 班级 {{class.class_id}}
+							.status.md-subhead(layout='row' layout-align='space-between space-between')
+								small.label 状态:
+								small.content  {{class.tStatus}}
+							.time(layout='row' layout-align='space-between space-between')
+								.md-subhead(layout='row' layout-align='space-between space-between')
+									small.label 开始日期:
+									small.content  {{class.startTime | date: 'yyyy-MM-dd  HH:mm' }}
+								.md-subhead(layout='row' layout-align='space-between space-between')
+									small.label 结束日期:
+									small.content  {{class.endTime | date: 'yyyy-MM-dd  HH:mm' }}
+							md-divider
+
+			md-card-actions(layout="row" layout-align="end center")
+				md-button.dress(flex='33' ng-href="{{homework.classes[0].description}}" target="_blank") 作业链接
+				md-button.dress(flex='33' ng-click='vm.editHomework(homework.id)') 编辑
+				md-button.dress(flex='33' ng-click='vm.reviewHomework(homework.id)' ng-hide="homework.status == 'future'") 评审
+
+
+
+

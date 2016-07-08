@@ -13,7 +13,7 @@ angular.module 'fuse'
 
   # --------- 菜单 ----------- #
 
-  nav.save-item 'homework', {title: "作业", group: true, weight: 1, class: 'homework'}
+  # nav.save-item 'homework', {title: "作业", group: true, weight: 1, class: 'homework'}
 
   nav.save-item 'homework.dashboard', {title: "作业详情", weight: 1, icon: 'icon-book-open', state: 'app.student.homework.dashboard'}
 
