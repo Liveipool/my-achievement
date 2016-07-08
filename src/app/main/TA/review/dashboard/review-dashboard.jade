@@ -9,12 +9,11 @@ div#review-dashboard(layout="column")
       md-tabs-wrapper
         md-tab(label="班级{{$index + 1}}" ng-repeat='class in vm.classes')
           md-content.md-tab-content.p-12
-            div(layout='row'  layout-align="start start")
+            div(layout='row'  layout-align="start center")
               md-input-container.md-block.md-headline.md-accent(flex='25')
                 label 搜索姓名
-                input(type='text' ng-model='vm.nameSearch')
-              md-button.md-raised.md-accent(ng-click='vm.search($index)') 查询
-            table(datatable="ng", dt-options="vm.dtOptions", class="row-border hover", dt-instance='vm.dtInstance')
+                input(type='text' ng-model='vm.searchWords[$index]' ng-change='vm.search($index)')
+            table(datatable="ng", dt-options="vm.dtOptions", class="row-border hover", dt-instance='vm.dtInstances[$index]')
               thead
                 tr
                   th 姓名

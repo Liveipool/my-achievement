@@ -15,13 +15,15 @@ angular.module 'app.TA'
           console.log "review-dashboard"
           #console.log(data.data);
           @user = Authentication.get-user!
-          @classes = data.data.slice 0
-          @dtInstance = {}
+          @classes = data.data
+          @dtInstances = []
+          @searchWords = []
+          for x in @classes
+            @dtInstances.push {}
+            @searchWords.push ''
           @dtOptions = DTOptionsBuilder.newOptions! .withDisplayLength 10 .withPaginationType 'simple' .withDOM 'tip'
-          @search = (index) !~>
-            @classes[index] = ($filter 'searchName') data.data[index].slice(0), @nameSearch
-            #console.log @dtInstance.column(0)
-          # console.log @dtOptions
+          @search = (index)!~>
+            @dtInstances[index] .DataTable .columns 0 .search @searchWords[index] .draw!
   }
 
 .filter 'searchName', ->
