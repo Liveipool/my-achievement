@@ -9,14 +9,14 @@
           {
             "id": "1",
             "status": "finish",
-            "start-date": "2016-07-07",
-            "end-date": "2016-07-07"
+            "start-time": "2016-05-27",
+            "end-time": "2016-05-30"
           },
           {
             "id": "2",
             "status": "finish",
-            "start-date": "2016-07-07",
-            "end-date": "2016-07-07"
+            "start-time": "2016-05-29",
+            "end-time": "2016-06-02"
           }
         ]
       },
@@ -28,52 +28,52 @@
           {
             "id": "1",
             "status": "present",
-            "start-date": "2016-07-07",
-            "end-date": "2016-07-07"
+            "start-time": "2016-06-20",
+            "end-time": "2016-07-00"
           },
           {
             "id": "2",
             "status": "finish",
-            "start-date": "2016-07-07",
-            "end-date": "2016-07-07"
+            "start-time": "2016-06-04",
+            "end-time": "2016-06-27"
           }
         ]
       },
       {
         "id": "3",
-        "title": "学习Angular",
-        "description": "http://www.baidu.com",
-        "classes": [
-          {
-            "id": "1",
-            "status": "future",
-            "start-date": "2016-07-07",
-            "end-date": "2016-07-07"
-          },
-          {
-            "id": "2",
-            "status": "present",
-            "start-date": "2016-07-07",
-            "end-date": "2016-07-07"
-          }
-        ]
-      },
-      {
-        "id": "4",
         "title": "学习loopback",
         "description": "http://www.baidu.com",
         "classes": [
           {
             "id": "1",
             "status": "future",
-            "start-date": "2016-07-07",
-            "end-date": "2016-07-07"
+            "start-time": "2016-07-17",
+            "end-time": "2016-08-30"
           },
           {
             "id": "2",
             "status": "future",
-            "start-date": "2016-07-07",
-            "end-date": "2016-07-07"
+            "start-time": "2016-07-21",
+            "end-time": "2016-09-03"
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "title": "学习Angular",
+        "description": "http://www.baidu.com",
+        "classes": [
+          {
+            "id": "1",
+            "status": "future",
+            "start-time": "2016-07-12",
+            "end-time": "2016-07-21"
+          },
+          {
+            "id": "2",
+            "status": "present",
+            "start-time": "2016-07-05",
+            "end-time": "2016-07-13"
           }
         ]
       }
