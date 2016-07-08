@@ -4,7 +4,7 @@ angular.module 'app.teacher', []
 
 .config ($state-provider,  ms-navigation-service-provider) !->
   $state-provider.state 'app.teacher', {
-    abstarct: true
+    abstract: true
   }
 
 
