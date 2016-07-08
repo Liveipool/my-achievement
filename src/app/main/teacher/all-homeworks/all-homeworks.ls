@@ -46,11 +46,19 @@ angular.module 'app.teacher'
             for h in hs
               if @status-helper h.classes, 'present'
                 h.status = 'present'
+                h.t-status = '进行中'
               else
                 if @status-helper h.classes, 'future'
                   h.status = 'future'
+                  h.t-status = '未开始'
                 else
                   h.status = 'finish'
+                  h.t-status = '已结束'
+            for h in hs
+              for c in h.classes
+                c.t-status = '进行中' if c.status == 'present'
+                c.t-status = '未开始' if c.status == 'future'
+                c.t-status = '已结束' if c.status == 'finish'
 
           @calculate-status @homeworks
 
