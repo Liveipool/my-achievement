@@ -23,10 +23,10 @@ gulp.task('prepare-data', function ()
 	});
 	console.log(schemas.student);
 	var i, j, aclass, classes = [], classNum, studentNum, student;
-	classNum = _.random(2, 4);
+	classNum = 2;
+	studentNum = 50;
 	for (i = 1; i <= classNum; ++i) {
 		aclass = [];
-		studentNum = _.random(15, 25);
 		for (j = 0; j < studentNum; ++j) {
 			student = jsf(schemas.student);
 			if (_.random(1))

@@ -22,8 +22,8 @@ div#review-dashboard(layout="column")
                   th 评审
               tbody
                 tr(ng-repeat="student in class")
-                  td {{ student.name }}
-                  td {{ student.number }}
+                  td {{ student.fullname }}
+                  td {{ student.sid }}
                   td Group {{ student.group }}
                   td
                     div(ng-hide='student.TAscore')
@@ -31,4 +31,23 @@ div#review-dashboard(layout="column")
                     div(ng-show='student.TAscore')
                       a() 重评
                       |  (已评: {{student.TAscore}}分)
-
+            div.card.md-whiteframe-4dp.p-12.mt-20(layout='row' layout-align="space-around center")
+              div(flex='40' layout='column')
+                span.md-display-1.text-center 分数段人数
+                div(layout='row')
+                  div(layout='column', flex='30' layout-align='space-around center')
+                    span.md-subhead 90~100：{{vm.scoreCounter[$index][0]}}人
+                    span.md-subhead 80~90：{{vm.scoreCounter[$index][1]}}人
+                    span.md-subhead 70~80：{{vm.scoreCounter[$index][2]}}人
+                    span.md-subhead  60~70：{{vm.scoreCounter[$index][3]}}人
+                  c3chart(bindto-id='pie-plot{{$index}}-chart', flex='70')
+                    chart-column(column-id="90~100", column-values='{{vm.scoreCounter[$index][0]}}', column-type='pie')
+                    chart-column(column-id="80~90", column-values='{{vm.scoreCounter[$index][1]}}', column-type='pie')
+                    chart-column(column-id="70~80", column-values='{{vm.scoreCounter[$index][2]}}', column-type='pie')
+                    chart-column(column-id="60~70", column-values='{{vm.scoreCounter[$index][3]}}', column-type='pie')
+                    chart-pie(expand='true')
+              div(flex='20' layout='column' layout-align='space-around center')
+                span.font-size-30.font-weight-900 实时评分数据
+                span.md-subhead 平均分：{{vm.averageScore[$index]}}
+                span.md-subhead 最高分：{{vm.highScore[$index]}}
+                span.md-subhead 最低分：{{vm.lowScore[$index]}}
