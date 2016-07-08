@@ -1,0 +1,79 @@
+mixin basic-information
+  div(layout="row", layout-wrap)
+    .p-12(flex-gt-md="70" flex-gt-sm="70" flex="100")
+      +person-information
+    .p-12(flex-gt-md="30" flex-gt-sm="30" flex="100")
+      +group-classmates
+      +TA
+
+mixin person-information
+  .about(layout="column", flex="100")
+    .profile-box.info-box.general.md-whiteframe-1dp(layout="column")
+      header.md-accent-bg
+        .title 基本信息
+      .content
+        div.p-12(layout="row")
+          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
+            .title 姓名
+            .info 李为
+          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
+            .title 学号
+            .info 1433113
+          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
+            .title 性别
+            .info 男
+        div.p-12(layout="row")
+          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
+            .title 班级
+            .info 周四晚上班
+          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
+            .title 组号
+            .info 第4组
+          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
+            .title  QQ
+            .info 123653079
+        div.p-12(layout="row")
+          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
+            .title 手机号
+            .info 18826072459
+          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
+            .title 邮箱
+            .info 123653079@qq.com
+          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
+            .title 个人网址
+            .info www.baidu.com
+        div.p-12(layout="row")
+          .info-line
+            .title 个人简介
+            .info 吃饭、睡觉、踢球、打代码
+
+mixin group-classmates
+  .about-sidebar(layout="column", flex="100")
+    .profile-box.friends.md-whiteframe-1dp(layout="column")
+      header.md-accent-bg(layout="row", layout-align="space-between center")
+        .title 小组成员
+      .content(layout="row", layout-wrap)
+        .friend(flex="25")
+          img(src="assets/images/avatars/alice.jpg")
+        .friend(flex="25")
+          img(src="assets/images/avatars/andrew.jpg")
+        .friend(flex="25")
+          img(src="assets/images/avatars/carl.jpg")
+        .friend(flex="25")
+          img(src="assets/images/avatars/joyce.jpg")
+
+mixin TA
+  .about-sidebar(layout="column", flex="100")
+    .profile-box.friends.md-whiteframe-1dp(layout="column")
+      header.md-accent-bg(layout="row", layout-align="space-between center")
+        .title TA
+      .content(layout="row", layout-wrap)
+        .friend(flex="25")
+          img(src="assets/images/avatars/alice.jpg")
+        .friend(flex="25")
+          img(src="assets/images/avatars/andrew.jpg")
+        .friend(flex="25")  
+          img(src="assets/images/avatars/carl.jpg")
+        .friend(flex="25")
+          img(src="assets/images/avatars/joyce.jpg")
+

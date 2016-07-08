@@ -11,6 +11,9 @@ angular.module 'app.student'
           .then (result)->
             homeworks = result.data.homeworks
             Promise.resolve homeworks
+    data:
+      role: 'student'
+
     views:
       'content@app':
         template-url: 'app/main/student/homework/dashboard/homework-dashboard.html'
