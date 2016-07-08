@@ -173,6 +173,9 @@
 
         // Base Url
         api.baseUrl = 'app/data/';
+        api.classes = $resource(api.baseUrl + 'faker/classes.json');
+        api.homeworks = $resource(api.baseUrl + 'faker/homeworks.json');
+
         api.gfcUrl = '/'
 
         // console.log("API get services defined by GFC: ", GFC.services);

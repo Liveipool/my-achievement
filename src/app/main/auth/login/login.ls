@@ -32,9 +32,9 @@ angular.module 'app.auth.login', []
             console.log user
             if user
               @invalid-user = false
+
               dest = Authentication.filter-route user
               $state.go dest
             else
               @invalid-user = true
   }
-

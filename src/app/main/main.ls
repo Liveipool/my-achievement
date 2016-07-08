@@ -17,6 +17,9 @@ angular.module 'fuse'
 
   nav.save-item 'homework.dashboard', {title: "作业详情", weight: 1, icon: 'icon-book-open', state: 'app.student.homework.dashboard'}
 
+  nav.save-item 'TA', {title: "TA评审", group: true, weight: 1, class: 'TA'}
+
+  nav.save-item 'TA.dashboard', {title: "作业列表", weight: 1, icon: 'icon-book-open', state: 'app.TA.review.dashboard'}
   nav.save-item 'user',  {title : "用户"   , group: true,   weight   : 2,  class: 'user' }
 
 .controller 'MainController', ($scope, $root-scope, ms-navigation-service, $state, Authentication)!->
