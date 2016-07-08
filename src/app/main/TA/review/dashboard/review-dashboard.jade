@@ -1,6 +1,6 @@
 mixin headline
   header.header.md-accent-bg(layout='column', layout-align='end')
-    span.md-display-1.font-weight-300 作业X
+    span.md-display-1.font-weight-300 {{vm.homeworkTitle}}
 
 div#review-dashboard(layout="column")
   +headline
@@ -12,6 +12,7 @@ div#review-dashboard(layout="column")
             div(layout='row'  layout-align="start center")
               md-input-container.md-block.md-headline.md-accent(flex='25')
                 label 搜索姓名
+                md-icon.icon-account-search.md-accent
                 input(type='text' ng-model='vm.searchWords[$index]' ng-change='vm.search($index)')
             table(datatable="ng", dt-options="vm.dtOptions", class="row-border hover", dt-instance='vm.dtInstances[$index]')
               thead
@@ -21,7 +22,7 @@ div#review-dashboard(layout="column")
                   th 小组
                   th 评审
               tbody
-                tr(ng-repeat="student in class")
+                tr(ng-repeat="student in class", ng-class="{'md-light-green-100-bg': student.TAscore}")
                   td {{ student.fullname }}
                   td {{ student.sid }}
                   td Group {{ student.group }}
@@ -33,7 +34,7 @@ div#review-dashboard(layout="column")
                       |  (已评: {{student.TAscore}}分)
             div.card.md-whiteframe-4dp.p-12.mt-20(layout='row' layout-align="space-around center")
               div(flex='40' layout='column')
-                span.md-display-1.text-center 分数段人数
+                span.font-size-30.font-weight-900.text-center 分数段人数
                 div(layout='row')
                   div(layout='column', flex='30' layout-align='space-around center')
                     span.md-subhead 90~100：{{vm.scoreCounter[$index][0]}}人
@@ -46,7 +47,7 @@ div#review-dashboard(layout="column")
                     chart-column(column-id="70~80", column-values='{{vm.scoreCounter[$index][2]}}', column-type='pie')
                     chart-column(column-id="60~70", column-values='{{vm.scoreCounter[$index][3]}}', column-type='pie')
                     chart-pie(expand='true')
-              div(flex='20' layout='column' layout-align='space-around center')
+              div.h-300(flex='20' layout='column' layout-align='space-around center')
                 span.font-size-30.font-weight-900 实时评分数据
                 span.md-subhead 平均分：{{vm.averageScore[$index]}}
                 span.md-subhead 最高分：{{vm.highScore[$index]}}

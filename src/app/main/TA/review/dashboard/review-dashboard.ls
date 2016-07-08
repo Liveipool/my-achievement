@@ -4,18 +4,26 @@ angular.module 'app.TA'
 
 .config ($state-provider) !->
   $state-provider.state 'app.TA.review.dashboard', {
-    url: '/homework/TA-review-list'
+    url: '/homework/TA-review-list?hid'
     resolve:
-      data: (api-resolver) -> api-resolver.resolve('classes@get')
+      data1: (api-resolver) -> api-resolver.resolve 'classes@get'
+      data2: (api-resolver) -> api-resolver.resolve 'homeworks@get'
     views:
       'content@app':
         template-url: 'app/main/TA/review/dashboard/review-dashboard.html'
         controller-as : 'vm'
-        controller: ($scope, $filter, Authentication, data, DTOptionsBuilder)!->
+        controller: ($scope, $filter, $state-params, $state, $location, Authentication, data1, data2, DTOptionsBuilder)!->
           console.log "review-dashboard"
-          #console.log(data.data);
+          #console.log(data1.data);
+          console.log $location.search()
+          @homeworkId = parseInt($location.search().hid || '1');
+          console.log(@homeworkId);
+          for homework in data2.data
+            if (homework.id == @homeworkId)
+              @homeworkTitle = homework.title
+              break
           @user = Authentication.get-user!
-          @classes = data.data
+          @classes = data1.data
           @dtInstances = []
           @searchWords = []
           @highScore = []
@@ -53,7 +61,8 @@ angular.module 'app.TA'
           @dtOptions = DTOptionsBuilder.newOptions! .withDisplayLength 10 .withPaginationType 'simple' .withDOM 'tip'
 
           @search = (index)!~>
-            @dtInstances[index] .DataTable .columns 0 .search @searchWords[index] .draw!
+            #@dtInstances[index] .DataTable .columns 0 .search @searchWords[index] .draw!
+            $state.go('app.student.homework.dashboard')
 
 
   }
