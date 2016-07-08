@@ -1,0 +1,43 @@
+mixin form-header
+  md-toolbar.md-accent(style="min-height:60px;", md-whiteframe="1")
+    .md-toolbar-tools
+      h2 编辑该用户 
+      span(flex)
+      md-button.md-icon-button(ng-click="cancel()", aria-label="close")
+        md-icon.icon-close(style="font-size: 25px;")
+
+mixin user-info
+  md-dialog-content(flex, layout-padding)
+    md-card(md-theme="default")
+      div(layout-gt-sm="row")
+        md-input-container.md-icon-float.md-block(flex-gt-sm)
+          label 用户名
+          md-icon.blue-icon(md-font-icon="icon-account")
+          input(ng-model='user.username', ng-required="true", disabled)
+      div(layout-gt-sm="row")
+        md-input-container.md-block(flex-gt-sm)
+          label 姓名
+          md-icon.green-icon(md-font-icon="icon-worker")
+          input(ng-model='user.fullname', ng-required="true")
+      div(layout-gt-sm="row")
+        md-input-container.md-block(flex-gt-sm)
+          label 邮箱
+          md-icon.green-icon(md-font-icon="icon-email")
+          input(ng-model='user.email', type="email", ng-required="true")
+      div(layout-gt-sm="row")
+        md-input-container.md-block(flex-gt-sm)
+          label 密码
+          md-icon(md-font-icon="icon-key-variant")
+          input(type="password", ng-model='user.password')
+
+mixin submit-button
+  md-dialog-actions(layout="row", md-whiteframe="2")
+    md-button.submit-buttons.md-raised(ng-click="cancel()") 取消编辑
+    md-button.md-raised.md-warn.submit-buttons#add-button(ng-click="deleteUser($event)") 删除用户
+    md-button.md-raised.md-accent.submit-buttons#add-button(ng-click="editUser($event)") 编辑用户
+
+//- 添加病患的数据表单
+#user-add-dialog(layout="column", ng-cloak, style="width=800px;")
+  +form-header
+  +user-info
+  +submit-button

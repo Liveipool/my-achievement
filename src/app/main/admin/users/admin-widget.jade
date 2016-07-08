@@ -1,0 +1,17 @@
+mixin table-section(role, rolename, cloumns, info)
+  section.white-bg
+    md-subheader.md-accent.text-center.md-primary= role
+    md-list(layout-padding)
+      md-list-item
+        md-content(flex, layout="column")
+          table.simple.white-bg(ms-responsive-table)
+            thead
+                tr
+                  th(ng-repeat="columnName in " + cloumns) {{columnName}}
+            tbody
+                tr(ng-repeat="role in " + rolename)
+                  each val in info
+                    td= "{{role." + val + "}}"
+                  td
+                    md-button.md-icon-button(ng-click="showAdvanced($event)", username="{{role.username}}", aria-label="user-edit")
+                      md-icon(md-font-icon="icon-table-edit")

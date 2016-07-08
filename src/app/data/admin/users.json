@@ -1,0 +1,183 @@
+{
+  "data": {
+    "users": [
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331234",
+        "class": "3",
+        "group": "1"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331234",
+        "class": "3",
+        "group": "1"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331234",
+        "class": "3",
+        "group": "1"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331234",
+        "class": "3",
+        "group": "1"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331234",
+        "class": "3",
+        "group": "1"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331234",
+        "class": "3a",
+        "group": "1"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331234",
+        "class": "3c",
+        "group": "1"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331234",
+        "class": "3",
+        "group": "1"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331234",
+        "class": "1a",
+        "group": "1"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331234",
+        "class": "3",
+        "group": "1"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331234",
+        "class": "3",
+        "group": "1"
+      },
+      {
+        "email": "lisi@test.com",
+        "username": "lisi",
+        "fullname": "李思",
+        "avatar": "assets/images/avatars/katherine.jpg",
+        "role": "teacher",
+        "password": "12345678"
+      },
+      {
+        "email": "lisi@test.com",
+        "username": "lisi",
+        "fullname": "李思",
+        "avatar": "assets/images/avatars/katherine.jpg",
+        "role": "teacher",
+        "password": "12345678"
+      },
+      {
+        "email": "zhaowu@test.com",
+        "username": "zhaowu",
+        "fullname": "赵武",
+        "avatar": "assets/images/avatars/andrew.jpg",
+        "role": "admin",
+        "password": "12345678"
+      },
+      {
+        "email": "lisisi@test.com",
+        "username": "lisisi",
+        "fullname": "李思思",
+        "avatar": "assets/images/avatars/katherine.jpg",
+        "role": "ta",
+        "password": "12345678"
+      },
+      {
+        "email": "lisisi@test.com",
+        "username": "lisisi",
+        "fullname": "李思思",
+        "avatar": "assets/images/avatars/katherine.jpg",
+        "role": "ta",
+        "password": "12345678"
+      },
+      {
+        "email": "lisisi@test.com",
+        "username": "lisisi",
+        "fullname": "李思思",
+        "avatar": "assets/images/avatars/katherine.jpg",
+        "role": "ta",
+        "password": "12345678"
+      },
+      {
+        "email": "lisisi@test.com",
+        "username": "lisisi",
+        "fullname": "李思思",
+        "avatar": "assets/images/avatars/katherine.jpg",
+        "role": "ta",
+        "password": "12345678"
+      }
+    ]
+  }
+}
