@@ -41,6 +41,11 @@ angular.module 'app.student'
             present: "red-fg"
             finish: "light-blue-fg"
 
+          vm.switch =
+            future: true
+            present: true
+            finish: true
+
           $scope.showSubmitDialog = (id)!->
             $mdDialog.show {
               templateUrl: 'app/main/student/homework/dashboard/submitDialog.html',
