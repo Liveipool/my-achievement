@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app.student', ['angularFileUpload', 'chart.js']
+angular.module 'app.student', ['angularFileUpload']
 
 .config ($state-provider)!->
   $state-provider.state 'app.student', {

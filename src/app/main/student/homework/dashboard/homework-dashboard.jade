@@ -11,9 +11,12 @@ div#homework-dashboar(layout="column")
           md-content.md-tab-content.p-12
             div.m-12.chart.card.md-whiteframe-4dp(layout="row" flex="100" layout-wrap)
               div.p-24(flex="100" flex-gt-xs="50")
-                canvas(id="line" class="chart chart-line" chart-data="vm.scoreChart.data" chart-labels="vm.scoreChart.labels" chart-legend="true" chart-series="vm.scoreChart.series")
+                nvd3(class="remove-x-lines remove-opacity" options="vm.scoreChart.options" data="vm.scoreChart.data")
+              //- div.p-24(flex="100" flex-gt-xs="50")
+              //-   canvas(id="line" class="chart chart-line" chart-data="vm.scoreChart.data" chart-labels="vm.scoreChart.labels" chart-legend="true" chart-series="vm.scoreChart.series")
               div.p-24(flex="100" flex-gt-xs="50")
                 canvas(id="line" class="chart chart-line" chart-data="vm.rankChart.data" chart-labels="vm.rankChart.labels" chart-legend="true" chart-series="vm.rankChart.series")
+
             div(layout="row" flex="100" layout-wrap)
               ms-widget.p-12(flippable="true" layout="column" flex="100" flex-gt-xs="50" flex-gt-md="25" ng-repeat="homework in vm.homeworks")
                 ms-widget-front.white-bg
@@ -40,20 +43,3 @@ div#homework-dashboar(layout="column")
           md-content.md-tab-content.ph-24
             h1  在这里查看作业排名
             p 没意见吧
-
-//- 作业提交的对话框
-//- div.md-dialog-container(id="submitDialog")
-//-   md-dialog(aria-label="Mango (Fruit)")
-//-     form
-//-       md-toolbar
-//-         div.md-toolbar-tools(layout="row" layout-align="space-between center")
-//-           h2 作业{{homework.id}}
-//-           md-button(class="md-icon-button" ng-click="cancel()")
-//-             i(class="icon-close" aria-label="Close dialog")
-
-//-       md-dialog-content
-//-         div.md-dialog-content
-//-           h2 Using .md-dialog-content class that sets the padding as the spec
-//-       md-dialog-actions(layout="row")
-//-         md-button.md-raised.md-primary(ng-click="cancel()") Not Useful
-//-         md-button.md-raised.md-primary(ng-click="cancel()") Useful
