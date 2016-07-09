@@ -24,19 +24,46 @@ mixin chart
         chart-axis-x(axis-type="category")
         chart-axes(values-x="x" y="score")
 
+mixin menu-item
+  //#TODO
+  md-menu-item(width="4")
+    md-button
+      md-icon(md-font-icon="icon-book")
+      span 作业描述
+  md-menu-item
+    md-button
+      md-icon(md-font-icon="icon-cloud-upload")
+      span 提交作业
+
+mixin homework-widget
+  ms-widget-front.white-bg
+    div.ph-24.pv-12.widget-head(layout="row" layout-align="space-between")
+      div(layout="column" layout-align="center") 作业{{homework.id}}
+      md-menu
+        button(aria-label="more" ng-click="$mdOpenMenu($event)")
+          md-icon(md-font-icon="icon-dots-vertical")
+        md-menu-content
+          +menu-item
+
+    div.p-24.widget-body(layout="column" layout-align="center center")
+      span.font-weight-500(ng-class="vm.fg[homework.classes[0].status]") {{homework.title}}
+    div.ph-24.pv-12.widget-foot
+      span 状态: {{vm.status[homework.classes[0].status]}}
+
 mixin homework-list
   ms-widget.p-12(flippable="true" layout="column" flex="100" flex-gt-xs="50" flex-gt-md="33" flex-gt-lg="25" ng-repeat="homework in vm.homeworks")
-    ms-widget-front.white-bg
+    +homework-widget
+
 
 
 div#homework-dashboard(layout="column")
-  header.header.md-accent-bg(layout="column" layout-align="end")
+  header.header.md-accent-bg.ph-24(layout="column" layout-align="end")
     span.md-display-1.font-weight-300
       | 欢迎回来,
       |{{vm.greeting}}
       |!
   div.content
-    md-content.p-12.default-bg
+    md-content.p-12.wrapper-bg
       div#chart-container.default-bg(layout="row")
         +chart
       div#homeworks-container(layout="row" layout-wrap)

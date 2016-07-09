@@ -2,6 +2,17 @@
   "user": [
     {
       "role": "student",
+      "sid": 12345678,
+      "username": "zhangshan",
+      "fullname": "张珊",
+      "avatar": "assets/images/avatars/carl.jpg",
+      "class": 1,
+      "group": 1,
+      "email": "88185836@qq.com",
+      "password": "12345678"
+    },
+    {
+      "role": "student",
       "sid": 88185836,
       "username": "88185836",
       "fullname": "王林石",
