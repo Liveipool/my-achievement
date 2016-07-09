@@ -1,3 +1,56 @@
+
+mixin chart
+ //#TODOc3表格的具体实现还有bug，需要仔细阅读文档解决
+ div.p-12(flex="50" flex-xs="100")
+    .md-title.mb-12 我的成绩
+    .card.md-whiteframe-4dp.white-bg.p-12
+      c3chart(bindto-id="scoreChart")
+        chart-column(column-id="x" column-values="作业1, 作业2, 作业3, 作业4, 作业5, 作业6, 作业7, 作业8, 作业9, 作业10")
+        chart-column(column-id="score" column-name="分数" column-color="#19b0f5" column-values="95, 90, 100, 88, 90, 95, 94, 90, 90, 95" column-type="line")
+        chart-axis-y(axis-max="100")
+        chart-points(point-radius="4" show-point="true" point-expand-enabled="true"
+                      point-expand-radius="8")
+        chart-grid(show-x="false" show-y="true")
+        chart-axis-x(axis-type="category")
+        chart-axes(values-x="x" y="score")
+
+  div.p-12(flex="50" flex-xs="100")
+    .md-title.mb-12 我的排名
+    .card.md-whiteframe-4dp.white-bg.p-12
+      c3chart(bindto-id="rankChart")
+        chart-column(column-id="x" column-values="作业1, 作业2, 作业3, 作业4, 作业5, 作业6, 作业7, 作业8, 作业9, 作业10, 作业11")
+        chart-column(column-id="rank" column-name="排名" column-color="#ffb300" column-values="30,200,100,400,150,250" column-type="area-spline")
+        chart-grid(show-x="false" show-y="true")
+        chart-axis-x(axis-type="category")
+        chart-axes(values-x="x" y="score")
+
+mixin homework-list
+  ms-widget.p-12(flippable="true" layout="column" flex="100" flex-gt-xs="50" flex-gt-md="33" flex-gt-lg="25" ng-repeat="homework in vm.homeworks")
+    ms-widget-front.white-bg
+      div.ms-widget-header.font-size-16.p-12(ng-class="{'md-blue-500-bg': homework.status=='present', 'md-green-500-bg': homework.status=='future', 'md-grey-500-bg': homework.status=='finish'}" layout="row" flex="100" layout-align="space-between center")
+        span 作业{{homework.id}}
+        div(md-font-icon="icon-dots-vertical") {{vm.status[homework.status]}}
+
+      div.ms-widget-content.font-size-30.p-12
+        span(ng-class="vm.fg[homework.status]") {{homework.title}}
+
+      div.ms-widget-footer.font-size-14.p-12(layout="row" flex="100" layout-align="space-between center")
+        a(href="{{homework.description}}" target="blank") 作业链接
+        md-button.md-raised.md-primary(ng-if="homework.status == 'present'" ng-click="showSubmitDialog(homework.id)") 提交作业
+        md-button.md-raised.md-primary(ng-if="homework.status == 'finish'" ng-click="flipWidget()" aria-label="Flip widget") 查看详情
+
+    ms-widget-back.white-bg(layout="column" flex="100")
+      div.ms-widget-header.font-size-16.p-12.md-grey-500-bg(layout="row" layout-align="space-between start")
+        span 作业{{homework.id}}
+        div.flip-to-front
+          md-button(class="md-icon-button" ng-click="flipWidget()" aria-label="Flip widget")
+                md-icon(md-font-icon="icon-close")
+      div(layout="column" layout-align="center center")
+        span 平均分：89
+        span 你的分数：89
+        span 你的排名：78
+
+
 div#homework-dashboard(layout="column")
   header.header.md-accent-bg(layout="column" layout-align="end")
     span.md-display-1.font-weight-300
@@ -5,24 +58,9 @@ div#homework-dashboard(layout="column")
       |{{vm.greeting}}
       |!
   div.content
-    md-tabs(md-dynamic-height, md-boder-bottom)
-      md-tabs-wrapper
-        md-tab(label="查看详情")
-          md-content.md-tab-content.p-12
-            div(layout="row" flex="100" layout-wrap)
-              ms-widget.p-12(layout="column" flex="100" flex-gt-xs="50" flex-gt-md="25" ng-repeat="homework in vm.homeworks")
-                ms-widget-front.white-bg
-                  div.ms-widget-header.font-size-16.p-12(layout="row" flex="100" layout-align="space-between center")
-                    span 作业{{homework.id}}
-                    div(md-font-icon="icon-dots-vertical")
+    md-content.p-12.default-bg
+      div#chart-container.default-bg(layout="row")
+        +chart
+      div#homeworks-container(layout="row" layout-wrap)
+        +homework-list
 
-                  div.ms-widget-content.font-size-30.p-12
-                    span(ng-class="vm.fg[homework.status]") {{homework.title}}
-
-                  div.ms-widget-footer.font-size-14.p-12(layout="row" flex="100" layout-align="start center")
-                    span 状态: {{vm.status[homework.status]}}
-
-        md-tab(label="查看排名")
-          md-content.md-tab-content.ph-24
-            h1  在这里查看作业排名
-            p 没意见吧
