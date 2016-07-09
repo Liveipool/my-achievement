@@ -47,66 +47,15 @@
 		color: rgba(80, 80, 80, 1)
 
 #all-homeworks-container
-
 	background-color: #F5F5F5
+	.md-button
+		margin: 0 !important
 
 
-	.image-div-1
+$months : ('january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december')
+
+@for $i from 1 through 12
+	.image-div-#{$i}
 		height: 100px
-		background: url('/assets/images/backgrounds/january.jpg') no-repeat
-		background-size: 100% auto
-
-	.image-div-2
-		height: 100px
-		background: url('/assets/images/backgrounds/february.jpg') no-repeat
-		background-size: 100% auto
-
-	.image-div-3
-		height: 100px
-		background: url('/assets/images/backgrounds/march.jpg') no-repeat
-		background-size: 100% auto
-
-	.image-div-4
-		height: 100px
-		background: url('/assets/images/backgrounds/april.jpg') no-repeat
-		background-size: 100% auto
-
-	.image-div-5
-		height: 100px
-		background: url('/assets/images/backgrounds/may.jpg') no-repeat
-		background-size: 100% auto
-
-	.image-div-6
-		height: 100px
-		background: url('/assets/images/backgrounds/june.jpg') no-repeat
-		background-size: 100% auto
-
-	.image-div-7
-		height: 100px
-		background: url('/assets/images/backgrounds/july.jpg') no-repeat
-		background-size: 100% auto
-
-	.image-div-8
-		height: 100px
-		background: url('/assets/images/backgrounds/august.jpg') no-repeat
-		background-size: 100% auto
-
-	.image-div-9
-		height: 100px
-		background: url('/assets/images/backgrounds/september.jpg') no-repeat
-		background-size: 100% auto
-
-	.image-div-10
-		height: 100px
-		background: url('/assets/images/backgrounds/october.jpg') no-repeat
-		background-size: 100% auto
-
-	.image-div-11
-		height: 100px
-		background: url('/assets/images/backgrounds/november.jpg') no-repeat
-		background-size: 100% auto
-
-	.image-div-12
-		height: 100px
-		background: url('/assets/images/backgrounds/december.jpg') no-repeat
+		background: url('/assets/images/backgrounds/#{nth($months, $i)}.jpg') no-repeat
 		background-size: 100% auto

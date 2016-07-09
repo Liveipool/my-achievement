@@ -1,21 +1,22 @@
 mixin homework
-	md-card.white-bg.m-0.p-0
+	md-card.white-bg.m-0
 		+card-image
-		+card-title
-		+card-content
-		+card-actions
+		.p-8
+			+card-title
+			+card-content
+			+card-actions
 
 mixin card-image
 	.image-div(ng-class='homework.bg')
 
 mixin card-title
-	md-card-title.p-16
+	md-card-title.p-8
 		md-card-title-text.md-headline 作业: {{homework.title}} ({{homework.tStatus}})
 
 mixin card-content
-	md-card-content.pb-0
+	md-card-content.p-0
 		.classes-container(layout='column')
-			.class-container.pv-8(flex ng-repeat='class in homework.classes')
+			.class-container.p-8(flex ng-repeat='class in homework.classes')
 				+class
 
 mixin class
@@ -44,9 +45,9 @@ mixin class-time
 
 mixin card-actions
 	md-card-actions(layout="row" layout-align="end center")
-		md-button.m-0(flex='33' ng-href="{{homework.classes[0].description}}" target="_blank") 作业链接
-		md-button.m-0(flex='33' ng-click='vm.editHomework(homework.id)') 编辑
-		md-button.m-0(flex='33' ng-click='vm.reviewHomework(homework.id)' ng-hide="homework.status == 'future'") 评审
+		md-button(flex='33' ng-click='' ng-href="{{homework.classes[0].description}}" target="_blank") 作业链接
+		md-button(flex='33' ng-click='vm.editHomework(homework.id)') 编辑
+		md-button(flex='33' ng-click='vm.reviewHomework(homework.id)' ng-hide="homework.status == 'future'") 评审
 
 #all-homeworks-header.page-layout.simple.fullwidth.doc-page.element-doc-page
 	.header.md-accent-bg.h-160(layout='row', layout-align='space-between')
