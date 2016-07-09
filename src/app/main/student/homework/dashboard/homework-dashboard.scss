@@ -1,15 +1,15 @@
 // md-input-container {
 //   margin: 0px 12px;
 // }
-#homework-dashboar {
+#homework-dashboard {
   header {
     height: 160px;
     min-height: 160px;
     max-height: 106px;
     padding: 0 24px;
     padding-bottom: 32px;
-    background-image: url(/assets/images/backgrounds/header-bg.png);
-    background-size: cover;
+    background: url('/assets/images/backgrounds/may.jpg') no-repeat 0 45%;
+    background-size: 100% auto;
   }
   md-tabs-wrapper {
     padding: 0px 24px;
@@ -69,6 +69,10 @@
 padding: 12px;
 }
 
+.p-6 {
+padding: 6px;
+}
+
 .mt-12 {
   margin-top: 12px;
 }
@@ -91,4 +95,12 @@ md-dialog {
 
 .pointer {
   cursor: pointer;
+}
+
+#scoreChart .c3-line-score {
+  stroke-width: 3px;
+}
+
+#rankChart .c3-line-rank {
+  stroke-width: 3px;
 }

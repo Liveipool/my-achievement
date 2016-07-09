@@ -32,65 +32,6 @@ angular.module 'app.student'
             present: "red-fg"
             finish: "blue-grey-fg"
 
-          @scoreChart =
-            options:
-              chart:
-                type                   : 'lineChart'
-                color                  : ['#2196F3']
-                isArea                 : true
-                useInteractiveGuideline: true
-                # duration               : 1
-                clipEdge               : true
-                clipVoronoi            : false
-                interpolate            : 'cardinal'
-                showLegend             : false
-                height: 415px
-                x: (d)->
-                  d.x
-                y: (d)->
-                  d.y
-                xAxis:
-                  showMaxMin: true
-                  min: 0
-                  tickFormat: (d)!->
-                    # date = new Date(new Date().setDate(new Date().getDate() + d))
-                    return "作业" + d
-                yAxis:
-                  axisLabel: 'Y Axis'
-            data: [{
-              values:
-                * "x": 1
-                  "y": 65
-                * "x": 2
-                  "y": 57
-                * "x": 3
-                  "y": 80
-                * "x": 4
-                  "y": 94
-                * "x": 5
-                  "y": 78
-                * "x": 6
-                  "y": 65
-                * "x": 7
-                  "y": 97
-              key: 'score'
-            }]
-
-          # @scoreChart =
-          #   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July']
-          #   series: ['Score']
-          #   data  : [
-          #       [65, 59, 80, 81, 56, 55, 40]
-          #   ]
-          @rankChart =
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July']
-            series: ['Rank']
-            data  : [
-                [12, 48, 40, 19, 86, 27, 90]
-            ]
-
-
-
           $scope.showSubmitDialog = (id)!->
             $mdDialog.show {
               templateUrl: 'app/main/student/homework/dashboard/submitDialog.html',
