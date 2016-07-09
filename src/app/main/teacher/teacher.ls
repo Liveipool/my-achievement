@@ -14,5 +14,5 @@ angular.module 'app.teacher', []
   nav = ms-navigation-service-provider
 
   nav.save-item 'homeworks',  {title : "作业情况"   , group: true,   weight   : 2 , class: 'homeworks'}
-  nav.save-item 'homeworks.all-homeworks',  {title : "查看所有作业"   , icon: 'icon-book-open', state: 'app.teacher.all-homeworks',   weight   : 1 }
+  nav.save-item 'homeworks.list',  {title : "所有作业"   , icon: 'icon-book-open', state: 'app.teacher.homework.list',   weight   : 1 }
 
