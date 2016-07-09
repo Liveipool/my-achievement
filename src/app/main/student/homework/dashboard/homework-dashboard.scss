@@ -1,6 +1,4 @@
-// md-input-container {
-//   margin: 0px 12px;
-// }
+
 #homework-dashboard {
   header {
     height: 160px;
@@ -34,6 +32,9 @@
       border-top: 1px solid #DDDDDD;
       background-color: #FAFAFA;
     }
+  }
+  .default-bg {
+    background-color: #F5F5F5 !important;
   }
   .p-12 {
   padding: 12px;
@@ -75,6 +76,9 @@ padding: 6px;
 
 .mt-12 {
   margin-top: 12px;
+}
+.mb-12 {
+  margin-bottom: 12px;
 }
 
 .pb-12 {
