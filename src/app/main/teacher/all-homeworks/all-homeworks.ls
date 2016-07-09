@@ -23,21 +23,18 @@ angular.module 'app.teacher'
           if @user.role is 'teacher'
             @greeting = @greeting + '老师'
 
-          @homeworks = homeworks
 
           @edit-homework = (hid) ->
             $state.go 'app.teacher.edit-homework', {id : hid}
-
           @review-homework = (hid) ->
             $state.go 'app.teacher.review-homework', {id : hid}
+
 
           @status-helper = (classes, status) ->
             for c in classes
               if c.status == status
                 return true
             false
-
-
           @calculate-status = (hs) !->
             for h in hs
               if @status-helper h.classes, 'current'
@@ -57,9 +54,8 @@ angular.module 'app.teacher'
                 c.t-status = '未开始' if c.status == 'future'
                 c.t-status = '已结束' if c.status == 'finish'
 
+          @homeworks = homeworks
           @calculate-status @homeworks
-          console.log @homeworks
-
 
           # @status =
           #   future: "未开始"
