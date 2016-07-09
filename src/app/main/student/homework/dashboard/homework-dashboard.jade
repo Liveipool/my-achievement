@@ -27,28 +27,6 @@ mixin chart
 mixin homework-list
   ms-widget.p-12(flippable="true" layout="column" flex="100" flex-gt-xs="50" flex-gt-md="33" flex-gt-lg="25" ng-repeat="homework in vm.homeworks")
     ms-widget-front.white-bg
-      div.ms-widget-header.font-size-16.p-12(ng-class="{'md-blue-500-bg': homework.status=='present', 'md-green-500-bg': homework.status=='future', 'md-grey-500-bg': homework.status=='finish'}" layout="row" flex="100" layout-align="space-between center")
-        span 作业{{homework.id}}
-        div(md-font-icon="icon-dots-vertical") {{vm.status[homework.status]}}
-
-      div.ms-widget-content.font-size-30.p-12
-        span(ng-class="vm.fg[homework.status]") {{homework.title}}
-
-      div.ms-widget-footer.font-size-14.p-12(layout="row" flex="100" layout-align="space-between center")
-        a(href="{{homework.description}}" target="blank") 作业链接
-        md-button.md-raised.md-primary(ng-if="homework.status == 'present'" ng-click="showSubmitDialog(homework.id)") 提交作业
-        md-button.md-raised.md-primary(ng-if="homework.status == 'finish'" ng-click="flipWidget()" aria-label="Flip widget") 查看详情
-
-    ms-widget-back.white-bg(layout="column" flex="100")
-      div.ms-widget-header.font-size-16.p-12.md-grey-500-bg(layout="row" layout-align="space-between start")
-        span 作业{{homework.id}}
-        div.flip-to-front
-          md-button(class="md-icon-button" ng-click="flipWidget()" aria-label="Flip widget")
-                md-icon(md-font-icon="icon-close")
-      div(layout="column" layout-align="center center")
-        span 平均分：89
-        span 你的分数：89
-        span 你的排名：78
 
 
 div#homework-dashboard(layout="column")
@@ -63,4 +41,3 @@ div#homework-dashboard(layout="column")
         +chart
       div#homeworks-container(layout="row" layout-wrap)
         +homework-list
-
