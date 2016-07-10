@@ -8,3 +8,4 @@ dist/
 .log
 *.gfc.jade
 src/app/gfc/**/*
+.DS_Store
