@@ -78,13 +78,14 @@ angular.module 'app.admin'
 
                   $scope.edit-user = !-> 
                     $scope.user ||= {}
-                    if valid-manager.edit-user-valid $scope.user
+                    invalid-arr = valid-manager.edit-user-valid $scope.user
+                    if invalid-arr.length ~= 0
                       # 发送修改请求
                       user-manager.edit-user $scope.user
                     else
                       $md-toast.show(
                         $md-toast.simple!
-                          .textContent '输入表单不合法，请仔细查看!'
+                          .textContent invalid-arr.join(',') + '不合法，请仔细查看!'
                           .action 'OK'
                           .highlightAction true
                           .highlightClass 'md-warn'

@@ -11,7 +11,7 @@ mixin user-info
     md-card.m-0.p-0.white-bg(md-theme="default")
       .p-12(layout="column", flex)
         div(flex="25", layout="row", style="overflow:hidden")
-          md-input-container.md-icon-float.md-block.m-bottom-0(flex-sm)
+          md-input-container.min-width-500.md-block.m-bottom-0(flex-sm)
             label 用户名
             md-icon.valid-color(md-font-icon="icon-account")
             input(ng-model='user.username', ng-required="true", disabled="false")
