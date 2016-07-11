@@ -4,15 +4,14 @@ angular.module 'app.student'
 
 .config ($state-provider) !->
   $state-provider.state 'app.student.homework-dashboard', {
-    url: '/homework/dashboard'
+    url: '/homework-dashboard'
     resolve:
       homeworks: ($resource) ->
         $resource('app/data/homework/homeworks.json').get!.$promise
           .then (result)->
             homeworks = result.data
             Promise.resolve homeworks
-    data:
-      role: 'student'
+
 
     views:
       'content@app':

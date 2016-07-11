@@ -4,7 +4,7 @@ angular.module 'app.teacher'
 
 .config ($state-provider,  ms-navigation-service-provider) !->
   $state-provider.state 'app.teacher.homework-list', {
-    url: '/homework/list'
+    url: '/homework-list'
     resolve:
       homeworks: ($resource) ->
         $resource('app/data/homework/homeworks.json').get!.$promise

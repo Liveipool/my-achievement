@@ -4,7 +4,7 @@ angular.module 'app.TA'
 
 .config ($state-provider) !->
   $state-provider.state 'app.TA.review-list', {
-    url: '/homework/TA-review-list?hid'
+    url: '/review-list?hid'
     resolve:
       data1: (api-resolver) -> api-resolver.resolve 'classes@get'
       data2: (api-resolver) -> api-resolver.resolve 'homeworks@get'

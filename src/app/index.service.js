@@ -88,8 +88,15 @@
       },
 
       isntTA: function(user) {
-        return user.role !== 'TA';
+        return user.role !== 'ta';
+      },
+
+      isToStateAuthenticated: function(toState) {
+        // some states which do not have 'data' or do not have 'data.role' attr can be  visited, e.g. 'profile' state, 'login' state, 'access-denied' state
+        // states that have same  'data.role' attr as user role can be visited
+          return !toState.data || !toState.data.role || toState.data.role == this.getUser().role
       }
+
     }
   }
 
