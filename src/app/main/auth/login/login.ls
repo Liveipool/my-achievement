@@ -32,7 +32,9 @@ angular.module 'app.auth.login', []
             console.log user
             if user
               @invalid-user = false
-              $state.go 'app.student.homework.dashboard'
+
+              dest = Authentication.filter-route user
+              $state.go dest
             else
               @invalid-user = true
   }
@@ -52,4 +54,3 @@ angular.module 'app.auth.login', []
         else if !user and to-state.name isnt 'app.login'
           $state.go 'app.login'
           event.prevent-default!
-

@@ -1,0 +1,26 @@
+{
+	"type": "object",
+	"properties": {
+		"fullname": {
+			"type": "string",
+			"minLength": 2,
+			"pattern": "[\\u4e00-\\u9fa5]",
+			"faker": "custom.name"
+		},
+		"sid": {
+			"type": "string",
+			"pattern": "^1[4-5]33\\d{4}$"
+		},
+		"group": {
+			"type": "integer",
+			"minimum": 1,
+			"maximum": 50
+		},
+		"TAscore": {
+			"type": "integer",
+			"minimum": 60,
+			"maximum": 100
+		}
+	},
+	"required": ["fullname", "sid", "group", "TAscore"]
+}

@@ -14,6 +14,20 @@
         {
             $rootScope.loadingProgress = true;
 
+            if (!Authentication.isExists()) {
+
+                Authentication.getCookieUser().then(function(user) {
+                    if (user !== null) {
+                        var dest = Authentication.filterRoute(user);
+                        $state.go(dest);
+                    }
+                    else if (user === null && toState.name !== 'app.login') {
+                        $state.go('app.login');
+                        event.preventDefault();
+                    }
+                });
+            }
+
         });
 
         // De-activate loading indicator

@@ -49,12 +49,12 @@ browserSync.use(browserSyncSpa({
     selector: '[ng-app]'// Only needed for angular apps
 }));
 
-gulp.task('serve', ['gfc-watch'], function ()
+gulp.task('serve', ['gfc-watch', 'prepare-data'], function ()
 {
     browserSyncInit([
-        path.join(conf.paths.tmp, '/serve'), 
-        path.join(conf.paths.gfc, '/adapters'), 
-        path.join(conf.paths.gfc, '/schema'), 
+        path.join(conf.paths.tmp, '/serve'),
+        path.join(conf.paths.gfc, '/adapters'),
+        path.join(conf.paths.gfc, '/schema'),
         path.join(conf.paths.gfc, '/data'),
         conf.paths.src
     ]);
