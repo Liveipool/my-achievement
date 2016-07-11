@@ -5,6 +5,8 @@ angular.module 'app.admin', []
 .config ($state-provider)!->
   $state-provider.state 'app.admin', {
     abstract: true
+    data:
+      role: 'admin'
   }
 
 .service 'userManager', ($resource, $root-scope)!->

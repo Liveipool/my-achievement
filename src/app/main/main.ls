@@ -8,7 +8,16 @@ angular.module 'fuse'
   'ngInject'
   nav = ms-navigation-service-provider
 
+  $state-provider.state 'app.access-denied', {
+    url: '/access-denied'
+    views:
+      'main@'         :
+        template-url  : 'app/core/layouts/content-only.html'
+        controller    : 'MainController as vm'
 
+      'content@app.access-denied'  :
+        template-url            : 'app/main/404.html'
+  }
 
 
   # --------- 菜单 ----------- #

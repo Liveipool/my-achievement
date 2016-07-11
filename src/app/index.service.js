@@ -61,7 +61,7 @@
             return 'app.student.homework.dashboard';
             break;
           case 'teacher':
-            return 'app.teacher.all-homeworks' //'app.teacher.homework.dashboard';
+            return 'app.teacher.homework.list' //'app.teacher.homework.dashboard';
             break;
           case 'admin':
             return 'app.student.homework.dashboard' // 'app.admin.dashboard';
@@ -74,6 +74,13 @@
             break;
         }
 
+      }, 
+
+      isToStateAuthenticated: function(toState) {
+
+        // some states which do not have 'data' or do not have 'data.role' attr can be  visited, e.g. 'profile' state, 'login' state, 'access-denied' state
+        // states that have same  'data.role' attr as user role can be visited
+          return !toState.data || !toState.data.role || toState.data.role == this.getUser().role
       }
 
     }

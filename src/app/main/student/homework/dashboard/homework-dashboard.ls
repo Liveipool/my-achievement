@@ -11,8 +11,7 @@ angular.module 'app.student'
           .then (result)->
             homeworks = result.data
             Promise.resolve homeworks
-    data:
-      role: 'student'
+
 
     views:
       'content@app':
