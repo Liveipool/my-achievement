@@ -2,10 +2,17 @@
 
 angular.module 'app.admin', []
 
-.config ($state-provider)!->
+.config ($state-provider, ms-navigation-service-provider)!->
   $state-provider.state 'app.admin', {
     abstract: true
+    data:
+      role: 'admin'
   }
+
+  nav = ms-navigation-service-provider
+  nav.save-item 'admin',            {title : '用户管理'   , group : true,  weight: 1 }
+  nav.save-item 'admin.all-users',      {title : '所有用户'      , icon  : 'icon-account-multiple',   state : 'app.admin.all-users',    weight   : 1 }
+  nav.save-item 'admin.add-user',      {title : '添加用户'      , icon  : 'icon-account-plus',   state : 'app.admin.add-user',    weight   : 1 }
 
 .service 'userManager', ($resource, $root-scope)!->
   @reload-users = ->
@@ -97,7 +104,7 @@ angular.module 'app.admin', []
     if !(user.role !~= 'student' or (user.class and user.class !~= ''))
       @invalid-arr ||= []
       @invalid-arr.push "班级框"
-    
+
   @add-user-valid = (user)->
     @invalid-arr = []
     @uniform-valid user

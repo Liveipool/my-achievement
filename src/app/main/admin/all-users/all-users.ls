@@ -3,12 +3,12 @@
 angular.module 'app.admin'
 
 .config ($state-provider) !->
-  $state-provider.state 'app.admin.users', {
+  $state-provider.state 'app.admin.all-users', {
     url: '/admin/all-users'
     # resolve: 都迁移到了user-manager服务里面(admin.ls文件中)
     views:
       'content@app':
-        template-url: 'app/main/admin/users/admin-users.html'
+        template-url: 'app/main/admin/all-users/all-users.html'
         controller-as : 'vm'
         controller: ($scope, $md-dialog, $md-media, valid-manager, user-manager)!->
 
