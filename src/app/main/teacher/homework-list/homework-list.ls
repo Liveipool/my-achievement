@@ -19,6 +19,7 @@ angular.module 'app.teacher'
 
           console.log "欢迎回来!"
           @user = Authentication.get-user!
+          @location = "所有作业"
           @greeting  = @user.fullname;
           if @user.role is 'teacher'
             @greeting = @greeting + '老师'

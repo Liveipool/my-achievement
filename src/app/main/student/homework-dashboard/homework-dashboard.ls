@@ -20,6 +20,7 @@ angular.module 'app.student'
         controller: ($scope, Authentication, homeworks, $mdDialog)!->
           console.log "欢迎回来!"
           vm = @
+          vm.location = "作业列表"
           vm.user = Authentication.get-user!
 
           vm.greeting  = vm.user.fullname;
@@ -36,9 +37,9 @@ angular.module 'app.student'
             finish: "已结束"
 
           vm.fg =
-            future: "orange-fg"
+            future: "light-blue-fg"
             present: "red-fg"
-            finish: "light-blue-fg"
+            finish: "grey-fg"
 
           vm.switch =
             future: true

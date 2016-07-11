@@ -59,11 +59,11 @@ mixin homework-list
   div(layout="column")
     div(layout="row")
       div.md-title.ph-12(layout="row" layout-align="center center") 作业列表
-      md-switch.md-warn(aria-label="future" ng-model="vm.switch.future")
+      md-switch(aria-label="future" ng-model="vm.switch.future")
         | 未开始
       md-switch.md-warn(aria-label="present" ng-model="vm.switch.present")
         | 进行中
-      md-switch(aria-label="finish" ng-model="vm.switch.finish")
+      md-switch.md-primary(aria-label="finish" ng-model="vm.switch.finish")
         | 已结束
 
     div(layout="row" layout-wrap)
@@ -71,9 +71,12 @@ mixin homework-list
         +homework-widget
 
 
-
-div#homework-dashboard(layout="column")
+div#homework-dashboard.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
   header.header.md-accent-bg.ph-24(layout="column" layout-align="end")
+    .breadcrumb(layout='row' layout-align='start center')
+      md-icon.s16(md-font-icon='icon-home')
+      md-icon.s16.separator(md-font-icon='icon-chevron-right')
+      span {{vm.location}}
     span.md-display-1.font-weight-300
       | 欢迎回来,
       |{{vm.greeting}}
