@@ -1,0 +1,44 @@
+mixin edit-information
+  div.p-12(layout="row")
+    div.white-bg(flex="100" flex-gt-lg="50" flex-gt-md="70")
+      div.profile-box.info-box.general.md-whiteframe-1dp.mb-0(layout="column")
+        header.md-accent-bg
+          div.title 修改信息
+
+        div.content
+          form(name="edit-info")
+            div(layout="row")
+              div.p-8(flex="40" layout="column" layout-align="start center")
+                div.p-8
+                  img.edit-avatar(src="{{vm.user.avatar}}")
+                div.p-8
+                  md-button.md-raised 上传头像
+
+              div.p-8(flex="60" layout="column")
+                md-input-container(flex="100")
+                  label 姓名
+                  md-icon.icon-account.s26
+                  input(ng-model="vm.user.fullname" disabled)
+
+                md-input-container(flex="100")
+                  label 邮箱
+                  md-icon.icon-email.s26
+                  input(ng-model="vm.user.email")
+
+                md-input-container(flex="100")
+                  label 修改密码
+                  md-icon.icon-key.s26
+                  input(ng-model="vm.user.password" type="password")
+
+                md-input-container(flex="100")
+                  label 确认密码
+                  md-icon.icon-key.s26
+                  input(ng-model="vm.user.password" type="password")
+            div(layout="row" layout-align="center")
+              md-button.md-raised.md-accent 确定
+
+
+
+
+
+

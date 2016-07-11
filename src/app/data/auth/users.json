@@ -1,30 +1,249 @@
 {
-  "data": {
-    "users": [
-      {
-        "email": "zhangshan@test.com",
-        "username": "zhangshan",
-        "fullname": "张珊",
-        "avatar": "assets/images/avatars/alice.jpg",
-        "role": "student",
-        "password": "12345678"
-      },
-      {
-        "email": "lisi@test.com",
-        "username": "lisi",
-        "fullname": "李思",
-        "avatar": "assets/images/avatars/katherine.jpg",
-        "role": "teacher",
-        "password": "12345678"
-      },
-      {
-        "email": "zhaowu@test.com",
-        "username": "zhaowu",
-        "fullname": "赵武",
-        "avatar": "assets/images/avatars/andrew.jpg",
-        "role": "admin",
-        "password": "12345678"
-      }
-    ]
-  }
+  "user": [
+    {
+      "role": "student",
+      "sid": 88185836,
+      "username": "88185836",
+      "fullname": "王林石",
+      "avatar": "assets/images/avatars/carl.jpg",
+      "class": 1,
+      "group": 1,
+      "email": "88185836@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 13923315,
+      "username": "13923315",
+      "fullname": "姚擦单",
+      "avatar": "assets/images/avatars/danielle.jpg",
+      "class": 1,
+      "group": 1,
+      "email": "13923315@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 41538824,
+      "username": "41538824",
+      "fullname": "陈日有",
+      "avatar": "assets/images/avatars/james.jpg",
+      "class": 1,
+      "group": 1,
+      "email": "41538824@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 43369528,
+      "username": "43369528",
+      "fullname": "欧肥如",
+      "avatar": "assets/images/avatars/carl.jpg",
+      "class": 1,
+      "group": 1,
+      "email": "43369528@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 59262172,
+      "username": "59262172",
+      "fullname": "莫中飞",
+      "avatar": "assets/images/avatars/james.jpg",
+      "class": 1,
+      "group": 1,
+      "email": "59262172@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 53437555,
+      "username": "53437555",
+      "fullname": "程航心",
+      "avatar": "assets/images/avatars/joyce.jpg",
+      "class": 1,
+      "group": 2,
+      "email": "53437555@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 12863164,
+      "username": "12863164",
+      "fullname": "胡话名",
+      "avatar": "assets/images/avatars/james.jpg",
+      "class": 1,
+      "group": 2,
+      "email": "12863164@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 39461681,
+      "username": "39461681",
+      "fullname": "莫飞友",
+      "avatar": "assets/images/avatars/danielle.jpg",
+      "class": 1,
+      "group": 2,
+      "email": "39461681@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 59328473,
+      "username": "59328473",
+      "fullname": "黄如图",
+      "avatar": "assets/images/avatars/joyce.jpg",
+      "class": 1,
+      "group": 2,
+      "email": "59328473@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 45129355,
+      "username": "45129355",
+      "fullname": "方行将",
+      "avatar": "assets/images/avatars/joyce.jpg",
+      "class": 1,
+      "group": 2,
+      "email": "45129355@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 34267149,
+      "username": "34267149",
+      "fullname": "肖析面",
+      "avatar": "assets/images/avatars/carl.jpg",
+      "class": 2,
+      "group": 3,
+      "email": "34267149@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 41132258,
+      "username": "41132258",
+      "fullname": "张名分",
+      "avatar": "assets/images/avatars/carl.jpg",
+      "class": 2,
+      "group": 3,
+      "email": "41132258@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 72412637,
+      "username": "72412637",
+      "fullname": "莫理分",
+      "avatar": "assets/images/avatars/carl.jpg",
+      "class": 2,
+      "group": 3,
+      "email": "72412637@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 25138881,
+      "username": "25138881",
+      "fullname": "肖树高",
+      "avatar": "assets/images/avatars/carl.jpg",
+      "class": 2,
+      "group": 3,
+      "email": "25138881@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 55242698,
+      "username": "55242698",
+      "fullname": "雷名日",
+      "avatar": "assets/images/avatars/garry.jpg",
+      "class": 2,
+      "group": 3,
+      "email": "55242698@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 46429363,
+      "username": "46429363",
+      "fullname": "胡面班",
+      "avatar": "assets/images/avatars/james.jpg",
+      "class": 2,
+      "group": 4,
+      "email": "46429363@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 15626169,
+      "username": "15626169",
+      "fullname": "张卖树",
+      "avatar": "assets/images/avatars/james.jpg",
+      "class": 2,
+      "group": 4,
+      "email": "15626169@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 73958255,
+      "username": "73958255",
+      "fullname": "林先理",
+      "avatar": "assets/images/avatars/joyce.jpg",
+      "class": 2,
+      "group": 4,
+      "email": "73958255@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 61649989,
+      "username": "61649989",
+      "fullname": "雷航日",
+      "avatar": "assets/images/avatars/joyce.jpg",
+      "class": 2,
+      "group": 4,
+      "email": "61649989@qq.com",
+      "password": "123456"
+    },
+    {
+      "role": "student",
+      "sid": 83775527,
+      "username": "83775527",
+      "fullname": "石飞叔",
+      "avatar": "assets/images/avatars/james.jpg",
+      "class": 2,
+      "group": 4,
+      "email": "83775527@qq.com",
+      "password": "123456"
+    },
+    {
+      "username": "admin",
+      "fullname": "管理员",
+      "role": "admin",
+      "avatar": "assets/images/avatars/katherine.jpg",
+      "email": "admin@qq.com",
+      "password": "123456"
+    },
+    {
+      "username": "linzhen",
+      "fullname": "林桢",
+      "sid": 15213434,
+      "role": "ta",
+      "avatar": "assets/images/avatars/jane.jpg",
+      "email": "linzhen@qq.com",
+      "password": "123456"
+    },
+    {
+      "username": "wangqing",
+      "fullname": "王青",
+      "role": "teacher",
+      "avatar": "assets/images/avatars/vincent.jpg",
+      "email": "wangqing@qq.com",
+      "password": "123456"
+    }
+  ]
 }

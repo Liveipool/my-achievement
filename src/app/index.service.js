@@ -35,7 +35,7 @@
       login: function(params) {
         return $resource('app/data/auth/users.json').get().$promise.then(function(result) {
 
-          var users = result.data.users;
+          var users = result.user;
 
           for (var i = users.length - 1; i >= 0; i--) {
             if (users[i].username === params.username && users[i].password === params.password) {
@@ -53,7 +53,29 @@
       logout: function() {
         authticatedUser = null;
         $cookies.remove("cookieUser");
+      },
+
+      filterRoute: function(user) {
+        switch (user.role) {
+          case 'student':
+            return 'app.student.homework.dashboard';
+            break;
+          case 'teacher':
+            return 'app.teacher.all-homeworks' //'app.teacher.homework.dashboard';
+            break;
+          case 'admin':
+            return 'app.student.homework.dashboard' // 'app.admin.dashboard';
+            break;
+          case 'ta':
+            return 'app.TA.review.dashboard' // 'app.ta.homework.dashboard';
+            break;
+          default:
+            return 'app.login';
+            break;
+        }
+
       }
+
     }
   }
 

@@ -9,8 +9,11 @@ angular.module 'app.student'
       homeworks: ($resource) ->
         $resource('app/data/homework/homeworks.json').get!.$promise
           .then (result)->
-            homeworks = result.data.homeworks
+            homeworks = result.data
             Promise.resolve homeworks
+    data:
+      role: 'student'
+
     views:
       'content@app':
         template-url: 'app/main/student/homework/dashboard/homework-dashboard.html'
@@ -23,6 +26,7 @@ angular.module 'app.student'
             @greeting = @greeting + '老师'
 
           @homeworks = homeworks
+          console.log @homeworks
           @status =
             future: "未开始"
             present: "进行中"
