@@ -37,10 +37,14 @@ angular.module 'fuse'
     nav.delete-item 'user.login'
     if user? and user.role is 'admin'
       nav.save-item 'admin',            {title : '系统管理'   , group : true,  weight: 1 }
-      nav.save-item 'admin.users',      {title : '用户'      , icon  : 'icon-account-multiple',   state : 'app.admin.users',    weight   : 1 }
+      nav.save-item 'admin.users',      {title : '用户管理'      , icon  : 'icon-account-multiple',   state : 'app.admin.users',    weight   : 1 }
+      nav.save-item 'admin.add-user',      {title : '添加用户'      , icon  : 'icon-account-plus',   state : 'app.admin.add-user',    weight   : 1 }
+      # nav.save-item 'admin.classes',      {title : '班级管理'      , icon  : 'icon-home-variant',   state : 'app.admin.classes',    weight   : 1 }
     else
       nav.delete-item 'admin'
       nav.delete-item 'admin.users'
+      nav.delete-item 'admin.add-user'
+      # nav.delete-item 'admin.classes'
   else
     nav.delete-item 'user.profile'
     nav.delete-item 'user.logout'
