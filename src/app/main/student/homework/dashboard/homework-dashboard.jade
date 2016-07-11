@@ -3,7 +3,7 @@ mixin chart
  //#TODOc3表格的具体实现还有bug，需要仔细阅读文档解决
  div.p-12(flex="50" flex-xs="100")
     .md-title.mb-12 我的成绩
-    .card.md-whiteframe-4dp.white-bg.p-12
+    .card.md-whiteframe-2dp.white-bg.p-12
       c3chart(bindto-id="scoreChart")
         chart-column(column-id="x" column-values="作业1, 作业2, 作业3, 作业4, 作业5, 作业6, 作业7, 作业8, 作业9, 作业10")
         chart-column(column-id="score" column-name="分数" column-color="#19b0f5" column-values="95, 90, 100, 88, 90, 95, 94, 90, 90, 95" column-type="line")
@@ -16,7 +16,7 @@ mixin chart
 
   div.p-12(flex="50" flex-xs="100")
     .md-title.mb-12 我的排名
-    .card.md-whiteframe-4dp.white-bg.p-12
+    .card.md-whiteframe-2dp.white-bg.p-12
       c3chart(bindto-id="rankChart")
         chart-column(column-id="x" column-values="作业1, 作业2, 作业3, 作业4, 作业5, 作业6, 作业7, 作业8, 作业9, 作业10, 作业11")
         chart-column(column-id="rank" column-name="排名" column-color="#ffb300" column-values="30,200,100,400,150,250" column-type="area-spline")
@@ -24,20 +24,77 @@ mixin chart
         chart-axis-x(axis-type="category")
         chart-axes(values-x="x" y="score")
 
+mixin menu-item
+  //#TODO根据作业的status来判断menu-item的内容
+  md-menu-item(width="4")
+    md-button(ng-click="jump(homework.description)")
+      md-icon(md-font-icon="icon-book")
+      span 作业链接
+  md-menu-item(ng-if="homework.classes[0].status === 'present'")
+    md-button(ng-click="showSubmitDialog(homework.id)")
+      md-icon(md-font-icon="icon-cloud-upload")
+      span 提交作业
+  md-menu-item(ng-if="homework.classes[0].status === 'finish'")
+    md-button(ng-click="flipWidget()" aria-label="Flip widget")
+      md-icon(md-font-icon="icon-document")
+      span 作业详情
+
+mixin homework-widget-front
+  ms-widget-front.white-bg
+    div.ph-24.pv-12.widget-head(layout="row" layout-align="space-between")
+      div(layout="column" layout-align="center") 作业{{homework.id}}
+      md-menu
+        button(aria-label="more" ng-click="$mdOpenMenu($event)")
+          md-icon(md-font-icon="icon-dots-vertical")
+        md-menu-content
+          +menu-item
+    div.p-24.widget-body(layout="column" layout-align="center center")
+      span.font-weight-500(ng-class="vm.fg[homework.classes[0].status]") {{homework.title}}
+    div.ph-24.pv-12.widget-foot
+      span 状态: {{vm.status[homework.classes[0].status]}}
+
+mixin homework-widget-back
+  ms-widget-back.white-bg(layout="column" flex="100")
+    div.ph-24.pv-12.widget-head(layout="row" layout-align="space-between start")
+      div(layout="column" layout-align="center") 作业{{homework.id}}
+      div.flip-to-front
+        md-button(class="md-icon-button" ng-click="flipWidget()" aria-label="Flip widget")
+              md-icon(md-font-icon="icon-close")
+    div.md-headline(layout="column" layout-align="center center")
+      span 平均分：89
+      span 你的分数：89
+      span 你的排名：78
+
+mixin homework-widget
+  +homework-widget-front
+  +homework-widget-back
+
 mixin homework-list
-  ms-widget.p-12(flippable="true" layout="column" flex="100" flex-gt-xs="50" flex-gt-md="33" flex-gt-lg="25" ng-repeat="homework in vm.homeworks")
-    ms-widget-front.white-bg
+  div(layout="column")
+    div(layout="row")
+      div.md-title.ph-12(layout="row" layout-align="center center") 作业列表
+      md-switch.md-warn(aria-label="future" ng-model="vm.switch.future")
+        | 未开始
+      md-switch.md-warn(aria-label="present" ng-model="vm.switch.present")
+        | 进行中
+      md-switch(aria-label="finish" ng-model="vm.switch.finish")
+        | 已结束
+
+    div(layout="row" layout-wrap)
+      ms-widget.p-12(ng-if="vm.switch[homework.classes[0].status]" flippable="true" layout="column" flex="100" flex-gt-xs="50" flex-gt-sm="33" flex-gt-md="25" ng-repeat="homework in vm.homeworks")
+        +homework-widget
+
 
 
 div#homework-dashboard(layout="column")
-  header.header.md-accent-bg(layout="column" layout-align="end")
+  header.header.md-accent-bg.ph-24(layout="column" layout-align="end")
     span.md-display-1.font-weight-300
       | 欢迎回来,
       |{{vm.greeting}}
       |!
   div.content
-    md-content.p-12.default-bg
-      div#chart-container.default-bg(layout="row")
+    md-content.p-12.wrapper-bg
+      div#chart-container(layout="row")
         +chart
-      div#homeworks-container(layout="row" layout-wrap)
+      div#homeworks-container
         +homework-list

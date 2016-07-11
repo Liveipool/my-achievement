@@ -2,9 +2,9 @@
 
 angular.module 'app.teacher'
 
-.config ($state-provider) !->
-  $state-provider.state 'app.teacher.all-homeworks', {
-    url: '/homework/all-homeworks'
+.config ($state-provider,  ms-navigation-service-provider) !->
+  $state-provider.state 'app.teacher.homework.list', {
+    url: '/homework/list'
     resolve:
       homeworks: ($resource) ->
         $resource('app/data/homework/homeworks.json').get!.$promise
@@ -13,7 +13,7 @@ angular.module 'app.teacher'
             Promise.resolve homeworks
     views:
       'content@app':
-        template-url: 'app/main/teacher/all-homeworks/all-homeworks.html'
+        template-url: 'app/main/teacher/homework/list/homework-list.html'
         controller-as : 'vm'
         controller: ($scope, Authentication, homeworks, $state)!->
 
@@ -23,21 +23,18 @@ angular.module 'app.teacher'
           if @user.role is 'teacher'
             @greeting = @greeting + '老师'
 
-          @homeworks = homeworks
 
           @edit-homework = (hid) ->
             $state.go 'app.teacher.edit-homework', {id : hid}
-
           @review-homework = (hid) ->
             $state.go 'app.teacher.review-homework', {id : hid}
+
 
           @status-helper = (classes, status) ->
             for c in classes
               if c.status == status
                 return true
             false
-
-
           @calculate-status = (hs) !->
             for h in hs
               if @status-helper h.classes, 'current'
@@ -57,16 +54,7 @@ angular.module 'app.teacher'
                 c.t-status = '未开始' if c.status == 'future'
                 c.t-status = '已结束' if c.status == 'finish'
 
+          @homeworks = homeworks
           @calculate-status @homeworks
-          console.log @homeworks
 
-
-          # @status =
-          #   future: "未开始"
-          #   present: "进行中"
-          #   finish: "已结束"
-          # @fg =
-          #   future: "light-blue-fg"
-          #   present: "red-fg"
-          #   finish: "blue-grey-fg"
   }

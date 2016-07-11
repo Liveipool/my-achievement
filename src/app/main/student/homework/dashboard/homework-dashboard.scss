@@ -4,101 +4,27 @@
     height: 160px;
     min-height: 160px;
     max-height: 106px;
-    padding: 0 24px;
     padding-bottom: 32px;
     background: url('/assets/images/backgrounds/may.jpg') no-repeat 0 45%;
     background-size: 100% auto;
   }
-  md-tabs-wrapper {
-    padding: 0px 24px;
-    margin-bottom: 2px;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
-    background-color: #ffffff;
-  }
-  .md-tab-content {
-    background-color: #F5F5F5;
-  }
   ms-widget {
-    .ms-wiget-front {
-       box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
+    .widget-head {
+      font-size: 18px;
     }
-    .ms-widget-content {
-      min-height: 134px;
-      padding-top: 34px;
-      text-align: center;
+    .widget-body {
+      font-size: 34px;
+      padding-bottom: 48px;
     }
-    .ms-widget-footer {
-      height: 52px;
-      border-top: 1px solid #DDDDDD;
-      background-color: #FAFAFA;
+    .widget-foot {
+      border-top: 1px solid rgba(0,0,0,.12);
+      background-color: #F5F5F5;
     }
   }
-  .default-bg {
-    background-color: #F5F5F5 !important;
-  }
-  .p-12 {
-  padding: 12px;
-  }
-  .p-24 {
-    padding: 24px;
-  }
-  .ph-12 {
-    padding: 0px 12px;
-  }
-  .ph-24 {
-    padding: 0px 24px;
-  }
-  .m-12 {
-    margin: 12px;
-  }
-  .m-24 {
-    margin: 24px;
-  }
-  .mh-12 {
-    margin: 0px 12px;
-  }
-  .blueBorder {
-    border: 1px solid blue;
-  }
-}
-
-.mh-12 {
-  margin: 0px 12px;
-}
-
-.p-12 {
-padding: 12px;
-}
-
-.p-6 {
-padding: 6px;
-}
-
-.mt-12 {
-  margin-top: 12px;
-}
-.mb-12 {
-  margin-bottom: 12px;
-}
-
-.pb-12 {
-  padding-bottom: 12px;
-}
-
-.pb-24 {
-  padding-bottom: 24px;
-}
-
-.m-0 {
-  margin: 0px;
 }
 
 md-dialog {
   min-width: 400px;
-}
-
-.pointer {
-  cursor: pointer;
 }
 
 #scoreChart .c3-line-score {

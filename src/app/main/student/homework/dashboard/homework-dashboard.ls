@@ -20,21 +20,34 @@ angular.module 'app.student'
         controller-as : 'vm'
         controller: ($scope, Authentication, homeworks, $mdDialog)!->
           console.log "欢迎回来!"
-          @user = Authentication.get-user!
-          @greeting  = @user.fullname;
-          if @user.role is 'teacher'
-            @greeting = @greeting + '老师'
+          vm = @
+          vm.user = Authentication.get-user!
 
-          @homeworks = homeworks
-          console.log @homeworks
-          @status =
+          vm.greeting  = vm.user.fullname;
+
+          vm.homeworks = homeworks
+
+          for homework in vm.homeworks
+            _.remove homework.classes, (c) -> c.class_id isnt vm.user.class
+
+
+          vm.status =
             future: "未开始"
             present: "进行中"
             finish: "已结束"
-          @fg =
-            future: "light-blue-fg"
+
+          vm.fg =
+            future: "orange-fg"
             present: "red-fg"
-            finish: "blue-grey-fg"
+            finish: "light-blue-fg"
+
+          vm.switch =
+            future: true
+            present: true
+            finish: true
+
+          $scope.jump = (description)!->
+            window.open "http://www.baidu.com"
 
           $scope.showSubmitDialog = (id)!->
             $mdDialog.show {
@@ -46,7 +59,7 @@ angular.module 'app.student'
 
                 $scope.cancel = !->
                   $mdDialog.hide!
-                
+
                 $scope.pictureUploadState = $scope.coreUploadState = false
 
                 pictureUploader = $scope.pictureUploader = new FileUploader {
