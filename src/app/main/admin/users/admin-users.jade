@@ -8,7 +8,7 @@ mixin all-users
         +table-section("管理员", "admin", "adColumns", ["username", "fullname", "email"])
         +table-section("教师", "teachers", "teaColumns", ["username", "fullname", "email"])
         +table-section("教师助理", "TAs", "taColumns", ["username", "fullname", "email"])
-        +table-section("学生", "students", "stuColumns", ["sid", "fullname", "username", "class", "group"])
+        +table-section("学生", "students", "stuColumns", ["sid", "fullname", "class", "group"])
 
 //- Tabs展示的第二个页面，展示的是所有教师的信息
 mixin all-teachers
@@ -30,7 +30,7 @@ mixin all-students
     md-card.m-12
       md-content(flex, layout="column", style="max-height: {{widgetHeight}}px")
         div(ng-repeat="class in classes")
-          +table-section("{{class.className}}", "class.students", "stuColumnsByClass", ["sid", "fullname", "username", "group"])
+          +table-section("{{class.className}}", "class.students", "stuColumnsByClass", ["sid", "fullname", "group"])
 
 div#admin-head(layout="column", ng-cloak)
   header.header.md-accent-bg(layout="column", layout-align="end")
