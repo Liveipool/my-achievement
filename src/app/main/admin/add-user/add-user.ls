@@ -7,11 +7,11 @@ angular.module 'app.admin'
     url: '/admin/add-user'
     views:
       'content@app':
-        template-url: 'app/main/admin/add-user/admin-add-user.html'
+        template-url: 'app/main/admin/add-user/add-user.html'
         controller-as : 'vm'
         controller: ($scope, valid-manager, $md-toast, user-manager)!->
 
-          $scope.add-user = !-> 
+          $scope.add-user = !->
             $scope.user ||= {}
             invalid-arr = valid-manager.add-user-valid $scope.user
             if invalid-arr.length ~= 0

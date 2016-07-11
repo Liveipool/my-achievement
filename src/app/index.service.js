@@ -58,22 +58,21 @@
       filterRoute: function(user) {
         switch (user.role) {
           case 'student':
-            return 'app.student.homework.dashboard';
+            return 'app.student.homework-dashboard';
             break;
           case 'teacher':
-            return 'app.teacher.all-homeworks' //'app.teacher.homework.dashboard';
+            return 'app.teacher.homework-list' //'app.teacher.homework.dashboard';
             break;
           case 'admin':
-            return 'app.student.homework.dashboard' // 'app.admin.dashboard';
+            return 'app.admin.all-users' // 'app.admin.dashboard';
             break;
           case 'ta':
-            return 'app.TA.review.dashboard' // 'app.ta.homework.dashboard';
+            return 'app.TA.review-list' // 'app.ta.homework.dashboard';
             break;
           default:
             return 'app.login';
             break;
         }
-
       }
 
     }
