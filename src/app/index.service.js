@@ -73,8 +73,23 @@
             return 'app.login';
             break;
         }
-      }
+      },
 
+      isntAdmin: function(user) {
+        return user.role !== 'admin';
+      },
+
+      isntStudent: function(user) {
+        return user.role !== 'student';
+      },
+
+      isntTeacher: function(user) {
+        return user.role !== 'teacher';
+      },
+
+      isntTA: function(user) {
+        return user.role !== 'TA';
+      }
     }
   }
 

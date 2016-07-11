@@ -2,18 +2,12 @@
 
 angular.module 'app.admin', []
 
-.config ($state-provider, ms-navigation-service-provider)!->
+.config ($state-provider)!->
   $state-provider.state 'app.admin', {
     abstract: true
     data:
       role: 'admin'
   }
-
-  nav = ms-navigation-service-provider
-  nav.save-item 'admin',            {title : '用户管理'   , group : true,  weight: 1 }
-  nav.save-item 'admin.all-users',      {title : '所有用户'      , icon  : 'icon-account-multiple',   state : 'app.admin.all-users',    weight   : 1 }
-  nav.save-item 'admin.add-user',      {title : '添加用户'      , icon  : 'icon-account-plus',   state : 'app.admin.add-user',    weight   : 1 }
-
 .service 'userManager', ($resource, $root-scope)!->
   @reload-users = ->
     that = @

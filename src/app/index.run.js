@@ -13,6 +13,7 @@
         var stateChangeStartEvent = $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams)
         {
             $rootScope.loadingProgress = true;
+            // console.log('index run');
 
             if (!Authentication.isExists()) {
 
