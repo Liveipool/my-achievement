@@ -10,8 +10,9 @@
   .h-h {
     border-bottom: 2px solid #F5F5F5;
   }
-  md-virtual-repeat-container {
-    display: block;
-    height: 800px;
+  .list-container {
+    max-height: 600px;
+    overflow: auto;
+    border-top: 2px solid #F5F5F5;
   }
 }

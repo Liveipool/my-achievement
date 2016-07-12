@@ -1,26 +1,20 @@
 
-
 mixin table-container
-  //- md-virtual-repeat-container
-  //-   div(md-virtual-repeat="group in class.groups")
-  //-     span hello
-  div(ng-repeat="group in class.groups" class="repeated-item" flex)
-    header.md-accent-bg.p-12(layout-align="center" layout="row")
-      span 小组{{$index+1}}
-    table.simple
-      thead
-        tr
+  md-content.list-container(layout="column")
+    div(ng-repeat="group in class.groups")
+      header.p-12.md-accent-bg(id="class{{class.id}}-group{{group.id}}")
+        span 小组{{group.id}}
+      table.simple
+        thead
           th 学号
           th 姓名
           th 小组
-          th 操作
-      tbody
-        tr(ng-repeat="student in group")
-          td {{ student.sid }}
-          td {{ student.fullname }}
-          td {{ student.group }}
-          td
-            a(href="#") 评审
+          th 评分
+        tbody(ng-repeat="student in group.members")
+          td {{student.sid}}
+          td {{student.fullname}}
+          td 小组{{student.group}}
+          td 90分
 
 
 mixin chart
@@ -44,8 +38,8 @@ mixin tab-content
         div.ph-24.pv-12
           md-input-container
             label 小组
-            md-select(ng-model="class.selectedGroup")
-              md-option(ng-repeat="group in class.groups" ng-value="$index+1") 小组{{$index+1}}
+            md-select(ng-model="vm.selected[class.id]" ng-change="vm.goToAnchor(class.id, vm.selected[class.id])")
+              md-option(ng-repeat="group in class.groups" ng-value="group.id") 小组{{group.id}}
 
       div.white-bg.md-whiteframe-2dp.mt-24
         +chart
