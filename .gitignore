@@ -9,3 +9,4 @@ dist/
 *.gfc.jade
 src/app/gfc/**/*
 src/app/data/faker/*
+.DS_Store

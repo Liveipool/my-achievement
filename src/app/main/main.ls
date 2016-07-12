@@ -8,7 +8,16 @@ angular.module 'fuse'
   'ngInject'
   nav = ms-navigation-service-provider
 
+  $state-provider.state 'app.access-denied', {
+    url: '/access-denied'
+    views:
+      'main@'         :
+        template-url  : 'app/core/layouts/content-only.html'
+        controller    : 'MainController as vm'
 
+      'content@app.access-denied'  :
+        template-url            : 'app/main/404.html'
+  }
 
 
   # --------- 菜单 ----------- #
@@ -20,6 +29,9 @@ angular.module 'fuse'
   nav.save-item 'TA', {title: "TA评审", group: true, weight: 1, class: 'TA'}
 
   nav.save-item 'TA.dashboard', {title: "作业列表", weight: 1, icon: 'icon-book-open', state: 'app.TA.review.dashboard'}
+
+  nav.save-item 'homework.review', {title: "查看排名", weight: 1, icon: 'icon-pen', state: 'app.student.homework.review'}
+
   nav.save-item 'user',  {title : "用户"   , group: true,   weight   : 2,  class: 'user' }
 
 .controller 'MainController', ($scope, $root-scope, ms-navigation-service, $state, Authentication)!->
@@ -34,10 +46,14 @@ angular.module 'fuse'
     nav.delete-item 'user.login'
     if user? and user.role is 'admin'
       nav.save-item 'admin',            {title : '系统管理'   , group : true,  weight: 1 }
-      nav.save-item 'admin.users',      {title : '用户'      , icon  : 'icon-account-multiple',   state : 'app.admin.users',    weight   : 1 }
+      nav.save-item 'admin.users',      {title : '用户管理'      , icon  : 'icon-account-multiple',   state : 'app.admin.users',    weight   : 1 }
+      nav.save-item 'admin.add-user',      {title : '添加用户'      , icon  : 'icon-account-plus',   state : 'app.admin.add-user',    weight   : 1 }
+      # nav.save-item 'admin.classes',      {title : '班级管理'      , icon  : 'icon-home-variant',   state : 'app.admin.classes',    weight   : 1 }
     else
       nav.delete-item 'admin'
       nav.delete-item 'admin.users'
+      nav.delete-item 'admin.add-user'
+      # nav.delete-item 'admin.classes'
   else
     nav.delete-item 'user.profile'
     nav.delete-item 'user.logout'

@@ -35,7 +35,7 @@
       login: function(params) {
         return $resource('app/data/auth/users.json').get().$promise.then(function(result) {
 
-          var users = result.data.users;
+          var users = result.user;
 
           for (var i = users.length - 1; i >= 0; i--) {
             if (users[i].username === params.username && users[i].password === params.password) {
@@ -61,19 +61,26 @@
             return 'app.student.homework.dashboard';
             break;
           case 'teacher':
-            return 'app.student.homework.dashboard' //'app.teacher.homework.dashboard';
+            return 'app.teacher.homework.list' //'app.teacher.homework.dashboard';
             break;
           case 'admin':
             return 'app.student.homework.dashboard' // 'app.admin.dashboard';
             break;
           case 'ta':
-            return 'app.student.homework.dashboard' // 'app.ta.homework.dashboard';
+            return 'app.TA.review.dashboard' // 'app.ta.homework.dashboard';
             break;
           default:
             return 'app.login';
             break;
         }
 
+      }, 
+
+      isToStateAuthenticated: function(toState) {
+
+        // some states which do not have 'data' or do not have 'data.role' attr can be  visited, e.g. 'profile' state, 'login' state, 'access-denied' state
+        // states that have same  'data.role' attr as user role can be visited
+          return !toState.data || !toState.data.role || toState.data.role == this.getUser().role
       }
 
     }
