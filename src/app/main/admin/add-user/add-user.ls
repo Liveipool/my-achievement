@@ -4,7 +4,7 @@ angular.module 'app.admin'
 
 .config ($state-provider) !->
   $state-provider.state 'app.admin.add-user', {
-    url: '/admin/add-user'
+    url: '/add-user'
     views:
       'content@app':
         template-url: 'app/main/admin/add-user/add-user.html'

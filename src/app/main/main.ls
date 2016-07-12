@@ -26,9 +26,9 @@ angular.module 'fuse'
     #---------目前只能在这里设置菜单栏-----------#
 
     #---admin---#
-    nav.save-item 'admin', {title: '用户管理', group: true, weight: 2 , hidden: -> auth.isnt-admin}
-    nav.save-item 'admin.all-users', {title: '所有用户', icon: 'icon-account-multiple', state: 'app.admin.all-users', weight: 2 , hidden: -> auth.isnt-admin user}
-    nav.save-item 'admin.add-user', {title: '添加用户', icon: 'icon-account-plus',state: 'app.admin.add-user', weight: 2, hidden: -> auth.isnt-admin user }
+    nav.save-item 'admin', {title: '用户管理', group: true, weight: 1 , hidden: -> auth.isnt-admin user}
+    nav.save-item 'admin.all-users', {title: '所有用户', icon: 'icon-account-multiple', state: 'app.admin.all-users', weight: 1 , hidden: -> auth.isnt-admin user}
+    nav.save-item 'admin.add-user', {title: '添加用户', icon: 'icon-account-plus',state: 'app.admin.add-user', weight: 1, hidden: -> auth.isnt-admin user }
 
     #---student---#
     nav.save-item 'student', {title: "作业", group: true, weight: 1, class: 'homework', hidden: -> auth.isnt-student user}

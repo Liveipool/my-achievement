@@ -12,7 +12,7 @@ angular.module 'app.admin', []
   @reload-users = ->
     that = @
     # TODO: 向服务器发出请求获取所有user信息
-    console.warn "TODO: function reload-users in userManager"
+    # console.warn "TODO: function reload-users in userManager"
     $resource('app/data/admin/users.json').get!.$promise
       .then (result)->
         that.users-cache = result.data.users
