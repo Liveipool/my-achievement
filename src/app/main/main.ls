@@ -38,6 +38,7 @@ angular.module 'fuse'
     #---teacher---#
     nav.save-item 'teacher',  {title : "作业"   , group: true,   weight   : 1 , class: 'teacher', hidden: -> auth.isnt-teacher user}
     nav.save-item 'teacher.homeworks-list',  {title : "所有作业"   , icon: 'icon-book-open', state: 'app.teacher.homework-list',   weight : 1, class: 'teacher', hidden: -> auth.isnt-teacher user }
+    nav.save-item 'teacher.publish-homework', {title: "添加作业", icon: 'icon-border-color', state: 'app.teacher.publish-homework', weight: 1, class: 'teacher', hidden: -> auth.isnt-teacher user}
 
     #---TA---#
     nav.save-item 'TA', {title: "作业", group: true, weight: 1, hidden: -> auth.isnt-TA user}
