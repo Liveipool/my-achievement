@@ -3,8 +3,8 @@
 angular.module 'app.teacher'
 
 .config ($state-provider,  ms-navigation-service-provider) !->
-  $state-provider.state 'app.teacher.homework.list', {
-    url: '/homework/list'
+  $state-provider.state 'app.teacher.homework-list', {
+    url: '/homework-list'
     resolve:
       homeworks: ($resource) ->
         $resource('app/data/homework/homeworks.json').get!.$promise
@@ -13,7 +13,7 @@ angular.module 'app.teacher'
             Promise.resolve homeworks
     views:
       'content@app':
-        template-url: 'app/main/teacher/homework/list/homework-list.html'
+        template-url: 'app/main/teacher/homework-list/homework-list.html'
         controller-as : 'vm'
         controller: ($scope, Authentication, homeworks, $state)!->
 

@@ -6,5 +6,5 @@ angular.module 'app.TA', []
   $state-provider.state 'app.TA', {
     abstract: true
     data:
-        role: 'TA'
+      role: 'ta'
   }

@@ -13,13 +13,10 @@
         var stateChangeStartEvent = $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams)
         {
             $rootScope.loadingProgress = true;
-            // console.log('from: ', fromState)
-            // console.log('to: ', toState)
-            // console.log('not exist: ', !Authentication.isExists())
+
             if (!Authentication.isExists()) {
 
                 Authentication.getCookieUser().then(function(user) {
-                    // console.log('state not authenticated?: ', !Authentication.isToStateAuthenticated(toState))
 
                     if (user !== null ) {
 
@@ -39,7 +36,7 @@
                     }
                 });
             }
- 
+
 
         });
 

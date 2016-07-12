@@ -8,7 +8,6 @@ angular.module 'app.admin', []
     data:
       role: 'admin'
   }
-
 .service 'userManager', ($resource, $root-scope)!->
   @reload-users = ->
     that = @
@@ -99,7 +98,7 @@ angular.module 'app.admin', []
     if !(user.role !~= 'student' or (user.class and user.class !~= ''))
       @invalid-arr ||= []
       @invalid-arr.push "班级框"
-    
+
   @add-user-valid = (user)->
     @invalid-arr = []
     @uniform-valid user

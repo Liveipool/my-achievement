@@ -3,8 +3,8 @@
 angular.module 'app.student'
 
 .config ($state-provider) !->
-  $state-provider.state 'app.student.homework.dashboard', {
-    url: '/homework/dashboard'
+  $state-provider.state 'app.student.homework-dashboard', {
+    url: '/homework-dashboard'
     resolve:
       homeworks: ($resource) ->
         $resource('app/data/homework/homeworks.json').get!.$promise
@@ -15,7 +15,7 @@ angular.module 'app.student'
 
     views:
       'content@app':
-        template-url: 'app/main/student/homework/dashboard/homework-dashboard.html'
+        template-url: 'app/main/student/homework-dashboard/homework-dashboard.html'
         controller-as : 'vm'
         controller: ($scope, Authentication, homeworks, $mdDialog)!->
           console.log "欢迎回来!"

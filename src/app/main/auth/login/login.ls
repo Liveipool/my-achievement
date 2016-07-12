@@ -38,4 +38,3 @@ angular.module 'app.auth.login', []
             else
               @invalid-user = true
   }
-

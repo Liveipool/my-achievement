@@ -3,19 +3,19 @@
 angular.module 'app.admin'
 
 .config ($state-provider) !->
-  $state-provider.state 'app.admin.users', {
+  $state-provider.state 'app.admin.all-users', {
     url: '/admin/all-users'
     # resolve: 都迁移到了user-manager服务里面(admin.ls文件中)
     views:
       'content@app':
-        template-url: 'app/main/admin/users/admin-users.html'
+        template-url: 'app/main/admin/all-users/all-users.html'
         controller-as : 'vm'
         controller: ($scope, $md-dialog, $md-media, valid-manager, user-manager)!->
-          
+
           # 监听窗口大小事件改变表格展示高度
-          height-watch = -> 
+          height-watch = ->
             window.inner-height
-          height-change-process = (value)!-> 
+          height-change-process = (value)!->
             $scope.widget-height = value - 260
           $scope.$watch height-watch, height-change-process
 
@@ -25,9 +25,9 @@ angular.module 'app.admin'
 
           # table头的展示信息
           $scope.ad-columns = $scope.tea-columns = $scope.ta-columns = ['用户名','姓名', '邮箱', '编辑']
-          $scope.stu-columns = ['学号', '姓名', '用户名', '班级', '组别', '编辑']
-          $scope.stu-columns-by-class = ['学号', '姓名', '用户名', '组别', '编辑']
-          
+          $scope.stu-columns = ['学号', '姓名', '班级', '组别', '编辑']
+          $scope.stu-columns-by-class = ['学号', '姓名', '组别', '编辑']
+
           # 初始化获取所有users的信息之后更新表格信息
           user-manager.get-users!.then (users)!->
             $scope.update-tables users
@@ -52,7 +52,11 @@ angular.module 'app.admin'
 
             # 根据班别分开学生
             $scope.students.sort (a, b)->
-              a.class.locale-compare b.class
+              priority = a.class.locale-compare b.class
+              if priority ~= 0
+                a.group.locale-compare b.group
+              else
+                priority
 
             $scope.classes = []
             for i from 0 to $scope.students.length - 1 by 1
@@ -62,7 +66,7 @@ angular.module 'app.admin'
                   students: []
                 }
               $scope.classes[$scope.classes.length - 1].students.push $scope.students[i]
-            
+
           # 展示编辑框
           $scope.showAdvanced = (ev) ->
               use-full-screen = ($md-media 'sm' || $md-media 'xs')  && $scope.customFullscreen;
@@ -76,7 +80,7 @@ angular.module 'app.admin'
                     .then (user)!->
                       $scope.user = user
 
-                  $scope.edit-user = !-> 
+                  $scope.edit-user = !->
                     $scope.user ||= {}
                     invalid-arr = valid-manager.edit-user-valid $scope.user
                     if invalid-arr.length ~= 0

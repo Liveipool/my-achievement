@@ -3,14 +3,14 @@
 angular.module 'app.TA'
 
 .config ($state-provider) !->
-  $state-provider.state 'app.TA.review.dashboard', {
-    url: '/homework/TA-review-list?hid'
+  $state-provider.state 'app.TA.review-list', {
+    url: '/review-list?hid'
     resolve:
       data1: (api-resolver) -> api-resolver.resolve 'classes@get'
       data2: (api-resolver) -> api-resolver.resolve 'homeworks@get'
     views:
       'content@app':
-        template-url: 'app/main/TA/review/dashboard/review-dashboard.html'
+        template-url: 'app/main/TA/review-list/review-list.html'
         controller-as : 'vm'
         controller: ($scope, $filter, $state-params, $state, $location, Authentication, data1, data2, DTOptionsBuilder)!->
           console.log "review-dashboard"
