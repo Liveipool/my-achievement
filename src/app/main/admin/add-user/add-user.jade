@@ -1,0 +1,83 @@
+//- 用户信息输入
+mixin user-info-inputs
+  div(layout="column")
+    div(flex="25", layout="row")
+      md-input-container.md-block(flex)
+        label 用户名
+        md-icon.valid-color(md-font-icon="icon-account")
+        input(ng-model='user.username', ng-required="true")
+    div(flex="25", layout="row")
+      md-input-container.md-block(flex)
+        label 姓名
+        md-icon.valid-color(md-font-icon="icon-worker")
+        input(ng-model='user.fullname', ng-required="true")
+      div.p-6
+      md-input-container.md-block(flex)
+        label 权限
+        md-select(ng-model="user.role", ng-required="true")
+          md-option(value="{{op}}", ng-repeat="op in ['teacher', 'ta', 'student']") {{op}}
+    div(flex="25", layout="row")
+      md-input-container.md-block(flex)
+        label 邮箱
+        md-icon.valid-color(md-font-icon="icon-email")
+        input(ng-model='user.email', type="email", ng-required="true")
+    div(flex="25", layout="row", ng-show="user.role == 'student'")
+      md-input-container.md-block(flex)
+        label 班级
+        md-icon.valid-color(md-font-icon="icon-account-multiple")
+        input(ng-model='user.class', ng-required="true")
+      div.p-6
+      md-input-container.md-block(flex)
+        label 小组
+        input(ng-model='user.group')
+    div(flex="25", layout="row")
+      md-input-container.m-bottom-0(flex)
+        label 密码
+        md-icon.valid-color(md-font-icon="icon-key-variant")
+        input(type="password", ng-model='user.password', ng-required="true")
+      div.p-6
+      md-input-container.m-bottom-0(flex)
+        label 重复密码
+        input(type="password", ng-model='user.repassword', ng-required="true")
+
+//- 手动添加用户
+mixin add-one-user-card
+  md-card.m-12(flex)
+    md-toolbar.md-accent(md-whiteframe="1")
+      .md-toolbar-tools
+        h2.md-flex 单位添加用户
+    md-content.p-12.white-bg
+      +user-info-inputs
+    md-content.white-bg(md-whiteframe="1", layout="row")
+      div(flex, layout="row", layout-align="start")
+        md-button.m-12(ng-click="resetUser($event)") 重置
+      div(flex, layout="row", layout-align="end")
+        md-button.md-raised.md-accent.m-12(ng-click="addUser($event)") 添加用户
+
+//- 通过文件上传添加用户
+mixin add-users-by-file-card
+  md-card.m-12(flex)
+    md-toolbar.md-accent(md-whiteframe="1")
+      .md-toolbar-tools
+        h2.md-flex 批量添加用户
+    md-content#upload-img(flex="100", md-whiteframe="1", layout="row")
+      div(flex, layout="row", layout-align="center center")
+        label.md-button.md-raised.md-accent.m-12(for="uploadExcel") 选择需要上传的文件
+        input(type="file", id="uploadExcel", style="display:none")
+        //- TODO: 文件上传进度条与文件信息展示
+
+
+div#admin-head(layout="column", ng-cloak)
+  header.header.md-accent-bg(layout="column", layout-align="end")
+    span.md-display-1.font-weight-300
+      | 添加新的用户
+
+div#admin-body(layout="column", ng-cloak)
+  md-content(md-theme="default")
+    md-tabs(md-dynamic-height)
+      md-tabs-wrapper
+        md-tab(label="添加用户")
+          .p-12(layout="row", layout-xs="column")
+            +add-one-user-card
+            +add-users-by-file-card
+            

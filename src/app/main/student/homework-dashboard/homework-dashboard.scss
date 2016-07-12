@@ -1,0 +1,36 @@
+
+#homework-dashboard {
+  header {
+    height: 160px;
+    min-height: 160px;
+    max-height: 106px;
+    padding-bottom: 32px;
+    background: url('/assets/images/backgrounds/may.jpg') no-repeat 0 45%;
+    background-size: 100% auto;
+  }
+  ms-widget {
+    .widget-head {
+      font-size: 18px;
+    }
+    .widget-body {
+      font-size: 34px;
+      padding-bottom: 48px !important;
+    }
+    .widget-foot {
+      border-top: 1px solid rgba(0,0,0,.12);
+      background-color: #F5F5F5;
+    }
+  }
+}
+
+md-dialog {
+  min-width: 400px;
+}
+
+#scoreChart .c3-line-score {
+  stroke-width: 3px;
+}
+
+#rankChart .c3-line-rank {
+  stroke-width: 3px;
+}

@@ -1,0 +1,73 @@
+mixin basic-information
+  div(layout="row", layout-wrap)
+    .p-12(flex-gt-md="70" flex-gt-sm="70" flex="100")
+      +person-information
+    .p-12(flex-gt-md="30" flex-gt-sm="30" flex="100")
+      +group-classmates
+      //- +TA
+
+mixin person-information
+  .about(layout="column", flex="100")
+    .profile-box.info-box.general.md-whiteframe-1dp(layout="column")
+      header.md-accent-bg
+        .title 基本信息
+      .content
+        div.pb-16(layout="row")
+          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
+            .title.big-font 姓名
+            .info.pt-10 {{vm.user.fullname}}
+          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
+            .title.big-font 学号
+            .info.pt-10 {{vm.user.sid}}
+          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
+            .title.big-font 性别
+            .info.pt-10 {{vm.user.gender}}
+        div.pb-16(layout="row")
+          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
+            .title.big-font 班级
+            .info.pt-10 {{vm.user.class}}班
+          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
+            .title.big-font 组号
+            .info.pt-10 第{{vm.user.group}}组
+          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
+            .title.big-font 邮箱
+            .info.pt-10 {{vm.user.email}}
+        div(layout="row")
+          div
+            .title.big-font 个人简介
+            .info.pt-10 吃饭、睡觉、踢球、打代码
+
+mixin group-classmates
+  .about-sidebar(layout="column", flex="100")
+    .profile-box.friends.md-whiteframe-1dp(layout="column")
+      header.md-accent-bg(layout="row", layout-align="space-between center")
+        .title 小组成员
+      .content.p-8(layout="row", layout-wrap)
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
+          .avatar-container
+            img(src="assets/images/avatars/alice.jpg")
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
+          .avatar-container
+            img(src="assets/images/avatars/andrew.jpg")
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
+          .avatar-container
+            img(src="assets/images/avatars/carl.jpg")
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
+          .avatar-container
+            img(src="assets/images/avatars/joyce.jpg")
+
+mixin TA
+  .about-sidebar(layout="column", flex="100")
+    .profile-box.friends.md-whiteframe-1dp(layout="column")
+      header.md-accent-bg(layout="row", layout-align="space-between center")
+        .title TA
+      .content.p-8(layout="row", layout-wrap)
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
+          img(src="assets/images/avatars/alice.jpg")
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
+          img(src="assets/images/avatars/andrew.jpg")
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
+          img(src="assets/images/avatars/carl.jpg")
+        .friend.p-8(flex="25" layout="row" layout-align='center center')
+          img(src="assets/images/avatars/joyce.jpg")
+

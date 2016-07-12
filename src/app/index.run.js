@@ -14,6 +14,30 @@
         {
             $rootScope.loadingProgress = true;
 
+            if (!Authentication.isExists()) {
+
+                Authentication.getCookieUser().then(function(user) {
+
+                    if (user !== null ) {
+
+                        if (!Authentication.isToStateAuthenticated(toState)) {
+                            event.preventDefault();
+                            $state.go('app.access-denied');
+                        }
+                        else if (toState.name == 'app.login') {
+                            var dest = Authentication.filterRoute(user);
+                            $state.go(dest);
+                        }
+
+                    }
+                    else if (user === null && toState.name !== 'app.login' && toState.name !== 'app.access-denied') {
+                        $state.go('app.login');
+                        event.preventDefault();
+                    }
+                });
+            }
+
+
         });
 
         // De-activate loading indicator

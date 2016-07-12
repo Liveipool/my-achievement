@@ -1,0 +1,55 @@
+include ./admin-widget.jade
+
+//- Tabs展示的第一个页面，展示的是所有用户信息
+mixin all-users
+  md-content.p-12
+    md-card.m-12
+      md-content(flex, layout="column" style="max-height: {{widgetHeight}}px")
+        +table-section("管理员", "admin", "adColumns", ["username", "fullname", "email"])
+        +table-section("教师", "teachers", "teaColumns", ["username", "fullname", "email"])
+        +table-section("教师助理", "TAs", "taColumns", ["username", "fullname", "email"])
+        +table-section("学生", "students", "stuColumns", ["sid", "fullname", "class", "group"])
+
+//- Tabs展示的第二个页面，展示的是所有教师的信息
+mixin all-teachers
+  md-content.p-12
+    md-card.m-12
+      md-content(flex, layout="column" style="max-height: {{widgetHeight}}px")
+        +table-section("教师", "teachers", "teaColumns", ["username", "fullname", "email"])
+
+//- Tabs展示的第三个页面，展示的是所有教师助理的信息
+mixin all-TAs
+  md-content.p-12
+    md-card.m-12
+      md-content(flex, layout="column" style="max-height: {{widgetHeight}}px")
+        +table-section("教师助理", "TAs", "taColumns", ["username", "fullname", "email"])
+
+//- Tabs展示的第四个页面，展示的是所有学生的信息
+mixin all-students
+  md-content.p-12
+    md-card.m-12
+      md-content(flex, layout="column", style="max-height: {{widgetHeight}}px")
+        div(ng-repeat="class in classes")
+          +table-section("{{class.className}}", "class.students", "stuColumnsByClass", ["sid", "fullname", "group"])
+
+div#admin-head(layout="column", ng-cloak)
+  header.header.md-accent-bg(layout="column", layout-align="end")
+    span.md-display-1.font-weight-300
+      | 用户浏览与编辑
+
+div#admin-body(layout="column", ng-cloak)
+  md-content(md-theme="default")
+    #search-bar(layout-gt-sm="row")
+      md-input-container.md-block
+        md-icon.blue-icon(md-font-icon="icon-magnify")
+        input(ng-model='search', aria-label="search")
+    md-tabs(md-dynamic-height)
+      md-tabs-wrapper
+        md-tab(label="所有用户")
+          +all-users
+        md-tab(label="所有教师")
+          +all-teachers
+        md-tab(label="所有助教")
+          +all-TAs
+        md-tab(label="所有学生")
+          +all-students

@@ -1,3 +1,4 @@
+
 mixin homework
 	md-card.white-bg.m-0
 		+card-image
@@ -49,11 +50,13 @@ mixin card-actions
 		md-button(flex='33' ng-click='vm.editHomework(homework.id)') 编辑
 		md-button(flex='33' ng-click='vm.reviewHomework(homework.id)' ng-hide="homework.status == 'future'") 评审
 
+
 #all-homeworks-header.page-layout.simple.fullwidth.doc-page.element-doc-page
 	.header.h-160(layout='column' layout-align='end start')
 		.breadcrumb(layout='row' layout-align='start center')
 			md-icon.s16(md-font-icon='icon-home')
 			md-icon.s16.separator(md-font-icon='icon-chevron-right')
+			span {{vm.location}}
 			span.parent
 		.title 欢迎回来 {{vm.greeting}}
 

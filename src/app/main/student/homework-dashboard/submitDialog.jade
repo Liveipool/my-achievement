@@ -1,0 +1,33 @@
+md-dialog(aria-label="submitDialog")
+  form
+    md-toolbar.md-light-blue-500-bg
+      div.md-toolbar-tools(layout="row" layout-align="space-between center")
+        h2 作业{{id}}
+        md-button(class="md-icon-button" ng-click="cancel()")
+          i(class="icon-close" aria-label="Close dialog")
+
+    md-dialog-content
+      div.md-dialog-content
+        form(layout="column" layout-align="space-around center")
+          div(layout="row" layout-align="space-around center")
+            md-input-container.m-0(flex)
+              label 请选择作业缩略图
+              input(type="text" ng-model="picture.name" disabled)
+            div.pb-12
+              label.pointer.m-0.icon-camera.md-headline(for="uploadPicture")
+                input(hide type="file" id="uploadPicture" nv-file-select uploader="pictureUploader" ng-click="clearPictureItem()")
+          div(layout="row")
+            md-input-container.m-0(flex)
+              label 请输入你的github地址
+              input(type="text")
+          div(layout="row" layout-align="space-around center")
+            md-input-container.m-0(flex)
+              label 请选择你的代码文件
+              input(type="text" ng-model="core.name" disabled)
+            div.pb-24
+              label.pointer.m-0.icon-folder-multiple.md-headline(for="uploadCore")
+                input(hide type="file" id="uploadCore" nv-file-select uploader="coreUploader" ng-click="clearCoreItem()")
+
+    md-dialog-actions(layout="row")
+      md-button.md-raised.md-primary.md-light-blue-500-bg(ng-click="cancel()") 返回
+      md-button.md-raised.md-primary.md-light-blue-500-bg(ng-click="uploadFile()") 提交
