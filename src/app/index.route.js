@@ -19,9 +19,13 @@
         //                   .when('/teacher', '/homework-list');
 
         $urlRouterProvider.when('', '/')
+                          .when('/', function($injector, $location) {
+                            var  $state = $injector.get("$state");
+                            $state.go("app.login");
+                          })
                           .otherwise( function($injector, $location) {
                                 var $state = $injector.get("$state");
-                                $state.go("app.login");
+                                $state.go("app.access-denied");
                             });
 
 
