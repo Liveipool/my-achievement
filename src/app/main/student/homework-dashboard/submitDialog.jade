@@ -1,6 +1,6 @@
 md-dialog(aria-label="submitDialog")
   form
-    md-toolbar
+    md-toolbar.md-light-blue-500-bg
       div.md-toolbar-tools(layout="row" layout-align="space-between center")
         h2 作业{{id}}
         md-button(class="md-icon-button" ng-click="cancel()")
@@ -29,5 +29,5 @@ md-dialog(aria-label="submitDialog")
                 input(hide type="file" id="uploadCore" nv-file-select uploader="coreUploader" ng-click="clearCoreItem()")
 
     md-dialog-actions(layout="row")
-      md-button.md-raised.md-primary(ng-click="cancel()") 返回
-      md-button.md-raised.md-primary(ng-click="uploadFile()") 提交
+      md-button.md-raised.md-primary.md-light-blue-500-bg(ng-click="cancel()") 返回
+      md-button.md-raised.md-primary.md-light-blue-500-bg(ng-click="uploadFile()") 提交

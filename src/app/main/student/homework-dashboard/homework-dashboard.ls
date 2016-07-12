@@ -11,7 +11,8 @@ angular.module 'app.student'
           .then (result)->
             homeworks = result.data
             Promise.resolve homeworks
-
+    data:
+      role: 'student'
 
     views:
       'content@app':
@@ -20,7 +21,6 @@ angular.module 'app.student'
         controller: ($scope, Authentication, homeworks, $mdDialog)!->
           console.log "欢迎回来!"
           vm = @
-          vm.location = "作业列表"
           vm.user = Authentication.get-user!
 
           vm.greeting  = vm.user.fullname;
@@ -46,9 +46,12 @@ angular.module 'app.student'
             present: true
             finish: true
 
+          $scope.jump = (description)!->
+            window.open "http://www.baidu.com"
+
           $scope.showSubmitDialog = (id)!->
             $mdDialog.show {
-              templateUrl: 'app/main/student/homework/dashboard/submitDialog.html',
+              templateUrl: 'app/main/student/homework-dashboard/submitDialog.html',
               parent: angular.element(document.body),
               clickOutsideToClose: false,
               controller: ($scope, $mdDialog, FileUploader) !->

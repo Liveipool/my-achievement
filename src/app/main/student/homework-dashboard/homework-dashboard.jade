@@ -27,20 +27,19 @@ mixin chart
 mixin menu-item
   //#TODO根据作业的status来判断menu-item的内容
   md-menu-item(width="4")
-    md-button
+    md-button(ng-click="jump(homework.description)")
       md-icon(md-font-icon="icon-book")
-      span 作业描述
+      span 作业链接
   md-menu-item(ng-if="homework.classes[0].status === 'present'")
-    md-button
+    md-button(ng-click="showSubmitDialog(homework.id)")
       md-icon(md-font-icon="icon-cloud-upload")
       span 提交作业
   md-menu-item(ng-if="homework.classes[0].status === 'finish'")
-    md-button
+    md-button(ng-click="flipWidget()" aria-label="Flip widget")
       md-icon(md-font-icon="icon-document")
       span 作业详情
 
-
-mixin homework-widget
+mixin homework-widget-front
   ms-widget-front.white-bg
     div.ph-24.pv-12.widget-head(layout="row" layout-align="space-between")
       div(layout="column" layout-align="center") 作业{{homework.id}}
@@ -49,11 +48,26 @@ mixin homework-widget
           md-icon(md-font-icon="icon-dots-vertical")
         md-menu-content
           +menu-item
-
     div.p-24.widget-body(layout="column" layout-align="center center")
       span.font-weight-500(ng-class="vm.fg[homework.classes[0].status]") {{homework.title}}
     div.ph-24.pv-12.widget-foot
       span 状态: {{vm.status[homework.classes[0].status]}}
+
+mixin homework-widget-back
+  ms-widget-back.white-bg(layout="column" flex="100")
+    div.ph-24.pv-12.widget-head(layout="row" layout-align="space-between start")
+      div(layout="column" layout-align="center") 作业{{homework.id}}
+      div.flip-to-front
+        md-button(class="md-icon-button" ng-click="flipWidget()" aria-label="Flip widget")
+              md-icon(md-font-icon="icon-close")
+    div.md-headline(layout="column" layout-align="center center")
+      span 平均分：89
+      span 你的分数：89
+      span 你的排名：78
+
+mixin homework-widget
+  +homework-widget-front
+  +homework-widget-back
 
 mixin homework-list
   div(layout="column")
@@ -67,21 +81,18 @@ mixin homework-list
         | 已结束
 
     div(layout="row" layout-wrap)
-      ms-widget.p-12(flippable="true" layout="column" flex="100" flex-gt-xs="50" flex-gt-md="33" flex-gt-lg="25" ng-repeat="homework in vm.homeworks")
+      ms-widget.p-12(ng-if="vm.switch[homework.classes[0].status]" flippable="true" layout="column" flex="100" flex-gt-xs="50" flex-gt-sm="33" flex-gt-md="25" ng-repeat="homework in vm.homeworks")
         +homework-widget
 
 
-div#homework-dashboard.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+
+div#homework-dashboard(layout="column")
   header.header.md-accent-bg.ph-24(layout="column" layout-align="end")
-    .breadcrumb(layout='row' layout-align='start center')
-      md-icon.s16(md-font-icon='icon-home')
-      md-icon.s16.separator(md-font-icon='icon-chevron-right')
-      span {{vm.location}}
     span.md-display-1.font-weight-300
       | 欢迎回来,
       |{{vm.greeting}}
       |!
-  div
+  div.content
     md-content.p-12.wrapper-bg
       div#chart-container(layout="row")
         +chart
