@@ -12,6 +12,7 @@ mixin chart
                       point-expand-radius="8")
         chart-grid(show-x="false" show-y="true")
         chart-axis-x(axis-type="category")
+        chart-axis-y(axis-max="100")
         chart-axes(values-x="x" y="score")
 
   div.p-12(flex="50" flex-xs="100")
@@ -86,13 +87,19 @@ mixin homework-list
 
 
 
-div#homework-dashboard(layout="column")
+div#homework-dashboard.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+
   header.header.md-accent-bg.ph-24(layout="column" layout-align="end")
+    .breadcrumb(layout='row' layout-align='start center')
+      md-icon.s16(md-font-icon='icon-home')
+      md-icon.s16.separator(md-font-icon='icon-chevron-right')
+      span {{vm.location}}
+      span.parent
     span.md-display-1.font-weight-300
       | 欢迎回来,
       |{{vm.greeting}}
       |!
-  div.content
+  div
     md-content.p-12.wrapper-bg
       div#chart-container(layout="row")
         +chart

@@ -22,6 +22,7 @@ angular.module 'app.student'
           console.log "欢迎回来!"
           vm = @
           vm.user = Authentication.get-user!
+          vm.location = "作业列表"
 
           vm.greeting  = vm.user.fullname;
 
