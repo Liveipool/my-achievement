@@ -1,0 +1,150 @@
+{
+  "data": {
+    "users": [
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan1",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331134",
+        "class": "教务一班",
+        "group": "1"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan2",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331231",
+        "class": "教务一班",
+        "group": "2"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan3",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331234",
+        "class": "教务二班",
+        "group": "1"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan4",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331234",
+        "class": "教务二班",
+        "group": "2"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan5",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331134",
+        "class": "教务一班",
+        "group": "1"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan6",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331231",
+        "class": "教务一班",
+        "group": "2"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan7",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331234",
+        "class": "教务二班",
+        "group": "1"
+      },
+      {
+        "email": "zhangshan@test.com",
+        "username": "zhangshan8",
+        "fullname": "张珊",
+        "avatar": "assets/images/avatars/alice.jpg",
+        "role": "student",
+        "password": "12345678",
+        "sid": "14331234",
+        "class": "教务二班",
+        "group": "2"
+      },
+      {
+        "email": "lisi@test.com",
+        "username": "lisi1",
+        "fullname": "李思",
+        "avatar": "assets/images/avatars/katherine.jpg",
+        "role": "teacher",
+        "password": "12345678"
+      },
+      {
+        "email": "lisi@test.com",
+        "username": "lisi2",
+        "fullname": "李思",
+        "avatar": "assets/images/avatars/katherine.jpg",
+        "role": "teacher",
+        "password": "12345678"
+      },
+      {
+        "email": "zhaowu@test.com",
+        "username": "zhaowu",
+        "fullname": "赵武",
+        "avatar": "assets/images/avatars/andrew.jpg",
+        "role": "admin",
+        "password": "12345678"
+      },
+      {
+        "email": "lisisi@test.com",
+        "username": "lisisi1",
+        "fullname": "李思思",
+        "avatar": "assets/images/avatars/katherine.jpg",
+        "role": "ta",
+        "password": "12345678"
+      },
+      {
+        "email": "lisisi@test.com",
+        "username": "lisisi2",
+        "fullname": "李思思",
+        "avatar": "assets/images/avatars/katherine.jpg",
+        "role": "ta",
+        "password": "12345678"
+      },
+      {
+        "email": "lisisi@test.com",
+        "username": "lisisi3",
+        "fullname": "李思思",
+        "avatar": "assets/images/avatars/katherine.jpg",
+        "role": "ta",
+        "password": "12345678"
+      },
+      {
+        "email": "lisisi@test.com",
+        "username": "lisisi4",
+        "fullname": "李思思",
+        "avatar": "assets/images/avatars/katherine.jpg",
+        "role": "ta",
+        "password": "12345678"
+      }
+    ]
+  }
+}

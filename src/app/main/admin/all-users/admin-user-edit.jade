@@ -1,0 +1,63 @@
+mixin edit-header
+  md-toolbar.md-accent(style="min-height:60px;", md-whiteframe="1")
+    .md-toolbar-tools
+      h2 编辑该用户 
+      span(flex)
+      md-button.md-icon-button(ng-click="cancel()", aria-label="close")
+        md-icon.icon-close(style="font-size: 25px;")
+
+mixin user-info
+  md-dialog-content.p-12(flex, layout-padding)
+    md-card.m-0.p-0.white-bg(md-theme="default")
+      .p-12(layout="column", flex)
+        div(flex="25", layout="row", style="overflow:hidden")
+          md-input-container.min-width-500.md-block.m-bottom-0(flex-sm)
+            label 用户名
+            md-icon.valid-color(md-font-icon="icon-account")
+            input(ng-model='user.username', ng-required="true", disabled="false")
+        div(flex="25", layout="row")
+          md-input-container.md-block.m-bottom-0(flex)
+            label 姓名
+            md-icon.valid-color(md-font-icon="icon-worker")
+            input(ng-model='user.fullname', ng-required="true")
+          div.p-6
+          md-input-container.md-block.m-bottom-0(flex)
+            label 权限
+            md-select(ng-model="user.role", ng-required="true")
+              md-option(value="{{op}}", ng-repeat="op in ['teacher', 'ta', 'student']") {{op}}
+        div(flex="25", layout="row")
+          md-input-container.md-block.m-bottom-0(flex)
+            label 邮箱
+            md-icon.valid-color(md-font-icon="icon-email")
+            input(ng-model='user.email', type="email", ng-required="true")
+        div(flex="25", layout="row", ng-show="user.role == 'student'")
+          md-input-container.md-block.m-bottom-0(flex)
+            label 班级
+            md-icon.valid-color(md-font-icon="icon-account-multiple")
+            input(ng-model="user.class", ng-required="true")
+          div.p-6
+          md-input-container.md-block.m-bottom-0(flex)
+            label 小组
+            input(ng-model='user.group')
+        div(flex="25", layout="row")
+          md-input-container.md-block.m-bottom-0(flex)
+            label 密码
+            md-icon.valid-color(md-font-icon="icon-key-variant")
+            input(type="password", ng-model='user.password')
+          div.p-6
+          md-input-container.md-block.m-bottom-0(flex)
+            label 重复密码
+            input(type="password", ng-model='user.repassword')
+
+mixin submit-button
+  md-dialog-actions.white-bg.p-12(layout="row", md-whiteframe="2", style="min-height: 50px")
+    div(flex, layout="row", layout-align="start")
+      md-button.m-0(ng-click="cancel()") 取消编辑
+    div(flex, layout="row", layout-align="end")
+      md-button.md-raised.md-warn#add-button(ng-click="deleteUser($event)") 删除用户
+      md-button.md-raised.md-accent.m-0#add-button(ng-click="editUser($event)") 编辑用户
+
+#user-add-dialog(layout="column", ng-cloak)
+  +edit-header
+  +user-info
+  +submit-button

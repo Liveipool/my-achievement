@@ -3,20 +3,19 @@
 angular.module 'app.student'
 
 .config ($state-provider) !->
-  $state-provider.state 'app.student.homework.dashboard', {
-    url: '/homework/dashboard'
+  $state-provider.state 'app.student.homework-dashboard', {
+    url: '/homework-dashboard'
     resolve:
       homeworks: ($resource) ->
         $resource('app/data/homework/homeworks.json').get!.$promise
           .then (result)->
             homeworks = result.data
             Promise.resolve homeworks
-    data:
-      role: 'student'
+
 
     views:
       'content@app':
-        template-url: 'app/main/student/homework/dashboard/homework-dashboard.html'
+        template-url: 'app/main/student/homework-dashboard/homework-dashboard.html'
         controller-as : 'vm'
         controller: ($scope, Authentication, homeworks, $mdDialog)!->
           console.log "欢迎回来!"
@@ -45,6 +44,10 @@ angular.module 'app.student'
             future: true
             present: true
             finish: true
+
+          vm.score = "95, 90, 100, 88, 90, 95, 94, 90, 90, 95"
+
+          vm.rank = "30,200,100,400,150,250"
 
           $scope.jump = (description)!->
             window.open "http://www.baidu.com"
@@ -95,8 +98,6 @@ angular.module 'app.student'
                 $scope.uploadFile = !->
                   pictureUploader.uploadAll();
                   coreUploader.uploadAll();
-
-
             }
 
   }
