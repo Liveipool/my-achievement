@@ -38,8 +38,8 @@ angular.module 'app.teacher'
             false
           @calculate-status = (hs) !->
             for h in hs
-              if @status-helper h.classes, 'current'
-                h.status = 'current'
+              if @status-helper h.classes, 'present'
+                h.status = 'present'
                 h.t-status = '进行中'
               else
                 if @status-helper h.classes, 'future'
@@ -50,8 +50,10 @@ angular.module 'app.teacher'
                   h.t-status = '已结束'
             for h in hs
               h.bg = 'image-div-' + (1 + parse-int 12 * Math.random!)
+              h.description = 'https://' + h.description if not /http/.test h.description
+              # avoid missing the 'http'
               for c in h.classes
-                c.t-status = '进行中' if c.status == 'current'
+                c.t-status = '进行中' if c.status == 'present'
                 c.t-status = '未开始' if c.status == 'future'
                 c.t-status = '已结束' if c.status == 'finish'
 
