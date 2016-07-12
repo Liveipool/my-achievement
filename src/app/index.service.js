@@ -3,7 +3,8 @@
 
   angular
     .module('fuse')
-    .factory('Authentication', AuthenticationService);
+    .factory('Authentication', AuthenticationService)
+    .factory('Interaction', InteractionService);
 
   function AuthenticationService($resource, $q, $cookies) {
     var self = this,
@@ -100,4 +101,57 @@
     }
   }
 
+  function InteractionService (){
+    return {
+      getBgByMonth: function (number) {
+        var season,
+            month = number; //#TODO 测试用，实际部署时使用new Date().getMonth()
+
+        console.log(month);
+
+        if (month >= 0 && month <= 2)
+          season = "spring";
+
+        else if (month >= 3 && month <= 5)
+          season = "summer";
+
+        else if (month >=6 && month <= 8)
+          season = "autumn";
+
+        else
+          season = "winter";
+        switch  (season) {
+          case "spring":
+            return {
+              fg: 'default-fg',
+              bg: 'spring'
+            };
+            break;
+          case "summer":
+            return {
+              fg: 'default-fg',
+              bg: 'summer'
+            };
+            break;
+          case "autumn":
+            return {
+              fg: 'default-fg',
+              bg: 'autumn'
+            };
+            break;
+          case "winter":
+            return {
+              fg: 'default-fg',
+              bg: 'winter'
+            };
+            break;
+          default:
+            return {
+              fg: 'default-fg',
+              bg: 'spring'
+            };
+        }
+      }
+  }
+}
 })();

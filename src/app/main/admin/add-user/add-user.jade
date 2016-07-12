@@ -67,10 +67,17 @@ mixin add-users-by-file-card
         //- TODO: 文件上传进度条与文件信息展示
 
 
-div#admin-head(layout="column", ng-cloak)
-  header.header.md-accent-bg(layout="column", layout-align="end")
-    span.md-display-1.font-weight-300
-      | 添加新的用户
+div#admin.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+  header.header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
+    .breadcrumb(layout='row' layout-align='start center')
+      md-icon.s16(md-font-icon='icon-home')
+      md-icon.s16.separator(md-font-icon='icon-chevron-right')
+      span {{vm.location}}
+      span.parent
+    span.md-display-1.font-weight-300(ng-class="vm.theme.fg")
+      | 欢迎回来,
+      |{{vm.greeting}}
+      |!
 
 div#admin-body(layout="column", ng-cloak)
   md-content(md-theme="default")
@@ -80,4 +87,3 @@ div#admin-body(layout="column", ng-cloak)
           .p-12(layout="row", layout-xs="column")
             +add-one-user-card
             +add-users-by-file-card
-            
