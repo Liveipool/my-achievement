@@ -107,8 +107,6 @@
         var season,
             month = number; //#TODO 测试用，实际部署时使用new Date().getMonth()
 
-        console.log(month);
-
         if (month >= 0 && month <= 2)
           season = "spring";
 

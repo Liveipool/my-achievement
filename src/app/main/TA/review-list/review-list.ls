@@ -1,68 +1,66 @@
 'use strict'
-
 angular.module 'app.TA'
 
 .config ($state-provider) !->
   $state-provider.state 'app.TA.review-list', {
     url: '/review-list?hid'
     resolve:
-      data1: (api-resolver) -> api-resolver.resolve 'classes@get'
-      data2: (api-resolver) -> api-resolver.resolve 'homeworks@get'
+      users: (api-resolver) -> api-resolver.resolve 'users@get'
+      homeworks: (api-resolver) -> api-resolver.resolve 'homeworks@get'
     views:
       'content@app':
         template-url: 'app/main/TA/review-list/review-list.html'
         controller-as : 'vm'
-        controller: ($scope, $filter, $state-params, $state, $location, Authentication, data1, data2, DTOptionsBuilder)!->
-          console.log "review-dashboard"
-          #console.log(data1.data);
-          console.log $location.search()
-          @homeworkId = parseInt($location.search().hid || '1');
-          console.log(@homeworkId);
-          for homework in data2.data
-            if (homework.id == @homeworkId)
-              @homeworkTitle = homework.title
-              break
+        controller: ($scope, $filter, $state-params, $state, $location, $anchor-scroll, Authentication, Interaction, homeworks, DTOptionsBuilder, users)!->
+
+          @go-to-anchor = (c_id, g_id) ->
+            # body...
+            new-hash = "class" + c_id + "-group" + g_id
+            if $location.hash! !== new-hash
+              $location.hash new-hash
+            else
+              $anchor-scroll!
+          @test = (c_id,g_id) ->
+            console.log c_id + g_id
+
+
+
+          # $ "vertical-container-1" .scroll-unique!
+          @homework = _.find homeworks.data, {'id': 1}
+
           @user = Authentication.get-user!
-          @classes = data1.data
-          @dtInstances = []
-          @searchWords = []
-          @highScore = []
-          @lowScore = []
-          @averageScore = []
-          for x in @classes
-            @dtInstances.push {}
-            @searchWords.push ''
-          @scoreCounter = [];
 
-          for aClass, i in @classes
-            @scoreCounter.push [0, 0, 0, 0]
-            t1 = 0
-            t2 = 100
-            t3 = 0
-            avgCounter = 0
-            for student in aClass
-              if student.TAscore
-                t1 = t1 >? student.TAscore
-                t2 = t2 <? student.TAscore
-                t3 += student.TAscore
-                ++avgCounter
-                if student.TAscore >= 90
-                  ++@scoreCounter[i][0]
-                else if student.TAscore >= 80
-                  ++@scoreCounter[i][1]
-                else if student.TAscore >= 70
-                  ++@scoreCounter[i][2]
-                else if student.TAscore >= 60
-                  ++@scoreCounter[i][3]
-            @highScore.push t1
-            @lowScore.push t2
-            @averageScore.push( (t3 / avgCounter) .toFixed 2)
+          @greeting = @user.fullname
 
-          @dtOptions = DTOptionsBuilder.newOptions! .withDisplayLength 10 .withPaginationType 'simple' .withDOM 'tip'
+          @location = "评审列表"
 
-          @search = (index)!~>
-            @dtInstances[index] .DataTable .columns 0 .search @searchWords[index] .draw!
+          @theme = Interaction.get-bg-by-month 2
 
+          @student-users = _.filter users.user, 'class'
+
+
+          @_classes = _.groupBy @student-users, 'class'
+
+          # console.log @_classes
+          @classes = []
+          for id of @_classes
+            groups = []
+            _groups = _.groupBy @_classes[id], 'group'
+            for _id of _groups
+              groups.push {id: _id, members: _groups[_id]}
+            @classes.push {id: id, groups: groups, members: @_classes[id]}
+
+          console.log @classes
+
+          @selected = []
+          i = @classes.length
+          while i > 0
+            @selected[i] = i.to-string!
+            i--
+
+          console.log @selected
+
+          @top-index = 1
 
 
   }
