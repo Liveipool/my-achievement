@@ -2,7 +2,7 @@
 
 angular.module 'app.teacher'
 
-.config ($state-provider,  ms-navigation-service-provider) !->
+.config ($state-provider) !->
   $state-provider.state 'app.teacher.homework-list', {
     url: '/homework-list'
     resolve:
