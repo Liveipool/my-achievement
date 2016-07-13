@@ -60,7 +60,7 @@ mixin add-users-by-file-card
     md-toolbar.md-accent(md-whiteframe="1")
       .md-toolbar-tools
         h2.md-flex 批量添加用户
-    md-content#upload-img(flex="100", md-whiteframe="1", layout="row")
+    md-content#upload-img(flex="100", md-whiteframe="1", layout="row", ng-class="vm.theme.bg")
       div(flex, layout="row", layout-align="center center")
         label.md-button.md-raised.md-accent.m-12(for="uploadExcel") 选择需要上传的文件
         input(type="file", id="uploadExcel", style="display:none")
