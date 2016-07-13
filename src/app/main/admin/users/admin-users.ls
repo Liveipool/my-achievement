@@ -52,7 +52,11 @@ angular.module 'app.admin'
 
             # 根据班别分开学生
             $scope.students.sort (a, b)->
-              a.class.locale-compare b.class
+              priority = a.class.locale-compare b.class
+              if priority ~= 0
+                a.group.locale-compare b.group
+              else
+                priority
 
             $scope.classes = []
             for i from 0 to $scope.students.length - 1 by 1

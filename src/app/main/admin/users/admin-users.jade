@@ -4,7 +4,7 @@ include ./admin-widget.jade
 mixin all-users
   md-content.p-12
     md-card.m-12
-      md-content(flex, layout="column" style="max-height: {{widgetHeight}}px")
+      md-content(flex, layout="column" style="max-height: {{widgetHeight}}px", ms-scroll)
         +table-section("管理员", "admin", "adColumns", ["username", "fullname", "email"])
         +table-section("教师", "teachers", "teaColumns", ["username", "fullname", "email"])
         +table-section("教师助理", "TAs", "taColumns", ["username", "fullname", "email"])
@@ -14,21 +14,21 @@ mixin all-users
 mixin all-teachers
   md-content.p-12
     md-card.m-12
-      md-content(flex, layout="column" style="max-height: {{widgetHeight}}px")
+      md-content(flex, layout="column" style="max-height: {{widgetHeight}}px", ms-scroll)
         +table-section("教师", "teachers", "teaColumns", ["username", "fullname", "email"])
 
 //- Tabs展示的第三个页面，展示的是所有教师助理的信息
 mixin all-TAs
   md-content.p-12
     md-card.m-12
-      md-content(flex, layout="column" style="max-height: {{widgetHeight}}px")
+      md-content(flex, layout="column" style="max-height: {{widgetHeight}}px", ms-scroll)
         +table-section("教师助理", "TAs", "taColumns", ["username", "fullname", "email"])
 
 //- Tabs展示的第四个页面，展示的是所有学生的信息
 mixin all-students
   md-content.p-12
     md-card.m-12
-      md-content(flex, layout="column", style="max-height: {{widgetHeight}}px")
+      md-content(flex, layout="column", style="max-height: {{widgetHeight}}px", ms-scroll)
         div(ng-repeat="class in classes")
           +table-section("{{class.className}}", "class.students", "stuColumnsByClass", ["sid", "fullname", "username", "group"])
 
@@ -41,7 +41,7 @@ div#admin-body(layout="column", ng-cloak)
   md-content(md-theme="default")
     #search-bar(layout-gt-sm="row")
       md-input-container.md-block
-        md-icon.blue-icon(md-font-icon="icon-magnify")
+        md-icon.md-accent(md-font-icon="icon-magnify")
         input(ng-model='search', aria-label="search")
     md-tabs(md-dynamic-height)
       md-tabs-wrapper
