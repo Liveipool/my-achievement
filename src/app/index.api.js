@@ -175,6 +175,7 @@
         api.baseUrl = 'app/data/';
         api.classes = $resource(api.baseUrl + 'faker/classes.json');
         api.homeworks = $resource(api.baseUrl + 'homework/homeworks.json');
+        api.reviews = $resource(api.baseUrl + 'faker/reviews.json');
 
         api.gfcUrl = '/'
 
