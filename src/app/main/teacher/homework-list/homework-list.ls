@@ -15,11 +15,11 @@ angular.module 'app.teacher'
       'content@app':
         template-url: 'app/main/teacher/homework-list/homework-list.html'
         controller-as : 'vm'
-        controller: ($scope, Authentication, homeworks, $state)!->
+        controller: ($scope, Authentication, homeworks, $state, Interaction)!->
 
-          console.log "欢迎回来!"
           @user = Authentication.get-user!
           @location = "所有作业"
+          @theme = Interaction.get-bg-by-month 2
           @greeting  = @user.fullname;
           if @user.role is 'teacher'
             @greeting = @greeting + '老师'

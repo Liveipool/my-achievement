@@ -10,7 +10,11 @@ angular.module 'app.admin'
       'content@app':
         template-url: 'app/main/admin/all-users/all-users.html'
         controller-as : 'vm'
-        controller: ($scope, $md-dialog, $md-media, valid-manager, user-manager)!->
+        controller: ($scope, $md-dialog, $md-media, valid-manager, user-manager, Interaction)!->
+
+          @theme = Interaction.get-bg-by-month 2
+          @location = "所有用户"
+          @greeting = "管理员"
 
           # 监听窗口大小事件改变表格展示高度
           height-watch = ->

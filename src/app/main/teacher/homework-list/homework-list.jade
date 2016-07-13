@@ -51,15 +51,15 @@ mixin card-actions
 		md-button(flex='33' ng-click='vm.reviewHomework(homework.id)' ng-hide="homework.status == 'future'") 评审
 
 
-#all-homeworks-header.page-layout.simple.fullwidth.doc-page.element-doc-page
-	.header.h-160(layout='column' layout-align='end start')
+div#all-homeworks-header.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+	header.header.ph-24(layout='column' layout-align='end start' ng-class="vm.theme.bg")
 		.breadcrumb(layout='row' layout-align='start center')
 			md-icon.s16(md-font-icon='icon-home')
 			md-icon.s16.separator(md-font-icon='icon-chevron-right')
 			span {{vm.location}}
 			span.parent
-		.title 欢迎回来 {{vm.greeting}}
+		.title(ng-class="vm.theme.fg") 欢迎回来, {{vm.greeting}}!
 
-#all-homeworks-container.p-12(layout-wrap='' layout='row' flex='100')
+div#all-homeworks-container.p-12(layout-wrap='' layout='row' flex='100')
 	.homework-container.m-0.p-12(flex='100' flex-gt-sm='50' flex-gt-md='33' ng-repeat='homework in vm.homeworks' layout='column')
 		+homework

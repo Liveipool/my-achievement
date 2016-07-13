@@ -1,0 +1,53 @@
+md-dialog.contact-dialog._md.md-default-theme._md-transition-in
+  form.md-inline-form.ng-valid.ng-valid-required.ng-dirty.ng-valid-parse.ng-valid-mindate.ng-valid-maxdate.ng-valid-filtered.ng-valid-valid.ng-valid-email(name='contactForm')
+    md-toolbar.md-accent.md-tall._md.layout-column.md-default-theme.height-220(layout="column")
+      div.md-toolbar-tools.md-toolbar-tools-top.layout-space-between-center.layout-row(layout="row" layout-align="space-between center")
+        span.title.ng-binding 修改信息
+        button.md-icon-button.md-button.ng-scope.md-ink-ripple.md-default-theme(type="button" ng-click="vm.closeEditDialog()")
+          md-icon.ng-scope.md-font.icon-close.material-icons.md-default-theme(md-font-icon="icon-close")
+      div.md-toolbar-tools.md-toolbar-tools-middle.layout-align-center-center.layout-column.flex(layout="colum" layout-align="center center")
+        div.layout-align-center-center.layout-column(layout="column" layout-align="center center")
+          img.md-avatar.avatar.contact-avatar.huge.mt-55(src="{{vm.user.avatar}}")
+          md-button 更改头像
+
+    md-dialog-content.ms-scroll.ps.container.ps-theme-default(ms-scroll)
+      md-input-container.md-icon-float.md-block.md-icon-left.md-default-theme.md-input-has-value
+        label.ng-scope 姓名 (required)
+        md-icon.name.md-font.icon-account.material-icons.md-default-theme(md-font-icon="icon-account")
+        input#fullname.ng-pristine.ng-valid.md-input._md-autofocus.ng-not-empty.ng-valid-required.ng-touched(value="{{vm.user.fullname}}" type="text" ng-require)
+        .md-errors-spacer
+      md-input-container.md-icon-float.md-block.md-icon-left.md-default-theme.md-input-has-value
+        label.ng-scope 邮箱 (required)
+        md-icon.name.md-font.icon-account.material-icons.md-default-theme(md-font-icon="icon-email")
+        input#email.ng-pristine.ng-valid.md-input._md-autofocus.ng-not-empty.ng-valid-required.ng-touched(value="{{vm.user.email}}" type="text" ng-require)
+        .md-errors-spacer
+      md-input-container.md-icon-float.md-block.md-icon-left.md-default-theme.md-input-has-value.mb-0
+        label.ng-scope 学号 (required)
+        md-icon.name.md-font.icon-account.material-icons.md-default-theme(md-font-icon="icon-numeric-1-box")
+        input#sid.ng-pristine.ng-valid.md-input._md-autofocus.ng-not-empty.ng-valid-required.ng-touched(value="{{vm.user.sid}}" type="text" ng-require)
+        .md-errors-spacer
+      div.ng-scope.layout-align-center-center.layout-row(layout="row" layout-align="center center")
+        button#changePassword.md-accent.md-button.ng-scope.md-ink-ripple.md-default-theme(type="button" ng-click="vm.changePassword()") 更改密码
+      md-input-container.md-icon-float.md-block.md-icon-left.md-default-theme.md-input-has-value(ng-if="vm.showOrHide == true")
+        label.ng-scope 旧密码 (required)
+        md-icon.name.md-font.icon-account.material-icons.md-default-theme(md-font-icon="icon-key")
+        input#oldPassword.ng-pristine.ng-valid.md-input._md-autofocus.ng-not-empty.ng-valid-required.ng-touched(type="password" ng-require)
+        .md-errors-spacer
+      md-input-container.md-icon-float.md-block.md-icon-left.md-default-theme.md-input-has-value(ng-if="vm.showOrHide == true")
+        label.ng-scope 新密码 (required)
+        md-icon.name.md-font.icon-account.material-icons.md-default-theme(md-font-icon="icon-key")
+        input#newPassword.ng-pristine.ng-valid.md-input._md-autofocus.ng-not-empty.ng-valid-required.ng-touched(type="password" ng-require)
+        .md-errors-spacer
+      md-input-container.md-icon-float.md-block.md-icon-left.md-default-theme.md-input-has-value(ng-if="vm.showOrHide == true")
+        label.ng-scope 重复新密码 (required)
+        md-icon.name.md-font.icon-account.material-icons.md-default-theme(md-font-icon="icon-key")
+        input#repeatNewPassword.ng-pristine.ng-valid.md-input._md-autofocus.ng-not-empty.ng-valid-required.ng-touched(type="password" ng-require)
+        .md-errors-spacer
+
+
+
+    md-dialog-actions.layout-align-space-between-center.layout-row(layout="row" layout-align='space-between center')
+      div.layout-align-start-center.layout-row(layout="row" layout-align="start center")
+        button.send-button.md-accent.md-raised.md-button.ng-scope.md-ink-ripple.md-default-theme(type='submit' ng-click="vm.saveChanges()" ng-disabled="vm.isChanged == ture") 保存
+      div.layout-row(layout="row")
+        md-button(ng-click="vm.clearChanges()") 重置 
