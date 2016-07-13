@@ -24,7 +24,7 @@ mixin person-information
               md-icon.ma(md-font-icon="icon-key")
               .fs-18.grey-600-fg 权限
             .fs-16.pt-5.fw {{vm.user.role}}
-        div.p-12(layout="row" ng-show="vm.user.role == '学生'")
+        div.p-12(layout="row" ng-show="vm.user.role == 'student'")
           div(flex="50")
             div(layout="row" layout-align="start start")
               md-icon.ma(md-font-icon="icon-account-multiple")
@@ -49,7 +49,7 @@ mixin person-information
 
 
 mixin group-classmates
-  .about-sidebar(layout="column", flex="100" ng-show="vm.user.role == '学生' || vm.user.role == 'TA'")
+  .about-sidebar(layout="column", flex="100" ng-show="vm.user.role == 'student'")
     .profile-box.friends.md-whiteframe-1dp(layout="column")
       header.md-accent-bg(layout="row", layout-align="space-between center")
         .title 小组成员
