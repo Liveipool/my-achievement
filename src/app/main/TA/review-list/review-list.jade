@@ -1,6 +1,6 @@
 
 mixin table-container
-  md-content.list-container(layout="column")
+  md-content(layout="column")
     div(ng-repeat="group in class.groups")
       header.p-12.md-accent-bg(id="class{{class.id}}-group{{group.id}}")
         span 小组{{group.id}}
@@ -16,7 +16,6 @@ mixin table-container
           td 小组{{student.group}}
           td 90分
 
-
 mixin chart
   header.p-24.h-h
     .md-title 成绩
@@ -31,10 +30,17 @@ mixin chart
 
 mixin tab-content
   md-content.wrapper-bg.p-12(layout="row" layout-xs="column")
+    div.p-12(flex="100" flex-gt-xs="65")
+      div.white-bg.md-whiteframe-2dp.p-24.list-container.scrollable(ms-scroll)
+        +table-container
+
     div.p-12(flex="100" flex-gt-xs="35" layout="column")
       div.white-bg.md-whiteframe-2dp(layout="column")
-        header.p-24.h-h
+        header.ph-24.pv-12.h-h(layout="row" layout-align="space-between center")
           .md-title 作业{{vm.homework.id}}: {{vm.homework.title}}
+          md-button
+            span.light-blue-fg +评审分组
+
         div.ph-24.pv-12
           md-input-container
             label 小组
@@ -43,11 +49,6 @@ mixin tab-content
 
       div.white-bg.md-whiteframe-2dp.mt-24
         +chart
-
-
-    div.p-12(flex="100" flex-gt-xs="65")
-      div.white-bg.md-whiteframe-2dp.p-24
-        +table-container
 
 div#review-list.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
   header.header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")

@@ -76,20 +76,20 @@
         }
       },
 
-      isntAdmin: function(user) {
-        return user.role !== 'admin';
+      isAdmin: function(user) {
+        return user.role === 'admin';
       },
 
-      isntStudent: function(user) {
-        return user.role !== 'student';
+      isStudent: function(user) {
+        return user.role === 'student';
       },
 
-      isntTeacher: function(user) {
-        return user.role !== 'teacher';
+      isTeacher: function(user) {
+        return user.role === 'teacher';
       },
 
-      isntTA: function(user) {
-        return user.role !== 'ta';
+      isTA: function(user) {
+        return user.role === 'ta';
       },
 
       isToStateAuthenticated: function(toState) {

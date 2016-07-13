@@ -15,7 +15,7 @@ angular.module 'app.profile', []
           @user = @raw-user-data
           #有bug，这里会改变全局的user的role从而导致侧边栏消失
 
-          # _.update @user, 'role', (role)-> if role is 'student' then '学生' else if role is 'admin' then '管理员' else if role is 'ta' then 'TA' else if role is 'teacher' then '老师'
+          # _.update @user, 'role', (role)-> if role is 'student' then '学生' else if role is 'admin' then '管理员' else if role is 'ta' then '助教' else if role is 'teacher' then '老师'
 
           @bg = "bg" + Math.ceil(12 * (Math.random!))
 

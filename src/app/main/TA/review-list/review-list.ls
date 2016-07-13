@@ -11,24 +11,15 @@ angular.module 'app.TA'
       'content@app':
         template-url: 'app/main/TA/review-list/review-list.html'
         controller-as : 'vm'
-        controller: ($scope, $filter, $state-params, $state, $location, $anchor-scroll, Authentication, Interaction, homeworks, DTOptionsBuilder, users)!->
+        controller: ($scope, $filter, $state-params, $state, reviewService, Authentication, Interaction, homeworks, users)!->
 
-          @go-to-anchor = (c_id, g_id) ->
-            # body...
-            new-hash = "class" + c_id + "-group" + g_id
-            if $location.hash! !== new-hash
-              $location.hash new-hash
-            else
-              $anchor-scroll!
-          @test = (c_id,g_id) ->
-            console.log c_id + g_id
+          service = reviewService
+          auth = Authentication
+          @go-to-anchor = service.go-to-anchor
 
-
-
-          # $ "vertical-container-1" .scroll-unique!
           @homework = _.find homeworks.data, {'id': 1}
 
-          @user = Authentication.get-user!
+          @user = auth.get-user!
 
           @greeting = @user.fullname
 
@@ -36,31 +27,40 @@ angular.module 'app.TA'
 
           @theme = Interaction.get-bg-by-month 2
 
-          @student-users = _.filter users.user, 'class'
+          @student-users = service.get-student-users-by-class users.user
 
-
-          @_classes = _.groupBy @student-users, 'class'
-
-          # console.log @_classes
-          @classes = []
-          for id of @_classes
-            groups = []
-            _groups = _.groupBy @_classes[id], 'group'
-            for _id of _groups
-              groups.push {id: _id, members: _groups[_id]}
-            @classes.push {id: id, groups: groups, members: @_classes[id]}
-
-          console.log @classes
+          @classes = service.get-classes @student-users
 
           @selected = []
           i = @classes.length
           while i > 0
             @selected[i] = i.to-string!
             i--
-
-          console.log @selected
-
-          @top-index = 1
-
-
   }
+
+.factory 'reviewService', ($location, $anchor-scroll)->
+  service =
+    go-to-anchor: (class-id, group-id) ->
+      new-hash = "class" + class-id + "-group" + group-id
+      if $location.hash! !== new-hash
+        $location.hash new-hash
+      else
+        $anchor-scroll!
+
+    get-student-users-by-class: (users) ->
+      _.filter users, 'class'
+
+    get-classes: (student-users) ->
+      _classes = _.groupBy student-users, 'class'
+      # console.log _classes
+      classes = []
+      for id of _classes
+        groups = []
+        _groups = _.groupBy _classes[id], 'group'
+        for _id of _groups
+          groups.push {id: _id, members: _groups[_id]}
+        classes.push {id: id, groups: groups, members: _classes[id]}
+      return classes
+
+
+
