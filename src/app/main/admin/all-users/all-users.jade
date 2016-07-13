@@ -32,10 +32,17 @@ mixin all-students
         div(ng-repeat="class in classes")
           +table-section("{{class.className}}", "class.students", "stuColumnsByClass", ["sid", "fullname", "group"])
 
-div#admin-head(layout="column", ng-cloak)
-  header.header.md-accent-bg(layout="column", layout-align="end")
-    span.md-display-1.font-weight-300
-      | 用户浏览与编辑
+div#admin.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+  header.header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
+    .breadcrumb(layout='row' layout-align='start center')
+      md-icon.s16(md-font-icon='icon-home')
+      md-icon.s16.separator(md-font-icon='icon-chevron-right')
+      span {{vm.location}}
+      span.parent
+    span.md-display-1.font-weight-300(ng-class="vm.theme.fg")
+      | 欢迎回来,
+      |{{vm.greeting}}
+      |!
 
 div#admin-body(layout="column", ng-cloak)
   md-content(md-theme="default")
