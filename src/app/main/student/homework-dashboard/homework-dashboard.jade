@@ -49,7 +49,7 @@ mixin homework-widget-front
           md-icon(md-font-icon="icon-dots-vertical")
         md-menu-content
           +menu-item
-    div.p-24.widget-body(layout="column" layout-align="center center")
+    div.p-24.widget-body.h-180(layout="column" layout-align="center center")
       span.font-weight-500(ng-class="vm.fg[homework.classes[0].status]") {{homework.title}}
     div.ph-24.pv-12.widget-foot
       span 状态: {{vm.status[homework.classes[0].status]}}
@@ -88,14 +88,13 @@ mixin homework-list
 
 
 div#homework-dashboard.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
-
-  header.header.md-accent-bg.ph-24(layout="column" layout-align="end")
+  header.header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
     .breadcrumb(layout='row' layout-align='start center')
       md-icon.s16(md-font-icon='icon-home')
       md-icon.s16.separator(md-font-icon='icon-chevron-right')
       span {{vm.location}}
       span.parent
-    span.md-display-1.font-weight-300
+    span.md-display-1.font-weight-300(ng-class="vm.theme.fg")
       | 欢迎回来,
       |{{vm.greeting}}
       |!

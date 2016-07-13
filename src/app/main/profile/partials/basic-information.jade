@@ -9,36 +9,47 @@ mixin basic-information
 mixin person-information
   .about(layout="column", flex="100")
     .profile-box.info-box.general.md-whiteframe-1dp(layout="column")
-      header.md-accent-bg
+      header.md-accent-bg(layout="row" layout-align="space-between center")
         .title 基本信息
-      .content
-        div.pb-16(layout="row")
-          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title.big-font 姓名
-            .info.pt-10 {{vm.user.fullname}}
-          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title.big-font 学号
-            .info.pt-10 {{vm.user.sid}}
-          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title.big-font 性别
-            .info.pt-10 {{vm.user.gender}}
-        div.pb-16(layout="row")
-          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title.big-font 班级
-            .info.pt-10 {{vm.user.class}}班
-          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title.big-font 组号
-            .info.pt-10 第{{vm.user.group}}组
-          div(flex="100" flex-gt-sm="50" flex-gt-md="33")
-            .title.big-font 邮箱
-            .info.pt-10 {{vm.user.email}}
-        div(layout="row")
-          div
-            .title.big-font 个人简介
-            .info.pt-10 吃饭、睡觉、踢球、打代码
+        U.more.secodary-text.fs-15(ng-click = "vm.openEditDialog()") 修改信息
+      .content.p-12
+        div.p-12(layout="row")
+          div(flex="50")
+            div(layout="row" layout-align="start start")
+              md-icon.ma(md-font-icon="icon-account")
+              .fs-18.grey-600-fg 姓名
+            .fs-16.pt-5.fw {{vm.user.fullname}}
+          div(flex="50")
+            div(layout="row" layout-align="start start")
+              md-icon.ma(md-font-icon="icon-key")
+              .fs-18.grey-600-fg 权限
+            .fs-16.pt-5.fw {{vm.user.role}}
+        div.p-12(layout="row" ng-show="vm.user.role == 'student'")
+          div(flex="50")
+            div(layout="row" layout-align="start start")
+              md-icon.ma(md-font-icon="icon-account-multiple")
+              .fs-18.grey-600-fg 班级
+            .fs-16.pt-5.fw {{vm.user.class}}班
+          div(flex="50")
+            div(layout="row" layout-align="start start")
+              md-icon.ma(md-font-icon="icon-account-box")
+              .fs-18.grey-600-fg 组号
+            .fs-16.pt-5.fw 第{{vm.user.group}}组
+        div.p-12(layout="row")
+          div(flex="50")
+            div(layout="row" layout-align="start start")
+              md-icon.ma(md-font-icon="icon-email")
+              .fs-18.grey-600-fg 邮箱
+            .fs-16.pt-5.fw {{vm.user.email}}
+          div(flex="50" ng-show="vm.user.role == '学生' || vm.user.role == 'TA'")
+            div(layout="row" layout-align="start start")
+              md-icon.ma(md-font-icon="icon-numeric-1-box")
+              .fs-18.grey-600-fg 学号
+            .fs-16.pt-5.fw {{vm.user.sid}}
+
 
 mixin group-classmates
-  .about-sidebar(layout="column", flex="100")
+  .about-sidebar(layout="column", flex="100" ng-show="vm.user.role == 'student'")
     .profile-box.friends.md-whiteframe-1dp(layout="column")
       header.md-accent-bg(layout="row", layout-align="space-between center")
         .title 小组成员
@@ -57,7 +68,7 @@ mixin group-classmates
             img(src="assets/images/avatars/joyce.jpg")
 
 mixin TA
-  .about-sidebar(layout="column", flex="100")
+  .about-sidebar(layout="column", flex="100" ng-show="vm.user.role == 'TA' || vm.user.role == '老师'")
     .profile-box.friends.md-whiteframe-1dp(layout="column")
       header.md-accent-bg(layout="row", layout-align="space-between center")
         .title TA
