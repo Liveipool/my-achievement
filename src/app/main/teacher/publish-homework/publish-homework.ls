@@ -19,16 +19,14 @@ angular.module 'app.teacher'
               controller-as: 'vm'
 
               controller: ($state, Authentication, homeworks)!->
-                self = @
-                console.log @hw-obj
 
                 # header
                 @user = Authentication.get-user!
-                @greeting  = @user.fullname
-
+                @greeting  = @user.fullname + "老师"
+                @location = "发布作业"
+                
                 # hw-card header
-                @hw-num = homeworks.length
-                @current-hw-num = @hw-num + 1
+                @current-hw-num = homeworks.length + 1
 
                 @class-num = homeworks[0].classes.length
 
@@ -40,8 +38,9 @@ angular.module 'app.teacher'
                     end-time: ""
                     status: "present"
                   }
-                # datepicker
+                @classes = @class-detail
 
+                # datepicker
                 @hours = []
                 @mins = []
                 @start-hour = []
@@ -57,61 +56,58 @@ angular.module 'app.teacher'
 
                 # validator bools
                 @date-invalid = []
-                @date-empty = []
-                for from 0 to @class-num - 1
-                  @date-invalid[i$] = @date-empty[i$] = false
-                  @start-hour[i$] =  0
-                  @start-min[i$] = 0
-                  @end-hour[i$] =  0
-                  @end-min[i$] = 0
 
+                init-time = !~>
+                  for from 0 to @class-num - 1
+                    @date-invalid[i$] = false
+                    @start-hour[i$] = 0
+                    @start-min[i$] = 0
+                    @end-hour[i$] = 0
+                    @end-min[i$] = 0
+                init-time!
+                
                 # 从页面获取的数据
                 @hw-obj =
                   id: @current-hw-num
-                  title: "第"+ @current-hw-num + "次作业"
+                  title: ""
                   description: ""
                   class-detail: @class-detail
 
-                @classes = @hw-obj.class-detail
+                console.log @hw-obj
 
                 # 注：数据未保存
                 @Submit = !->
                    console.log 'Submit'
-                   if self.validator!
-                      $state.go 'app.teacher.homework.list'
-                   console.log "new-obj: ", self.hw-obj # hw-obj：待插入的数据
+                   console.log "new-obj: ", @hw-obj # TODO：待插入的数据
+                   if @validator!
+                      $state.go 'app.teacher.homework-list'
 
-                @Reset = !->
+                @Reset = !~>
                   console.log 'Reset'
-                  self.hw-obj.hw-title = ''
-                  self.hw-obj.hw-url = ''
-                  for each-class in self.hw-obj.class-detail
+                  @hw-obj.title = ''
+                  @hw-obj.description = ''
+                  for each-class in @hw-obj.class-detail
                     for k of each-class
-                      if k != 'classStatus' && k != 'classId'
+                      if k != 'status' && k != 'classId'
                         each-class[k] = ""
-                  console.log self.hw-obj
+                  init-time!
+                  console.log @hw-obj
 
                 @parse-class-detail = (class-detail) !->
                   for item in class-detail
-                    console.log item.start-time
-                    item.start-time.set-hours self.start-hour[i$]
-                    item.start-time.set-minutes self.start-min[i$]
-                    item.end-time.set-hours self.end-hour[i$]
-                    item.end-time.set-minutes self.end-min[i$]
+                    item.start-time.set-hours @start-hour[i$]
+                    item.start-time.set-minutes @start-min[i$]
+                    item.end-time.set-hours @end-hour[i$]
+                    item.end-time.set-minutes @end-min[i$]
 
                 @validator = ->
                   valid = true
-                  for item in self.hw-obj.class-detail
-                    if item.start-time == "" || item.end-time == ""
-                      self.date-empty[i$] = true
-                      valid = false
-                    else
-                      self.date-empty[i$] = false
-                      self.parse-class-detail self.hw-obj.class-detail
+                  for item in @hw-obj.class-detail
+                      @parse-class-detail @hw-obj.class-detail
                       if item.start-time >= item.end-time
-                        self.date-invalid[i$] = true
+                        @date-invalid[i$] = true
                         console.log "data invalid: ", i$
                         valid = false
-                      else self.date-invalid[i$] = false
-                  valid
+                      else @date-invalid[i$] = false
+                  valid       
     }
