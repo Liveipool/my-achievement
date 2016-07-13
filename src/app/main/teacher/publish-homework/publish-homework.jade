@@ -1,0 +1,71 @@
+mixin container-header
+    header.header.hw-header
+        p.title 作业{{vm.currentHwNum}}
+
+mixin form
+    form(ng-submit='vm.Submit()' name='form')
+        md-content(layout='row' layout-align='center center' layout-wrap)
+            +inputs
+            +gap
+            +class-detail
+            +buttons
+
+mixin inputs
+    md-content.md-padding(layout='row' layout-align='center center' layout-wrap flex='100')
+        +input('icon-pencil-box-outline', '作业标题', 'vm.hwObj.title')
+        +input('icon-link', '作业链接', 'vm.hwObj.description')
+
+mixin input(icon, label, ngModel)
+    md-input-container.md-icon-float.md-input-invalid.input-size(flex flex-gt-xs='45' layout='column')
+        md-icon.ng-scope.md-font.material-icons(md-font-icon=icon)
+        label=label
+        input(type='text' ng-model=ngModel required)
+
+mixin gap
+    div.gap
+
+mixin class-detail
+    md-content.padding-top-bt-35(layout='row' layout-align='center center' layout-wrap  flex='100' md-whiteframe='1')
+        md-card.date-card.bg-white(ng-repeat='class in vm.classes' flex flex-gt-xs='45' layout='column')
+            header.header.md-accent-bg.class-header.margin-bt-40 
+                div.title 教务{{class.classId}}班
+            +datepickers('开始日期', 'class.startTime', 'vm.startHour[$index]', 'vm.startMin[$index]')
+            +datepickers('结束日期', 'class.endTime', 'vm.endHour[$index]', 'vm.endMin[$index]')
+            +error
+
+mixin datepickers(label, ngModelDay, ngModelHour, ngModelMin)
+    div(layout='row')
+        md-input-container.margin-lf-7(flex='45')
+            label=label
+            md-datepicker.datepicker(md-placeholder="日期" ng-model=ngModelDay required)
+        md-input-container.margin-rt-40(flex='10')
+            label 时
+            md-select(ng-model=ngModelHour)
+                md-option(ng-repeat='hour in vm.hours' value='{{hour}}') {{hour}}     
+        md-input-container.margin-rt-40(flex='10')
+            label 分
+            md-select(ng-model=ngModelMin)
+                md-option(ng-repeat='min in vm.mins' value='{{min}}') {{min}}
+
+mixin buttons
+    md-content.md-padding(layout='row' layout-align='center center' flex="100" md-whiteframe='2')
+        md-button.md-raised.md-warn.margin-lf-rt-3(type='submit' ng-disabled='form.$invalid') 提交
+        md-button.md-raised.margin-lf-rt-3(ng-click='vm.Reset()') 重置
+
+mixin error
+    span.error-message(ng-show='vm.dateInvalid[$index]') 开始时间不能大于结束时间
+
+
+//--------------------------  主页面  ----------------------------
+div#header.page-layout.simple.fullwidth.doc-page.element-doc-page
+    .header.h-160(layout='column' layout-align='end start')
+        .breadcrumb(layout='row' layout-align='start center')
+            md-icon.s16(md-font-icon='icon-home')
+            md-icon.s16.separator(md-font-icon='icon-chevron-right')
+            span {{vm.location}}
+            span.parent
+        .title 欢迎回来 {{vm.greeting}}
+
+div#container
+    +container-header
+    +form

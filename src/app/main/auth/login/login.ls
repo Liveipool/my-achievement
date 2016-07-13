@@ -38,19 +38,3 @@ angular.module 'app.auth.login', []
             else
               @invalid-user = true
   }
-
-.run ($root-scope, $state, Authentication)!->
-  $root-scope.$on '$stateChangeStart', (event, to-state, to-params, from-state)!->
-
-    # console.log "state change start"
-    # 同步不同标签页之间的状态
-    if !Authentication.is-exists!
-
-      # console.log 'user isnt exists'
-      Authentication.get-cookie-user! .then (user)!~>
-        if user?
-          $state.go 'app.admin.users'
-
-        else if !user and to-state.name isnt 'app.login'
-          $state.go 'app.login'
-          event.prevent-default!

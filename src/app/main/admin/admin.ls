@@ -5,13 +5,14 @@ angular.module 'app.admin', []
 .config ($state-provider)!->
   $state-provider.state 'app.admin', {
     abstract: true
+    data:
+      role: 'admin'
   }
-
 .service 'userManager', ($resource, $root-scope)!->
   @reload-users = ->
     that = @
     # TODO: 向服务器发出请求获取所有user信息
-    console.warn "TODO: function reload-users in userManager"
+    # console.warn "TODO: function reload-users in userManager"
     $resource('app/data/admin/users.json').get!.$promise
       .then (result)->
         that.users-cache = result.data.users
@@ -97,7 +98,7 @@ angular.module 'app.admin', []
     if !(user.role !~= 'student' or (user.class and user.class !~= ''))
       @invalid-arr ||= []
       @invalid-arr.push "班级框"
-    
+
   @add-user-valid = (user)->
     @invalid-arr = []
     @uniform-valid user

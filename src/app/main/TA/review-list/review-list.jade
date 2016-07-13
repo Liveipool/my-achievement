@@ -1,0 +1,71 @@
+
+mixin table-container
+  md-content(layout="column")
+    div(ng-repeat="group in class.groups")
+      header.p-12.md-accent-bg(id="class{{class.id}}-group{{group.id}}")
+        span 小组{{group.id}}
+      table.simple
+        thead
+          th 学号
+          th 姓名
+          th 小组
+          th 评分
+        tbody(ng-repeat="student in group.members")
+          td {{student.sid}}
+          td {{student.fullname}}
+          td 小组{{student.group}}
+          td 90分
+
+mixin chart
+  header.p-24.h-h
+    .md-title 成绩
+  div.p-24(layout="row" layout-align="center")
+    div
+      c3chart(bindto-id="pie-chart{{class.id}}")
+        chart-column(column-id="60-70" column-values="40" column-type="pie")
+        chart-column(column-id="70-80" column-values="70" column-type="pie")
+        chart-column(column-id="80-90" column-values="20" column-type="pie")
+        chart-column(column-id="90-100" column-values="70" column-type="pie")
+        chart-pie(expand="true")
+
+mixin tab-content
+  md-content.wrapper-bg.p-12(layout="row" layout-xs="column")
+    div.p-12(flex="100" flex-gt-xs="65")
+      div.white-bg.md-whiteframe-2dp.p-24.list-container.scrollable(ms-scroll)
+        +table-container
+
+    div.p-12(flex="100" flex-gt-xs="35" layout="column")
+      div.white-bg.md-whiteframe-2dp(layout="column")
+        header.ph-24.pv-12.h-h(layout="row" layout-align="space-between center")
+          .md-title 作业{{vm.homework.id}}: {{vm.homework.title}}
+          md-button
+            span.light-blue-fg +评审分组
+
+        div.ph-24.pv-12
+          md-input-container
+            label 小组
+            md-select(ng-model="vm.selected[class.id]" ng-change="vm.goToAnchor(class.id, vm.selected[class.id])")
+              md-option(ng-repeat="group in class.groups" ng-value="group.id") 小组{{group.id}}
+
+      div.white-bg.md-whiteframe-2dp.mt-24
+        +chart
+
+div#review-list.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+  header.header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
+    .breadcrumb(layout='row' layout-align='start center')
+      md-icon.s16(md-font-icon='icon-home')
+      md-icon.s16.separator(md-font-icon='icon-chevron-right')
+      span {{vm.location}}
+      span.parent
+    span.md-display-1.font-weight-300(ng-class="vm.theme.fg")
+      | 欢迎回来,
+      |{{vm.greeting}}
+      |!
+
+  md-content(layout="column")
+    md-tabs.white-bg(md-dynamic-height)
+      md-tab(label="班级{{$index + 1}}" ng-repeat="class in vm.classes")
+        +tab-content
+
+
+

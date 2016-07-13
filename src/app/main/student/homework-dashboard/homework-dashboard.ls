@@ -3,8 +3,8 @@
 angular.module 'app.student'
 
 .config ($state-provider) !->
-  $state-provider.state 'app.student.homework.dashboard', {
-    url: '/homework/dashboard'
+  $state-provider.state 'app.student.homework-dashboard', {
+    url: '/homework-dashboard'
     resolve:
       homeworks: ($resource) ->
         $resource('app/data/homework/homeworks.json').get!.$promise
@@ -16,12 +16,14 @@ angular.module 'app.student'
 
     views:
       'content@app':
-        template-url: 'app/main/student/homework/dashboard/homework-dashboard.html'
+        template-url: 'app/main/student/homework-dashboard/homework-dashboard.html'
         controller-as : 'vm'
-        controller: ($scope, Authentication, homeworks, $mdDialog)!->
+        controller: ($scope, Authentication, homeworks, $mdDialog, Interaction)!->
           console.log "欢迎回来!"
           vm = @
           vm.user = Authentication.get-user!
+          vm.location = "作业列表"
+          vm.theme = Interaction.get-bg-by-month 2
 
           vm.greeting  = vm.user.fullname;
 
@@ -37,18 +39,26 @@ angular.module 'app.student'
             finish: "已结束"
 
           vm.fg =
-            future: "orange-fg"
+            future: "light-blue-fg"
             present: "red-fg"
-            finish: "light-blue-fg"
+            finish: "grey-fg"
+
+          vm.bg =
+            future: "light-blue-bg"
+            present: "red-bg"
+            finish: "grey-bg"
 
           vm.switch =
             future: true
             present: true
             finish: true
 
+          $scope.jump = (description)!->
+            window.open "http://www.baidu.com"
+
           $scope.showSubmitDialog = (id)!->
             $mdDialog.show {
-              templateUrl: 'app/main/student/homework/dashboard/submitDialog.html',
+              templateUrl: 'app/main/student/homework-dashboard/submitDialog.html',
               parent: angular.element(document.body),
               clickOutsideToClose: false,
               controller: ($scope, $mdDialog, FileUploader) !->
