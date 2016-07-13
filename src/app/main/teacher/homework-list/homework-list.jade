@@ -45,8 +45,8 @@ mixin class-time
 			small.content {{class.endTime | date: 'yyyy-MM-dd  HH:mm' }}
 
 mixin card-actions
-	md-card-actions(layout="row" layout-align="end center")
-		md-button(flex='33' ng-click='' ng-href="{{homework.classes[0].description}}" target="_blank") 作业链接
+	md-card-actions(layout="row" layout-align="start center")
+		md-button(flex='33' ng-click='' ng-href="{{homework.description}}" target="_blank") 作业链接
 		md-button(flex='33' ng-click='vm.editHomework(homework.id)') 编辑
 		md-button(flex='33' ng-click='vm.reviewHomework(homework.id)' ng-hide="homework.status == 'future'") 评审
 
