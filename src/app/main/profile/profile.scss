@@ -120,6 +120,66 @@
         }
     }
 
+    .about-tab {
+        max-width: 1200px;
+        .about {
+            padding: 8px;
+            .general {
+                .location {
+                    md-icon {
+                        line-height: 13px !important;
+                    }
+                }
+            }
+            .work {
+                .job {
+                    .company {
+                        padding: 0 16px 0 0;
+                        font-weight: 500;
+                    }
+                    .date {
+                        color: rgba(0, 0, 0, 0.54);
+                    }
+                }
+            }
+        }
+        .about-sidebar {
+            padding: 8px 8px 8px 32px;
+            .friends {
+                .content {
+                    .friend {
+                        padding: 4px;
+                    }
+                }
+            }
+            .groups {
+                .content {
+                    .group {
+                        margin-bottom: 16px;
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                        .logo {
+                            border: 1px solid rgba(0, 0, 0, 0.12);
+                            margin-right: 16px;
+                        }
+                        .name {
+                            font-weight: 500;
+                            font-size: 15px;
+                        }
+                        .category,
+                        .members {
+                            color: rgba(0, 0, 0, 0.54);
+                        }
+                        .members {
+                            margin-top: 16px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     md-tabs-wrapper {
         padding: 0px 24px;
     }
@@ -190,22 +250,36 @@
     .font-weight {
         font-weight: bold;
     }
+    .fw {
+        font-weight: bold;
+    }
+    // Font-size helpers
+    @for $i from 0 through 300 {
+        .font-size-#{$i},
+        .fs-#{$i} {
+            font-size: #{$i + 'px'} !important;
+        } 
+    }
+    .ma {
+        margin: 0 2px 0 0; 
+    }
 }
 
 
 // RESPONSIVE
 @media screen and (max-width: $layout-breakpoint-sm) {
-
     #profile {
-
         .header {
-
             .profile-image {
                 margin: 0 0 16px 0;
             }
-
             .name {
                 margin-bottom: 32px;
+            }
+        }
+        .about-tab {
+            .about-sidebar {
+                padding: 8px
             }
         }
     }
