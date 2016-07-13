@@ -1,4 +1,41 @@
-div#homework-review.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+
+mixin group-review
+	+group-title-due-info
+	.review-container.pv-12(layout="column")
+		//- ng-repeat here
+		+review
+
+mixin group-title-due-info
+	.group-title-due-info.ph-12.pt-12(layout='row' layout-align="space-between center")
+		.group group {{vm.user.group}}
+		.title homework.title
+		.due Due homework.endTime
+
+mixin review
+	.review.white-bg(layout="row")
+		+review-image
+		+review-user-info
+		+review-comment
+		+review-score
+
+mixin review-image
+	.image-box(flex='20') image-box
+
+mixin review-user-info
+	.user-info(flex='15' layout="column" layout-align="center center")
+		.name XXX
+		.sid 12345678
+
+mixin review-comment
+	.comment(flex='50')
+		input(type="text" placeholder="enter the comment")
+
+mixin review-score
+	.score(layout="column" layout-align="center center")
+		input(type="text" placeholder="0~100")
+		md-button submit
+
+#homework-review-header.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
 	header.header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
 		.breadcrumb(layout='row' layout-align='start center')
 			md-icon.s16(md-font-icon='icon-home')
@@ -9,7 +46,10 @@ div#homework-review.page-layout.simple.fullwidth.doc-page.element-doc-page(layou
 			| 欢迎回来,
 			|{{vm.greeting}}
 			|!
-	div
-		md-content.p-12.wrapper-bg
-			div#chart-container(layout="row")
-			div#homeworks-container
+
+#homework-review-container.p-12.wrapper-bg
+	md-tabs.p-12(md-dynamic-height)
+		md-tab(label="Group Review")
+				+group-review
+		md-tab(label="My Score")
+				//- +my-score

@@ -19,10 +19,13 @@ angular.module 'app.student'
         template-url: 'app/main/student/homework-review/homework-review.html'
         controller-as : 'vm'
         controller: ($scope, Authentication, $state, Interaction)!->
-          console.log \here
+
+          console.log "here is homework review"
+
           @user = Authentication.get-user!
           @location = "作业互评"
           @theme = Interaction.get-bg-by-month 2
           @greeting  = @user.fullname;
 
+          console.log "user: ", @user
   }
