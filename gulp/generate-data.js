@@ -33,7 +33,7 @@ gulp.task('prepare-data', function ()
 			student = jsf(schemas.student);
 			if (_.random(1))
 				delete student.TAscore;
-			console.log(student);
+			// console.log(student);
 			aClass.push(student);
 		}
 		classes.push(aClass);
@@ -51,9 +51,9 @@ gulp.task('prepare-data', function ()
 			aClass.class_id = j;
 			aClass.description = "www.baidu.com"
 			aClass.startTime = faker.date.between(moment().subtract(18, 'days').toDate(), moment().add(2, 'days').toDate());
-			console.log(aClass.startTime);
+			// console.log(aClass.startTime);
 			aClass.endTime = moment(aClass.startTime).add(_.random(4, 12), 'days').toDate();
-			console.log(aClass.endTime);
+			// console.log(aClass.endTime);
 			if (moment().isBefore(aClass.startTime)) {
 				aClass.status = "future";
 			} else if (moment().isBefore(aClass.endTime)) {
