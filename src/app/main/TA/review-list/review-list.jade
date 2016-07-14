@@ -2,7 +2,7 @@
 mixin table-container
   md-content(layout="column")
     div(ng-repeat="group in class.groups")
-      header.p-12.md-accent-bg(id="class{{class.id}}-group{{group.id}}")
+      header.p-12.md-accent-bg(id="class{{class.id}}-group{{group.id}}" layout="row" layout-align="center")
         span 小组{{group.id}}
       table.simple
         thead
@@ -31,18 +31,17 @@ mixin chart
 mixin tab-content
   md-content.wrapper-bg.p-12(layout="row" layout-xs="column")
     div.p-12(flex="100" flex-gt-xs="65")
-      div.white-bg.md-whiteframe-2dp.p-24.list-container.scrollable(ms-scroll)
+      div.white-bg.md-whiteframe-2dp.list-container.scrollable(ms-scroll)
         +table-container
 
     div.p-12(flex="100" flex-gt-xs="35" layout="column")
       div.white-bg.md-whiteframe-2dp(layout="column")
         header.ph-24.pv-12.h-h(layout="row" layout-align="space-between center")
           .md-title 作业{{vm.homework.id}}: {{vm.homework.title}}
-          md-button
-            span.light-blue-fg +评审分组
 
-        div.ph-24.pv-12
-          md-input-container
+
+        div.ph-24.pv-12(layout="column")
+          md-input-container(flex="100")
             label 小组
             md-select(ng-model="vm.selected[class.id]" ng-change="vm.goToAnchor(class.id, vm.selected[class.id])")
               md-option(ng-repeat="group in class.groups" ng-value="group.id") 小组{{group.id}}
@@ -50,8 +49,8 @@ mixin tab-content
       div.white-bg.md-whiteframe-2dp.mt-24
         +chart
 
-div#review-list.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
-  header.header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
+div#header-container.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+  header.layout-header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
     .breadcrumb(layout='row' layout-align='start center')
       md-icon.s16(md-font-icon='icon-home')
       md-icon.s16.separator(md-font-icon='icon-chevron-right')
