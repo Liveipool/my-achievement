@@ -3,13 +3,13 @@
     {
       "role": "student",
       "sid": 94971446,
-      "username": "94971446",
+      "username": "12345678",
       "fullname": "郝肥如",
       "avatar": "assets/images/avatars/james.jpg",
       "class": 1,
       "group": 1,
       "email": "94971446@qq.com",
-      "password": "123456"
+      "password": "12345678"
     },
     {
       "role": "student",

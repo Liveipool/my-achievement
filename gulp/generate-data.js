@@ -48,7 +48,7 @@ gulp.task('prepare-data', function ()
 		review.reviewer.role = reviewer.role;
 
 
-	  	
+
 		review.homework_id = i;
 		review.score = _.random(60, 100);
 		if (reviewer.role == 'teacher')
@@ -65,7 +65,7 @@ gulp.task('prepare-data', function ()
 	  }
 	})
 	// console.log(reviewArr)
-	fs.outputFileSync(conf.paths.src + '/app/data/faker/reviews.json', JSON.stringify({data: reviewArr}));
+	fs.outputFileSync(conf.paths.src + '/app/data/review/reviews.json', JSON.stringify({data: reviewArr}));
 
 
 	// var schemas = {}

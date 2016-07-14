@@ -19,32 +19,31 @@ div#homework-dashboard.page-layout.simple.fullwidth.doc-page.element-doc-page(la
             <!-- Front -->
             ms-widget-front.white-bg
 
-                .ph-16.border-bottom( layout="row" layout-align="space-between center")
-                    .h3 {{vm.widget7.title}}
 
-                    .pv-16
+                .ph-24.border-bottom( layout="row" layout-align="space-between center")
+                    .md-title {{vm.widget7.title}}
+
+                    .pv-24
                         md-select.simplified( ng-model="vm.widget7.currentRange" aria-label="Change range")
                             md-option( ng-repeat="(key, range) in vm.widget7.ranges" value="{{key}}") {{range}}
 
 
-
-
-                table.simple( ms-responsive-table)
+                table.simple
                     thead
-                        tr
+                        tr.ph-24
                             th 排名
                             th 学号
                             th 姓名
                             th 小组
                             th 分数
                     tbody
-                        tr(ng-repeat="homework in vm.widget7.ranklists[vm.widget7.currentRange]  | limitTo: 10 track by $index ")
+                        tr.ph-24(ng-repeat="homework in vm.widget7.ranklists[vm.widget7.currentRange]  | limitTo: 10 track by $index ")
                             td {{$index+1}}
-                            td {{homework.reviewee.username}} 
-                            td {{homework.reviewee.fullname}} 
-                            td {{homework.group}} 
+                            td {{homework.reviewee.username}}
+                            td {{homework.reviewee.fullname}}
+                            td {{homework.group}}
                             td {{homework.score}}
-                            
+
 
             <!-- / Front -->
 
@@ -54,14 +53,14 @@ div#homework-dashboard.page-layout.simple.fullwidth.doc-page.element-doc-page(la
             <!-- Front -->
             ms-widget-front.white-bg
 
-                .ph-16.border-bottom( layout="row" layout-align="space-between center")
-                    .pv-20.h3 {{vm.widget6.title}}
-                    
-                .p-16
+                .ph-24.border-bottom( layout="row" layout-align="space-between center")
+                    .md-title.pv-24 {{vm.widget6.title}}
+
+                .p-24
                     nvd3.h-400( config="vm.widget6.mainChart.config"
                                           options="vm.widget6.mainChart.options"
                                           data="vm.widget6.mainChart.data")
-                .pv-8.mh-16.border-top(layout="row" layout-align="start center" layout-wrap)
+                .pv-8.mh-24.border-top(layout="row" layout-align="start center" layout-wrap)
                     .pv-8.border-right(layout="column" layout-align="center center" flex="100" flex-gt-xs="50")
                         span.font-size-32 {{vm.numOfSixtyToSeventy}}
                         span.h4 60~70分科目数量
@@ -69,7 +68,7 @@ div#homework-dashboard.page-layout.simple.fullwidth.doc-page.element-doc-page(la
                         span.font-size-32 {{vm.numOfSeventyToEighty}}
                         span.h4 70~80分科目数量
 
-                .pv-8.mh-16.border-top(layout="row" layout-align="start center" layout-wrap)
+                .pv-8.mh-24.border-top(layout="row" layout-align="start center" layout-wrap)
                     .pv-8.border-right(layout="column" layout-align="center center" flex="100" flex-gt-xs="50")
                         span.font-size-32 {{vm.numOfEightyToNinety}}
                         span.h4 80~90分科目数量
