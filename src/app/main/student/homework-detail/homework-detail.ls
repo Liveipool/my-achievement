@@ -131,7 +131,7 @@ angular.module 'app.student'
                     final-reviews = _.filter vm.reviews, (review)->
                         review.reviewer.role == 'teacher'
 
-                    for i in [1 to 20]
+                    for i in [1 to final-reviews.length]
                         hw_ranklist = _.filter final-reviews, (review)->
                                     review.homework_id == i and review.class == user.class
                         vm.widget7.ranklists['作业'+i] = _.order-by hw_ranklist, 'score', 'desc'
