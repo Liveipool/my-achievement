@@ -1,0 +1,78 @@
+
+div#homework-dashboard.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+
+  header.header.md-accent-bg.ph-24(layout="column" layout-align="end")
+    .breadcrumb(layout='row' layout-align='start center')
+      md-icon.s16(md-font-icon='icon-home')
+      md-icon.s16.separator(md-font-icon='icon-chevron-right')
+      span {{vm.location}}
+      span.parent
+    span.md-display-1.font-weight-300
+      | 欢迎回来,
+      |{{vm.greeting}}
+      |!
+
+  .content.p-12
+    .widget-group( layout="row" flex="100" layout-wrap)
+        ms-widget(layout="column" flex="100" flex-gt-sm="50")
+
+            <!-- Front -->
+            ms-widget-front.white-bg
+
+
+                .ph-24.border-bottom( layout="row" layout-align="space-between center")
+                    .md-title {{vm.widget7.title}}
+
+                    .pv-24
+                        md-select.simplified( ng-model="vm.widget7.currentRange" aria-label="Change range")
+                            md-option( ng-repeat="(key, range) in vm.widget7.ranges" value="{{key}}") {{range}}
+
+
+                table.simple
+                    thead
+                        tr.ph-24
+                            th 排名
+                            th 学号
+                            th 姓名
+                            th 小组
+                            th 分数
+                    tbody
+                        tr.ph-24(ng-repeat="homework in vm.widget7.ranklists[vm.widget7.currentRange]  | limitTo: 10 track by $index ")
+                            td {{$index+1}}
+                            td {{homework.reviewee.username}}
+                            td {{homework.reviewee.fullname}}
+                            td {{homework.group}}
+                            td {{homework.score}}
+
+
+            <!-- / Front -->
+
+
+        ms-widget( layout="column" flex="100" flex-gt-sm="50")
+
+            <!-- Front -->
+            ms-widget-front.white-bg
+
+                .ph-24.border-bottom( layout="row" layout-align="space-between center")
+                    .md-title.pv-24 {{vm.widget6.title}}
+
+                .p-24
+                    nvd3.h-400( config="vm.widget6.mainChart.config"
+                                          options="vm.widget6.mainChart.options"
+                                          data="vm.widget6.mainChart.data")
+                .pv-8.mh-24.border-top(layout="row" layout-align="start center" layout-wrap)
+                    .pv-8.border-right(layout="column" layout-align="center center" flex="100" flex-gt-xs="50")
+                        span.font-size-32 {{vm.numOfSixtyToSeventy}}
+                        span.h4 60~70分科目数量
+                    .pv-8(layout="column" layout-align="center center" flex="100" flex-gt-xs="50")
+                        span.font-size-32 {{vm.numOfSeventyToEighty}}
+                        span.h4 70~80分科目数量
+
+                .pv-8.mh-24.border-top(layout="row" layout-align="start center" layout-wrap)
+                    .pv-8.border-right(layout="column" layout-align="center center" flex="100" flex-gt-xs="50")
+                        span.font-size-32 {{vm.numOfEightyToNinety}}
+                        span.h4 80~90分科目数量
+                    .pv-8(layout="column" layout-align="center center" flex="100" flex-gt-xs="50")
+                        span.font-size-32 {{vm.numOfNinetyToFull}}
+                        span.h4 90~100分科目数量
+
