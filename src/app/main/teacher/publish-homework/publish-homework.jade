@@ -1,48 +1,47 @@
 mixin container-header
-    header.header.hw-header
-        p.title 作业{{vm.currentHwNum}}
+    header.p-24
+        .title 作业{{vm.currentHwNum}}
 
 mixin form
     form(ng-submit='vm.Submit()' name='form')
         md-content(layout='row' layout-align='center center' layout-wrap)
             +inputs
-            +gap
             +class-detail
             +buttons
 
 mixin inputs
-    md-content.md-padding(layout='row' layout-align='center center' layout-wrap flex='100')
-        +input('icon-pencil-box-outline', '作业标题', 'vm.hwObj.title')
-        +input('icon-link', '作业链接', 'vm.hwObj.description')
+    md-content.p-12.wrapper-bg(layout='row' layout-align='center center' layout-wrap flex='100')
+        div.p-12(layout="row" flex="100" flex-gt-xs="50")
+            +input('icon-pencil-box-outline', '作业标题', 'vm.hwObj.title')
+        div.p-12(layout="row" flex="100" flex-gt-xs="50")
+            +input('icon-link', '作业链接', 'vm.hwObj.description')
 
 mixin input(icon, label, ngModel)
-    md-input-container.md-icon-float.md-input-invalid.input-size(flex flex-gt-xs='45' layout='column')
+    md-input-container.md-icon-float.md-input-invalid.input-size(flex="100" layout='column')
         md-icon.ng-scope.md-font.material-icons(md-font-icon=icon)
         label=label
         input(type='text' ng-model=ngModel required)
 
-mixin gap
-    div.gap
-
 mixin class-detail
-    md-content.padding-top-bt-35(layout='row' layout-align='center center' layout-wrap  flex='100' md-whiteframe='1')
-        md-card.date-card.bg-white(ng-repeat='class in vm.classes' flex flex-gt-xs='45' layout='column')
-            header.header.md-accent-bg.class-header.margin-bt-40 
-                div.title 教务{{class.classId}}班
-            +datepickers('开始日期', 'class.startTime', 'vm.startHour[$index]', 'vm.startMin[$index]')
-            +datepickers('结束日期', 'class.endTime', 'vm.endHour[$index]', 'vm.endMin[$index]')
-            +error
+    md-content.p-12.wrapper-bg(layout='row' layout-wrap flex='100')
+        div.p-12(layout="row" flex="100" flex-gt-xs="50" ng-repeat="class in vm.classes")
+            div.white-bg.md-whiteframe-2dp(layout="column" flex="100")
+                header.md-accent-bg.ph-24.pv-12
+                    span 班级{{class.classId}}
+                +datepickers('开始日期', 'class.startTime', 'vm.startHour[$index]', 'vm.startMin[$index]')
+                +datepickers('结束日期', 'class.endTime', 'vm.endHour[$index]', 'vm.endMin[$index]')
+                +error
 
 mixin datepickers(label, ngModelDay, ngModelHour, ngModelMin)
-    div(layout='row')
-        md-input-container.margin-lf-7(flex='45')
+    div.pv-12.pr-24(layout='row')
+        md-input-container(flex='50' layout="row")
             label=label
-            md-datepicker.datepicker(md-placeholder="日期" ng-model=ngModelDay required)
-        md-input-container.margin-rt-40(flex='10')
+            md-datepicker.datepicker.pr-0(md-placeholder="日期" ng-model=ngModelDay required flex="100")
+        md-input-container.hour(flex='25')
             label 时
             md-select(ng-model=ngModelHour)
-                md-option(ng-repeat='hour in vm.hours' value='{{hour}}') {{hour}}     
-        md-input-container.margin-rt-40(flex='10')
+                md-option(ng-repeat='hour in vm.hours' value='{{hour}}') {{hour}}
+        md-input-container(flex='25')
             label 分
             md-select(ng-model=ngModelMin)
                 md-option(ng-repeat='min in vm.mins' value='{{min}}') {{min}}
@@ -57,15 +56,15 @@ mixin error
 
 
 //--------------------------  主页面  ----------------------------
-div#header.page-layout.simple.fullwidth.doc-page.element-doc-page
-    .header.h-160(layout='column' layout-align='end start')
+div#header-container.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+    header.header.ph-24(layout='column' layout-align='end start' ng-class="vm.theme.bg")
         .breadcrumb(layout='row' layout-align='start center')
             md-icon.s16(md-font-icon='icon-home')
             md-icon.s16.separator(md-font-icon='icon-chevron-right')
             span {{vm.location}}
             span.parent
-        .title 欢迎回来 {{vm.greeting}}
+        .title(ng-class="vm.theme.fg") 欢迎回来, {{vm.greeting}}!
 
-div#container
+div#publish-homework-container.wrapper-bg
     +container-header
     +form
