@@ -2,7 +2,7 @@ include ./admin-widget.jade
 
 //- Tabs展示的第一个页面，展示的是所有用户信息
 mixin all-users
-  md-content.p-12
+  md-content.p-12.rank
     md-card.m-12
       md-content(flex, layout="column" style="max-height: {{widgetHeight}}px", ms-scroll)
         +table-section("管理员", "admin", "adColumns", ["username", "fullname", "email"])
