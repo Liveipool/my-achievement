@@ -38,8 +38,7 @@ mixin tab-content
       div.white-bg.md-whiteframe-2dp(layout="column")
         header.ph-24.pv-12.h-h(layout="row" layout-align="space-between center")
           .md-title 作业{{vm.homework.id}}: {{vm.homework.title}}
-          md-button
-            span.light-blue-fg +评审分组
+
 
         div.ph-24.pv-12(layout="column")
           md-input-container(flex="100")
@@ -50,8 +49,8 @@ mixin tab-content
       div.white-bg.md-whiteframe-2dp.mt-24
         +chart
 
-div#review-list.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
-  header.header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
+div#header-container.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+  header.layout-header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
     .breadcrumb(layout='row' layout-align='start center')
       md-icon.s16(md-font-icon='icon-home')
       md-icon.s16.separator(md-font-icon='icon-chevron-right')

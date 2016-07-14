@@ -5,19 +5,20 @@ angular.module 'app.student'
 .config ($state-provider) !->
     $state-provider.state 'app.student.homework-detail', {
         url: '/homework-detail'
-        resolve: 
+        resolve:
             result: (api-resolver) -> api-resolver.resolve 'reviews@get'
             user: (Authentication)-> Authentication.getUser!
         views:
-            'content@app': 
+            'content@app':
                 template-url: 'app/main/student/homework-detail/homework-detail.html'
                 controller-as: 'vm'
-                controller: (result, user)!->
+                controller: (result, user, Interaction)!->
                     vm = @
                     vm.reviews = result.data
                     vm.user = user
                     vm.greeting = vm.user.fullname
                     vm.location = '作业详情'
+                    vm.theme = Interaction.get-bg-by-month 2
                     username = vm.user.username
                     # console.log vm.reviews
                     console.log user
@@ -34,8 +35,8 @@ angular.module 'app.student'
                     console.log homeworks
                     homeworks.forEach (homework)!->
                         console.log homework.reviewer
-                        if (homework.reviewer.role != 'teacher') 
-                            return 
+                        if (homework.reviewer.role != 'teacher')
+                            return
 
                         score = homework.finalScore
 
@@ -53,22 +54,22 @@ angular.module 'app.student'
                     # console.log vm.num-of-eighty-to-ninety
                     vm.widget6 = {
                         title       : '作业成绩分布'
-                        mainChart   : 
-                            config : 
+                        mainChart   :
+                            config :
                                 refreshDataOnly: true
                                 deepWatchData  : true
-                        
-                            options: 
-                                chart: 
+
+                            options:
+                                chart:
                                     type        : 'pieChart',
                                     color       : ['#f44336', '#9c27b0', '#03a9f4', '#e91e63']
                                     height      : 400
-                                    margin      : 
+                                    margin      :
                                         top   : 0
                                         right : 0
                                         bottom: 0
                                         left  : 0
-                                    
+
                                     donut       : true
                                     clipEdge    : true
                                     cornerRadius: 0
@@ -78,7 +79,7 @@ angular.module 'app.student'
                                                     d.label
                                     y           : (d)->
                                         return d.value
-                                    tooltip     : 
+                                    tooltip     :
                                         gravity: 's'
                                         classes: 'gravity-s'
                             data   : [
@@ -105,7 +106,7 @@ angular.module 'app.student'
                             ]
 
                     }
- 
+
 
 
                     vm.widget7 = {
@@ -136,6 +137,6 @@ angular.module 'app.student'
                         vm.widget7.ranklists['作业'+i] = _.order-by hw_ranklist, 'score', 'desc'
 
                     # console.log vm.widget7.ranklists['HW1']
-                            
+
                     # console.log vm.widget7.ranklists
     }

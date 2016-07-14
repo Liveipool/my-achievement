@@ -1,13 +1,13 @@
 
-div#homework-dashboard.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+div#header-container.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
 
-  header.header.md-accent-bg.ph-24(layout="column" layout-align="end")
+  header.header.layout-header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
     .breadcrumb(layout='row' layout-align='start center')
       md-icon.s16(md-font-icon='icon-home')
       md-icon.s16.separator(md-font-icon='icon-chevron-right')
       span {{vm.location}}
       span.parent
-    span.md-display-1.font-weight-300
+    span.md-display-1.font-weight-300(ng-class="vm.theme.fg")
       | 欢迎回来,
       |{{vm.greeting}}
       |!

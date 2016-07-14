@@ -18,13 +18,14 @@ angular.module 'app.teacher'
               template-url: 'app/main/teacher/publish-homework/publish-homework.html'
               controller-as: 'vm'
 
-              controller: ($state, Authentication, homeworks)!->
+              controller: ($state, Authentication, homeworks, Interaction)!->
 
                 # header
                 @user = Authentication.get-user!
                 @greeting  = @user.fullname + "老师"
                 @location = "发布作业"
-                
+                @theme = Interaction.get-bg-by-month 2
+
                 # hw-card header
                 @current-hw-num = homeworks.length + 1
 
@@ -65,7 +66,7 @@ angular.module 'app.teacher'
                     @end-hour[i$] = 0
                     @end-min[i$] = 0
                 init-time!
-                
+
                 # 从页面获取的数据
                 @hw-obj =
                   id: @current-hw-num
@@ -109,5 +110,5 @@ angular.module 'app.teacher'
                         console.log "data invalid: ", i$
                         valid = false
                       else @date-invalid[i$] = false
-                  valid       
+                  valid
     }
