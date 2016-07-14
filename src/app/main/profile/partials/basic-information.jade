@@ -4,7 +4,6 @@ mixin basic-information
       +person-information
     .p-12(flex-gt-md="30" flex-gt-sm="30" flex="100")
       +group-classmates
-      //- +TA
 
 mixin person-information
   .about(layout="column", flex="100")
@@ -18,34 +17,29 @@ mixin person-information
             div(layout="row" layout-align="start start")
               md-icon.ma(md-font-icon="icon-account")
               .fs-18.grey-600-fg 姓名
-            .fs-16.pt-5.fw {{vm.user.fullname}}
+            .fs-16.pt-5.pl-5.fw {{vm.user.fullname}}
           div(flex="50")
-            div(layout="row" layout-align="start start")
-              md-icon.ma(md-font-icon="icon-key")
-              .fs-18.grey-600-fg 权限
-            .fs-16.pt-5.fw {{vm.user.role}}
+            div(layout="row" layout-align="start start" ng-if="vm.user.role === 'student' || vm.user.role === 'ta'")
+              md-icon.ma(md-font-icon="icon-book")
+              .fs-18.grey-600-fg 学号
+            .fs-16.pt-5.pl-5.fw {{vm.user.sid}}
         div.p-12(layout="row" ng-show="vm.user.role == 'student'")
           div(flex="50")
             div(layout="row" layout-align="start start")
               md-icon.ma(md-font-icon="icon-account-multiple")
               .fs-18.grey-600-fg 班级
-            .fs-16.pt-5.fw {{vm.user.class}}班
+            .fs-16.pt-5.pl-5.fw {{vm.user.class}}班
           div(flex="50")
             div(layout="row" layout-align="start start")
               md-icon.ma(md-font-icon="icon-account-box")
-              .fs-18.grey-600-fg 组号
-            .fs-16.pt-5.fw 第{{vm.user.group}}组
+              .fs-18.grey-600-fg 小组
+            .fs-16.pt-5.pl-5.fw 第{{vm.user.group}}组
         div.p-12(layout="row")
           div(flex="50")
             div(layout="row" layout-align="start start")
               md-icon.ma(md-font-icon="icon-email")
               .fs-18.grey-600-fg 邮箱
-            .fs-16.pt-5.fw {{vm.user.email}}
-          div(flex="50" ng-show="vm.user.role == '学生' || vm.user.role == 'TA'")
-            div(layout="row" layout-align="start start")
-              md-icon.ma(md-font-icon="icon-numeric-1-box")
-              .fs-18.grey-600-fg 学号
-            .fs-16.pt-5.fw {{vm.user.sid}}
+            .fs-16.pt-5.pl-5.fw {{vm.user.email}}
 
 
 mixin group-classmates
