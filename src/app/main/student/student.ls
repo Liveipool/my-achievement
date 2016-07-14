@@ -32,6 +32,25 @@ angular.module 'app.student', ['angularFileUpload']
     reviews-id = [review for review in reviews when review.homework_id ~= id]
     Promise.resolve reviews-id
 
+  # gr means group review and ms means my score 
   @reviews-filter-by-username = (reviews, username) ->
-    reviews-username = [review for review in reviews when review.reviewer.username ~= username]
-    Promise.resolve reviews-username
+    reviews-username-gr = [review for review in reviews when review.reviewer.username ~= username]
+    reviews-username-ms = [review for review in reviews when review.reviewee.username ~= username]
+    Promise.resolve { "gr" : reviews-username-gr, "ms" : reviews-username-ms }
+
+
+  @cancle-update-review = ->
+    # reload-reviews then the change is undo in the controller
+    console.log "cancle-update-review!"
+    @reload-reviews!
+
+  @add-review = (review) ->
+    # TODO: add-review
+    console.log "add-review!"
+    @reload-reviews!
+
+  @update-review = (review) ->
+    #TODO: update-review
+    console.log "update-review!"
+    @reload-reviews!
+

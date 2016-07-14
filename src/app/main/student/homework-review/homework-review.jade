@@ -1,46 +1,5 @@
-
-mixin group-review
-	+group-title-due-info
-	.review-container.pv-12(layout="column" ng-repeat="review in vm.reviews")
-		//- ng-repeat here
-		+review
-
-mixin group-title-due-info
-	.group-title-due-info.ph-12.pt-12(layout='row' layout-align="space-between center")
-		.group group {{vm.user.group}}
-		.title 第{{vm.homeworkId}}次作业
-		.due {{vm.dateTime}}
-
-mixin review
-	.review.white-bg(layout="row")
-		+review-image
-		+review-user-info
-		+review-comment
-		+review-score
-
-mixin review-image
-	.image-box(flex='20') image-box
-
-mixin review-user-info
-	.user-info(flex='15' layout="column" layout-align="center center")
-		.name {{review.reviewee.fullname}}
-		.sid {{review.reviewee.username}}
-
-mixin review-comment
-	.comment(flex='50')
-		input(type="text" placeholder="enter the comment" ng-model="review.comment")
-
-mixin review-score
-	.score(layout="column" layout-align="space-around space-around")
-		input(type="text" placeholder="0~100" ng-model="review.score")
-		.submit-score(layout="column" ng-hide="review.score")
-			md-button submit
-		.edit-score(layout="column")
-			md-button edit
-		.editing-score(layout="column")
-			md-button update
-			md-button cancle
-
+include ./partials/group-review.jade
+include ./partials/my-score.jade
 
 #homework-review-header.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
 	header.header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
@@ -59,4 +18,4 @@ mixin review-score
 		md-tab(label="Group Review")
 				+group-review
 		md-tab(label="My Score")
-				//- +my-score
+				+my-score
