@@ -23,6 +23,7 @@ mixin change-password
 
 
 md-dialog.contact-dialog#dialog
+
   form(name="informationForm")
     md-toolbar.md-accent.md-tall.height-220(layout="column")
       header.title.ph-24.pv-12.md-toolbar-tools(layout="row" layout-align="space-between center" )
@@ -47,17 +48,19 @@ md-dialog.contact-dialog#dialog
       md-input-container.mb-0
         label(for="email") 邮箱
         md-icon(md-font-icon="icon-email")
-        input(type="email" name="email" value="{{vm.user.email}}")
+        input(type="email" name="email" value="{{vm.user.email}}" required)
 
-      md-input-container.mb-5(ng-if="vm.user.role === 'student'")
+      md-input-container.mb-5(ng-if="vm.user.role === 'student' || vm.user.role === 'ta'")
         label(for="sid") 学号
         md-icon(md-font-icon="icon-book")
-        input(type="text" name="sid" value="{{vm.user.sid}}")
+        input(type="text" name="sid" value="{{vm.user.sid}}" required)
+
 
       +change-password
 
-    md-dialog-actions.p-12(layout="row" layout-align="space-between center")
+    div.p-12.pt-0.wrapper-bg(layout="row" layout-align="space-between center")
       md-button.raised(ng-click="vm.addTest()") 保存
+      md-button.raised(type="reset") 重置
 
 
 
