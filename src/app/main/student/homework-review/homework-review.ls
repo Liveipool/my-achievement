@@ -31,22 +31,21 @@ angular.module 'app.student'
 
           # functions of the buttons
           @submit = (review)->
-            if 0 < review.score and review.score <= 100 and review.comment != ""
-              review-manager.add-review review
+            if review-manager.validator review
               review.comment = review.temp-comment
               review.score   = review.temp-score
+              review-manager.add-review review
               review.editing = false
-            else
-              alert "error"
 
           @edit = (review) ->
             review.editing = true
 
           @update = (review) ->
-            review-manager.update-review review
-            review.comment = review.temp-comment
-            review.score   = review.temp-score
-            review.editing = false
+            if review-manager.validator review
+              review.comment = review.temp-comment
+              review.score   = review.temp-score
+              review-manager.update-review review
+              review.editing = false
 
           @cancle = (review) ->
             review-manager.cancle-update-review review

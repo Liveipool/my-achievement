@@ -54,3 +54,14 @@ angular.module 'app.student', ['angularFileUpload']
     console.log "update-review!"
     @reload-reviews!
 
+  @validator = (review) ->
+    console.log review
+
+    temp-score = parse-int review.temp-score, 10
+    console.log typeof temp-score, temp-score
+
+    if 0 < temp-score && temp-score <= 100 && review.temp-comment
+      console.log \pass
+      return true
+    console.log \fail
+    return false
