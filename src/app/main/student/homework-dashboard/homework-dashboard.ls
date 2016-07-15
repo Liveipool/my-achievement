@@ -11,7 +11,8 @@ angular.module 'app.student'
           .then (result)->
             homeworks = result.data
             Promise.resolve homeworks
-
+    data:
+      role: 'student'
 
     views:
       'content@app':
@@ -36,9 +37,9 @@ angular.module 'app.student'
             finish: "已结束"
 
           vm.fg =
-            future: "orange-fg"
+            future: "light-blue-fg"
             present: "red-fg"
-            finish: "light-blue-fg"
+            finish: "grey-fg"
 
           vm.switch =
             future: true
@@ -47,14 +48,14 @@ angular.module 'app.student'
 
           vm.score = "95, 90, 100, 88, 90, 95, 94, 90, 90, 95"
 
-          vm.rank = "30,200,100,400,150,250"
+          vm.rank = "10, 30, 60, 40, 3, 45, 32, 12, 65, 43"
 
           $scope.jump = (description)!->
             window.open "http://www.baidu.com"
 
           $scope.showSubmitDialog = (id)!->
             $mdDialog.show {
-              templateUrl: 'app/main/student/homework/dashboard/submitDialog.html',
+              templateUrl: 'app/main/student/homework-dashboard/submitDialog.html',
               parent: angular.element(document.body),
               clickOutsideToClose: false,
               controller: ($scope, $mdDialog, FileUploader) !->

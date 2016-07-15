@@ -19,10 +19,11 @@ mixin chart
     .card.md-whiteframe-2dp.white-bg.p-12
       c3chart(bindto-id="rankChart")
         chart-column(column-id="x" column-values="作业1, 作业2, 作业3, 作业4, 作业5, 作业6, 作业7, 作业8, 作业9, 作业10, 作业11")
-        chart-column(column-id="rank" column-name="排名" column-color="#ffb300" column-values="{{vm.rank}}" column-type="area-spline")
+        chart-column(column-id="rank" column-name="排名" column-color="#ffb300" column-values="{{vm.rank}}" column-type="line")
         chart-grid(show-x="false" show-y="true")
         chart-axis-x(axis-type="category")
         chart-axes(values-x="x" y="score")
+        chart-axis-y(axis-inverted="true")
 
 mixin menu-item
   //#TODO根据作业的status来判断menu-item的内容
@@ -73,11 +74,11 @@ mixin homework-list
   div(layout="column")
     div(layout="row")
       div.md-title.ph-12(layout="row" layout-align="center center") 作业列表
-      md-switch.md-warn(aria-label="future" ng-model="vm.switch.future")
+      md-switch(aria-label="future" ng-model="vm.switch.future")
         | 未开始
       md-switch.md-warn(aria-label="present" ng-model="vm.switch.present")
         | 进行中
-      md-switch(aria-label="finish" ng-model="vm.switch.finish")
+      md-switch.md-primary(aria-label="finish" ng-model="vm.switch.finish")
         | 已结束
 
     div(layout="row" layout-wrap)
