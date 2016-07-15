@@ -12,24 +12,24 @@ mixin group-title-due-info-ms
 		.due.md-subhead {{vm.dateTime}}
 
 mixin review-ms
-	.review.white-bg(layout="row")
+	.review.white-bg.md-whiteframe-1dp(class="R-hs-pl" layout="row")
 		+review-ms-image
 		+review-ms-user-info
 		+review-ms-comment
 		+review-ms-score
 
 mixin review-ms-image
-	.image-box(flex='20') image-box
+	.image-div(ng-class="review.bg" flex='20')
 
 mixin review-ms-user-info
-	.user-info(flex='15' layout="column" layout-align="center center")
-		.name {{review.reviewer.fullname}}
-		.sid {{review.reviewer.username}}
+	.user-info-container(flex='15' layout="column" layout-align="center center")
+		.name.md-subhead {{review.reviewer.fullname}}
+		.sid.md-subhead {{review.reviewer.username}}
 
 mixin review-ms-comment
-	.comment.p-12(flex='50')
-		.md-subhead.p-12(ng-model="review.comment") {{review.comment}}
+	.comment-container.p-12(flex='50' layout="column" layout-align="center center")
+		.review-ms-comment.md-subhead.p-12(ng-model="review.comment") {{review.comment}}
 
 mixin review-ms-score
-	.score.p-12(flex layout="column" layout-align="center center")
+	.score-container.p-12(flex layout="column" layout-align="center center")
 		.p-12.md-headline {{review.score}}

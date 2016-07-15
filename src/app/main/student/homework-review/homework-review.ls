@@ -29,54 +29,96 @@ angular.module 'app.student'
           @homework-id = $state-params.id
           @date-time = new Date()
 
+          # functions of the buttons
+          @submit = (review)->
+            if 0 < review.score and review.score <= 100 and review.comment != ""
+              review-manager.add-review review
+              review.comment = review.temp-comment
+              review.score   = review.temp-score
+              review.editing = false
+            else
+              alert "error"
 
-          # the button state:
-          # init:   no score -> submit -> review-manager.add-review!
-          #       have score -> edit then init change to editing
-          # editing:  update -> review-manager.update-review!
-          #           cancle -> review-manager.cancle-update-review!
-          #           both then editing change to init
+          @edit = (review) ->
+            review.editing = true
 
-          @submit = (review-need-to-add)->
-            review-manager.add-review review-need-to-add
+          @update = (review) ->
+            review-manager.update-review review
+            review.comment = review.temp-comment
+            review.score   = review.temp-score
+            review.editing = false
 
-          @edit = (review-need-to-edit) ->
-            review-need-to-edit.edit = true
-
-          @update = (review-need-to-edit) ->
-            review-manager.update-review review-need-to-edit
-            review-need-to-edit.edit = false
-
-          @cancle = (review-need-to-edit) ->
-            review-manager.cancle-update-review review-need-to-edit
-            review-need-to-edit.edit = false
+          @cancle = (review) ->
+            review-manager.cancle-update-review review
+            review.temp-comment = review.comment
+            review.temp-score   = review.score
+            review.editing      = false
 
 
           # get the data:
 
-          # gr means group review and ms means my score
+          # gr means reviews in "group review" and ms means in "my score"
           @reviews-gr = []
           @reviews-ms = []
 
-          # when thenable, vm is @
+          # when thenable, vm is @, be careful
           vm = @
 
           # first get all reviews
           review-manager.get-all-reviews!
-
-          # next filtering by homework id
+          # then filtering by homework id
           .then (all-reviews) ->
             review-manager.reviews-filter-by-id all-reviews, vm.homework-id
-
-          # next filtering by @user.username, being careful about the @ and vm
+          # then filtering by @user.username, being careful about the @ and vm
           .then (reviews-id) ->
             review-manager.reviews-filter-by-username reviews-id, vm.user.username
-
           # then we get what we want
           .then (reviews-id-username) ->
             vm.reviews-gr = reviews-id-username.gr
             vm.reviews-ms = reviews-id-username.ms
+
+            # test submit, no score and no comment at the beginning
+            test-submit-review = {
+              "reviewee": {
+              "username": "94971446",
+              "fullname": "郝肥如"
+              },
+              "reviewer": {
+              "username": "45479458",
+              "fullname": "林放高",
+              "role": "student"
+              },
+              "homework_id": 1,
+              "class": 1,
+              "group": 1
+            }
+            vm.reviews-gr.push test-submit-review
+
             console.log reviews-id-username
 
+            for r in vm.reviews-ms
+              r.bg = 'image-div-' + (1 + parse-int 12 * Math.random!)
+
+            for r in vm.reviews-gr
+
+              # every can be edited at the beginning
+              r.editing = true
+
+              # buffer for editing score and comment
+              r.temp-score   = r.score
+              r.temp-comment = r.comment
+
+              # homework image
+              r.bg = 'image-div-' + (1 + parse-int 12 * Math.random!)
+
+              if r.score
+                # if have score means already submit before so can not be edited at the beginning
+                r.editing = false
+
+                # hs means have score and ns means no score
+                # t-score means the translation of score, then put the right class on review
+                r.t-score = 'hs'
+              else
+                r.t-score = 'ns'
 
   }
