@@ -1,0 +1,66 @@
+
+mixin change-password
+  div(layout="row" layout-align="center center")
+    button.md-button.change-password.md-accent(ng-click="vm.changePassword()") 修改密码
+
+  div.change-password-container.pv-12#change-password-container(layout="column")
+    form(name="changePasswordForm")
+      div(layout="column")
+        md-input-container.mb-0
+          label(for="old") 旧密码
+          md-icon(md-font-icon="icon-key")
+          input(type="password" name="old")
+
+        md-input-container.mb-0
+          label(for="new") 新密码
+          md-icon(md-font-icon="icon-key")
+          input(type="password" name="new")
+
+        md-input-container
+          label(for="confirm") 确认密码
+          md-icon(md-font-icon="icon-key")
+          input(type="password" name="confirm")
+
+
+md-dialog.contact-dialog#dialog
+
+  form(name="informationForm")
+    md-toolbar.md-accent.md-tall.height-220(layout="column")
+      header.title.ph-24.pv-12.md-toolbar-tools(layout="row" layout-align="space-between center" )
+        div 修改信息
+        button.md-icon-button(ng-click="vm.closeEditDialog()")
+          md-icon(md-font-icon="icon-close")
+      div.ph-12(layout="column")
+        div(layout="column")
+          div(flex="100" layout="row" layout-align="center start")
+            img.md-avatar.avatar.huge(ng-src="{{vm.user.avatar}}")
+
+          div.p-12(layout="row" layout-align="center center")
+            label.md-button(for="upload-avatar") 上传头像
+            input#upload-avatar.hide(type="file")
+
+    md-dialog-content.dialog-container(ms-scroll layout="column")
+      md-input-container.mb-0
+        label(for="fullname") 姓名
+        md-icon(md-font-icon="icon-account")
+        input(type="text" name="fullname" value="{{vm.user.fullname}}" disabled)
+
+      md-input-container.mb-0
+        label(for="email") 邮箱
+        md-icon(md-font-icon="icon-email")
+        input(type="email" name="email" value="{{vm.user.email}}" required)
+
+      md-input-container.mb-5(ng-if="vm.user.role === 'student' || vm.user.role === 'ta'")
+        label(for="sid") 学号
+        md-icon(md-font-icon="icon-book")
+        input(type="text" name="sid" value="{{vm.user.sid}}" required)
+
+
+      +change-password
+
+    div.p-12.pt-0.wrapper-bg(layout="row" layout-align="space-between center")
+      md-button.raised(ng-click="vm.addTest()") 保存
+      md-button.raised(type="reset") 重置
+
+
+

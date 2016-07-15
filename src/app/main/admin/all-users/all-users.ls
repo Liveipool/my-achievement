@@ -4,19 +4,23 @@ angular.module 'app.admin'
 
 .config ($state-provider) !->
   $state-provider.state 'app.admin.all-users', {
-    url: '/admin/all-users'
+    url: '/all-users'
     # resolve: 都迁移到了user-manager服务里面(admin.ls文件中)
     views:
       'content@app':
         template-url: 'app/main/admin/all-users/all-users.html'
         controller-as : 'vm'
-        controller: ($scope, $md-dialog, $md-media, valid-manager, user-manager)!->
+        controller: ($scope, $md-dialog, $md-media, valid-manager, user-manager, Interaction)!->
+
+          @theme = Interaction.get-bg-by-month 2
+          @location = "所有用户"
+          @greeting = "管理员"
 
           # 监听窗口大小事件改变表格展示高度
           height-watch = ->
             window.inner-height
           height-change-process = (value)!->
-            $scope.widget-height = value - 260
+            $scope.widget-height = value - 300
           $scope.$watch height-watch, height-change-process
 
           # 监听users的更新事件
@@ -109,7 +113,7 @@ angular.module 'app.admin'
                       # 发送删除请求
                       user-manager.delete-user $scope.user.username
 
-                templateUrl: 'app/main/admin/users/admin-user-edit.html'
+                templateUrl: 'app/main/admin/all-users/admin-user-edit.html'
                 parent: angular.element(document.body)
                 targetEvent: ev
                 clickOutsideToClose:true

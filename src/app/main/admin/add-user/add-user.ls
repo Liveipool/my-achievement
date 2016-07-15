@@ -4,12 +4,15 @@ angular.module 'app.admin'
 
 .config ($state-provider) !->
   $state-provider.state 'app.admin.add-user', {
-    url: '/admin/add-user'
+    url: '/add-user'
     views:
       'content@app':
         template-url: 'app/main/admin/add-user/add-user.html'
         controller-as : 'vm'
-        controller: ($scope, valid-manager, $md-toast, user-manager)!->
+        controller: ($scope, valid-manager, $md-toast, user-manager, Interaction)!->
+          @theme = Interaction.get-bg-by-month 2
+          @location = "添加用户"
+          @greeting = "管理员"
 
           $scope.add-user = !->
             $scope.user ||= {}

@@ -18,10 +18,13 @@ angular.module 'app.student'
       'content@app':
         template-url: 'app/main/student/homework-dashboard/homework-dashboard.html'
         controller-as : 'vm'
-        controller: ($scope, Authentication, homeworks, $mdDialog)!->
+        controller: ($scope, Authentication, homeworks, $mdDialog, Interaction)!->
           console.log "欢迎回来!"
           vm = @
           vm.user = Authentication.get-user!
+          console.log vm.user
+          vm.location = "作业列表"
+          vm.theme = Interaction.get-bg-by-month 2
 
           vm.greeting  = vm.user.fullname;
 
@@ -40,6 +43,11 @@ angular.module 'app.student'
             future: "light-blue-fg"
             present: "red-fg"
             finish: "grey-fg"
+
+          vm.bg =
+            future: "light-blue-bg"
+            present: "red-bg"
+            finish: "grey-bg"
 
           vm.switch =
             future: true
