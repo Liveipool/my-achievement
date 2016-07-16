@@ -62,5 +62,13 @@ angular.module 'app.TA'
         classes.push {id: id, groups: groups, members: _classes[id]}
       return classes
 
+    # get-selects : (classes) ->
+    #   selects = []
+    #   for id in classes
+    #     _class = classes[id]
+    #     i = parse-int _class.id
+    #     selects[i] = 1
+    #   se
+
 
 
