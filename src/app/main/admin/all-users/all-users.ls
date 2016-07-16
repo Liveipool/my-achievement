@@ -20,7 +20,7 @@ angular.module 'app.admin'
           height-watch = ->
             window.inner-height
           height-change-process = (value)!->
-            $scope.widget-height = value - 260
+            $scope.widget-height = value - 300
           $scope.$watch height-watch, height-change-process
 
           # 监听users的更新事件
@@ -113,7 +113,7 @@ angular.module 'app.admin'
                       # 发送删除请求
                       user-manager.delete-user $scope.user.username
 
-                templateUrl: 'app/main/admin/users/admin-user-edit.html'
+                templateUrl: 'app/main/admin/all-users/admin-user-edit.html'
                 parent: angular.element(document.body)
                 targetEvent: ev
                 clickOutsideToClose:true
