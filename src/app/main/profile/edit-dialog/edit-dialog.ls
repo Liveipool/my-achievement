@@ -1,10 +1,12 @@
 'use strict'
 
 angular.module 'app.profile'
-  .controller 'edit-dialog-controller', (Authentication, $mdDialog, $interval) !->
+  .controller 'edit-dialog-controller', (Authentication, $mdDialog, $interval, $scope) !->
     @user = Authentication.get-user!
     @show-or-hide = false
     @isChanged = false
+    $scope.sid = @user.sid
+    $scope.email = @user.email
     @close-edit-dialog = !->
       $mdDialog.hide!
 
