@@ -41,6 +41,7 @@ angular.module 'app.student', ['angularFileUpload']
 
   @cancle-update-review = ->
     # reload-reviews then the change is undo in the controller
+    # acctually do nothing is OK
     console.log "cancle-update-review!"
     @reload-reviews!
 
@@ -60,8 +61,15 @@ angular.module 'app.student', ['angularFileUpload']
     temp-score = parse-int review.temp-score, 10
     console.log typeof temp-score, temp-score
 
-    if 0 < temp-score && temp-score <= 100 && review.temp-comment
-      console.log \pass
-      return true
-    console.log \fail
-    return false
+    @status = {}
+    @status.error = {}
+
+    @status.state = true
+    if !(0 < temp-score && temp-score <= 100)
+      @status.state = false
+      @status.error.score = "error-score"
+    if !review.temp-comment
+      @status.state = false
+      @status.error.comment = "error-comment"
+
+    return @status

@@ -1,12 +1,12 @@
 
 mixin my-score
 	+group-title-due-info-ms
-	.review-container.pv-12(layout="column" ng-repeat="review in vm.reviewsMs")
+	.review-container.p-12(layout="column" ng-repeat="review in vm.reviewsMs")
 		//- ng-repeat here
 		+review-ms
 
 mixin group-title-due-info-ms
-	.group-title-due-info.ph-12.pt-12(layout='row' layout-align="space-between center")
+	.group-title-due-info.p-12(layout='row' layout-align="space-between center")
 		.group.md-title group {{vm.user.group}}
 		.title.md-title 第{{vm.homeworkId}}次作业
 		.due.md-subhead {{vm.dateTime}}

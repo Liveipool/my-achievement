@@ -1,11 +1,11 @@
 
 mixin group-review
 	+group-title-due-info
-	.review-container.pv-12(flex layout="column" ng-repeat="review in vm.reviewsGr")
+	.review-container.p-12(flex layout="column" ng-repeat="review in vm.reviewsGr")
 		+review
 
 mixin group-title-due-info
-	.group-title-due-info.ph-12.pt-12(flex layout='row' layout-align="space-between center")
+	.group-title-due-info.p-12(flex layout='row' layout-align="space-between center")
 		.group.md-title group {{vm.reviewsGr[0].group}}
 		.title.md-title 第{{vm.homeworkId}}次作业
 		.due.md-subhead {{vm.dateTime}}
@@ -30,12 +30,12 @@ mixin review-comment
 	.comment-container(flex='50' layout="row" layout-align="center center")
 		//- the way when comment displaying is the same as in the my score
 		.review-ms-comment.md-subhead.p-12(ng-hide="review.editing" ng-model="review.comment") {{review.comment}}
-		textarea.md-subhead(ng-show="review.editing" placeholder="请添加不少于50字的评审意见" wrap="virtual" ng-model="review.tempComment")
+		textarea.md-subhead(ng-class="review.error.comment" ng-show="review.editing" placeholder="请添加不少于50字的评审意见" wrap="virtual" ng-model="review.tempComment")
 
 mixin review-score
 	.score-container(layout="column" flex)
 
-		input.md-subhead(placeholder="请评分0~100" type="text" ng-model="review.tempScore" ng-disabled="!review.editing")
+		input.md-subhead(ng-class="review.error.score" placeholder="请评分0~100" type="text" ng-model="review.tempScore" ng-disabled="!review.editing")
 
 		div(flex layout="column" layout-align="center")
 			.submit-score.p-12(layout="column" layout-align="center center" ng-show="!review.score" )

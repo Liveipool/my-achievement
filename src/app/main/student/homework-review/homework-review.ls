@@ -31,28 +31,38 @@ angular.module 'app.student'
 
           # functions of the buttons
           @submit = (review)->
-            if review-manager.validator review
+            status = review-manager.validator review
+            if status.state
               review.comment = review.temp-comment
               review.score   = review.temp-score
               review-manager.add-review review
               review.editing = false
+              review.error = {}
+            else
+              review.error = status.error
+            console.log review.error
 
           @edit = (review) ->
             review.editing = true
 
           @update = (review) ->
-            if review-manager.validator review
+            status = review-manager.validator review
+            if status.state
               review.comment = review.temp-comment
               review.score   = review.temp-score
               review-manager.update-review review
               review.editing = false
+              review.error = {}
+            else
+              review.error = status.error
+            console.log review.error
 
           @cancle = (review) ->
             review-manager.cancle-update-review review
             review.temp-comment = review.comment
             review.temp-score   = review.score
             review.editing      = false
-
+            review.error = {}
 
           # get the data:
 

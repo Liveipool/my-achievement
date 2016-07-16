@@ -13,10 +13,12 @@ include ./partials/my-score.jade
 			|{{vm.greeting}}
 			|!
 
-#homework-review-container.p-12.wrapper-bg
-	md-tabs.p-12(md-dynamic-height)
-		md-tab(label="Group Review")
-			//- .layout-center(flex="100" layout="column" layout-align="center center")
-			+group-review
-		md-tab(label="My Score")
-			+my-score
+#homework-review-container
+	md-content
+		md-tabs(md-dynamic-height)
+			md-tab(label="Group Review")
+				md-content.wrapper-bg.p-12
+					+group-review
+			md-tab(label="My Score")
+				md-content.wrapper-bg.p-12
+					+my-score
