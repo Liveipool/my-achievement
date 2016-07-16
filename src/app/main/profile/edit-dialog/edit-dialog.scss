@@ -10,3 +10,14 @@
 .change-password-container {
     display: none;
 }
+.ng-invalid {
+  // border: 1px solid red;
+  color: rgb(221,44,0);
+}
+.ng-valid {
+  // border: 1px solid green;
+}
+
+.pristine {
+    color: rgb(0, 0, 0);
+}

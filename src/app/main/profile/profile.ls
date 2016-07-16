@@ -21,7 +21,7 @@ angular.module 'app.profile', []
               controller-as: 'vm'
               controller: 'edit-dialog-controller'
               template-url: 'app/main/profile/edit-dialog/edit-dialog.html'
-              click-outside-to-close: true
+              # click-outside-to-close: true
             )
 
     }
