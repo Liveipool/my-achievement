@@ -1,0 +1,35 @@
+
+mixin my-score
+	+group-title-due-info-ms
+	.review-container.p-12(layout="column" ng-repeat="review in vm.reviewsMs")
+		//- ng-repeat here
+		+review-ms
+
+mixin group-title-due-info-ms
+	.group-title-due-info.p-12(layout='row' layout-align="space-between center")
+		.group.md-title group {{vm.user.group}}
+		.title.md-title 第{{vm.homeworkId}}次作业
+		.due.md-subhead {{vm.dateTime}}
+
+mixin review-ms
+	.review.white-bg.md-whiteframe-1dp(class="R-hs-pl" layout="row")
+		+review-ms-image
+		+review-ms-user-info
+		+review-ms-comment
+		+review-ms-score
+
+mixin review-ms-image
+	.image-div(ng-class="review.bg" flex='20')
+
+mixin review-ms-user-info
+	.user-info-container(flex='15' layout="column" layout-align="center center")
+		.name.md-subhead {{review.reviewer.fullname}}
+		.sid.md-subhead {{review.reviewer.username}}
+
+mixin review-ms-comment
+	.comment-container.p-12(flex='50' layout="column" layout-align="center center")
+		.review-ms-comment.md-subhead.p-12(ng-model="review.comment") {{review.comment}}
+
+mixin review-ms-score
+	.score-container.p-12(flex layout="column" layout-align="center center")
+		.p-12.md-headline {{review.score}}
