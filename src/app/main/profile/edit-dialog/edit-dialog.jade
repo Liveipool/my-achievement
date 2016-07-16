@@ -4,27 +4,34 @@ mixin change-password
     button.md-button.change-password.md-accent(ng-click="vm.changePassword()") 修改密码
 
   div.change-password-container.pv-12#change-password-container(layout="column")
-    form(name="changePasswordForm")
-      div(layout="column")
-        md-input-container.mb-0
-          label(for="old") 旧密码
-          md-icon(md-font-icon="icon-key")
-          input(type="password" name="old")
+    div(layout="column")
+      md-input-container.mb-0
+        label(for="old") 旧密码
+        md-icon(md-font-icon="icon-key")
+        input(type="password" name="old" ng-model="password" required ng-pattern=/^\d{6}$/)
+        div.ng-invalid(ng-show="informationForm.old.$invalid && informationForm.new.$dirty")
+          small(ng-show="informationForm.old.$error.pattern") 密码不正确
+          small(ng-show="informationForm.old.$error.required") 密码不能为空
 
-        md-input-container.mb-0
-          label(for="new") 新密码
-          md-icon(md-font-icon="icon-key")
-          input(type="password" name="new")
+      md-input-container.mb-0
+        label(for="new") 新密码
+        md-icon(md-font-icon="icon-key")
+        input(type="password" name="new" ng-model="newPassword" ng-disabled="!informationForm.old.$valid" required ng-pattern=/\w{6,18}/)
+        div.ng-invalid(ng-show="informationForm.new.$invalid && informationForm.new.$dirty")
+          small(ng-show="informationForm.new.$error.pattern") 密码为6-18位，由数字，字母和下划线组成
+          small(ng-show="informationForm.new.$error.required") 新密码不能为空
 
-        md-input-container
-          label(for="confirm") 确认密码
-          md-icon(md-font-icon="icon-key")
-          input(type="password" name="confirm")
-
+      md-input-container
+        label(for="confirm") 确认密码
+        md-icon(md-font-icon="icon-key")
+        input(type="password" name="confirm" ng-model="confirmPassword" ng-disabled="!informationForm.old.$valid" required)
+        div.ng-invalid(ng-show="informationForm.confirm.$invalid && informationForm.confirm.$dirty")
+          small(ng-show="informationForm.confirm.$error.pattern") 两次输入密码不一致
+          small(ng-show="informationForm.confirm.$error.required") 请重复输入新密码
 
 md-dialog.contact-dialog#dialog
 
-  form(name="informationForm")
+  form(name="informationForm" novalidate ng-submit="signupForm()")
     md-toolbar.md-accent.md-tall.height-220(layout="column")
       header.title.ph-24.pv-12.md-toolbar-tools(layout="row" layout-align="space-between center" )
         div 修改信息
@@ -47,20 +54,27 @@ md-dialog.contact-dialog#dialog
 
       md-input-container.mb-0
         label(for="email") 邮箱
-        md-icon(md-font-icon="icon-email")
-        input(type="email" name="email" value="{{vm.user.email}}" required)
+        md-icon.ng-invalid(md-font-icon="icon-email")
+        input(type="text" name="email" ng-model="email" required ng-pattern=/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/)
+        div.ng-invalid(ng-show="informationForm.email.$invalid")
+          small(ng-show="informationForm.email.$error.pattern") 邮箱格式不正确
+          small(ng-show="informationForm.email.$error.required") 邮箱不能为空
 
       md-input-container.mb-5(ng-if="vm.user.role === 'student' || vm.user.role === 'ta'")
         label(for="sid") 学号
-        md-icon(md-font-icon="icon-book")
-        input(type="text" name="sid" value="{{vm.user.sid}}" required)
+        md-icon.ng-invalid(md-font-icon="icon-book")
+        input(type="text" name="sid" ng-model="sid" required ng-pattern=/^\d{8}$/)
+        div.ng-invalid(ng-show="informationForm.sid.$invalid")
+          small(ng-show="informationForm.sid.$error.pattern") 学号格式不正确
+          small(ng-show="informationForm.sid.$error.required") 邮箱不能为空
 
 
       +change-password
 
-    div.p-12.pt-0.wrapper-bg(layout="row" layout-align="space-between center")
-      md-button.raised(ng-click="vm.addTest()") 保存
-      md-button.raised(type="reset") 重置
+
+      div.p-12.pt-0.wrapper-bg(layout="row" layout-align="space-between center")
+        md-button.raised(ng-click="vm.addTest()") 保存
+        md-button.raised(type="reset") 重置
 
 
 
