@@ -33,6 +33,7 @@ angular.module 'fuse'
     #---student---#
     nav.save-item 'student', {title: "作业", group: true, weight: 1, class: 'homework', hidden: -> !auth.is-student user}
     nav.save-item 'student.homework-dashboard', {title: "作业列表", weight: 1 ,icon: 'icon-book-open' ,state: 'app.student.homework-dashboard', hidden: -> !auth.is-student user}
+    nav.save-item 'student.homework-review', {title: "作业互评", weight: 1 ,icon: 'icon-account-multiple' ,state: 'app.student.homework-review', hidden: -> !auth.is-student user}
     nav.save-item 'student.homework-detail', {title: "作业详情", weight: 1, icon: 'icon-border-color',state: 'app.student.homework-detail', hidden: -> !auth.is-student user}
 
     #---teacher---#

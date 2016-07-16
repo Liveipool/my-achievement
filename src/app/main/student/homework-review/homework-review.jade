@@ -1,0 +1,24 @@
+include ./partials/group-review.jade
+include ./partials/my-score.jade
+
+#homework-review-header.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+	header.header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
+		.breadcrumb(layout='row' layout-align='start center')
+			md-icon.s16(md-font-icon='icon-home')
+			md-icon.s16.separator(md-font-icon='icon-chevron-right')
+			span {{vm.location}}
+			span.parent
+		span.md-display-1.font-weight-300(ng-class="vm.theme.fg")
+			| 欢迎回来,
+			|{{vm.greeting}}
+			|!
+
+#homework-review-container
+	md-content
+		md-tabs(md-dynamic-height)
+			md-tab(label="Group Review")
+				md-content.wrapper-bg.p-12
+					+group-review
+			md-tab(label="My Score")
+				md-content.wrapper-bg.p-12
+					+my-score
