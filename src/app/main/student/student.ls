@@ -14,7 +14,7 @@ angular.module 'app.student', ['angularFileUpload']
     that = @
     # TODO: 向服务器发出请求获取所有user信息
     # console.warn "TODO: function reload-reviews in userManager"
-    $resource('app/data/faker/reviews.json').get!.$promise
+    $resource('app/data/review/reviews.json').get!.$promise
       .then (result)->
         that.reviews-cache = result.data
         # console.log(that.reviews-cache)
@@ -32,7 +32,7 @@ angular.module 'app.student', ['angularFileUpload']
     reviews-id = [review for review in reviews when review.homework_id ~= id]
     Promise.resolve reviews-id
 
-  # gr means group review and ms means my score 
+  # gr means group review and ms means my score
   @reviews-filter-by-username = (reviews, username) ->
     reviews-username-gr = [review for review in reviews when review.reviewer.username ~= username]
     reviews-username-ms = [review for review in reviews when review.reviewee.username ~= username]
@@ -67,9 +67,9 @@ angular.module 'app.student', ['angularFileUpload']
     @status.state = true
     if !(0 < temp-score && temp-score <= 100)
       @status.state = false
-      @status.error.score = "error-score"
+      @status.error.score = "请输入正确的评分"
     if !review.temp-comment
       @status.state = false
-      @status.error.comment = "error-comment"
+      @status.error.comment = "请输入正确的评论"
 
     return @status

@@ -37,10 +37,15 @@ mixin menu-item
     md-button(ng-click="showSubmitDialog(homework.id)")
       md-icon(md-font-icon="icon-cloud-upload")
       span 提交作业
+  md-menu-item(ng-if="homework.classes[0].status === 'present'")
+    md-button(ui-sref="app.student.homework-review({ id: homework.id })")
+      md-icon(md-font-icon="icon-document")
+      span 互评
   md-menu-item(ng-if="homework.classes[0].status === 'finish'")
     md-button(ng-click="flipWidget()" aria-label="Flip widget")
       md-icon(md-font-icon="icon-document")
       span 作业详情
+
 
 mixin homework-widget-front
   ms-widget-front.white-bg

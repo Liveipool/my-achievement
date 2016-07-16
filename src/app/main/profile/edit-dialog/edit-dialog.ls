@@ -15,7 +15,6 @@ angular.module 'app.profile'
       scroll = $interval !->
         item.scroll-top += 2
       , 1, 125
-
       @show-or-hide = !@show-or-hide
 
       # if @show-or-hide == true

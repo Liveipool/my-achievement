@@ -8,19 +8,17 @@
 		// background-size: 100% auto;
 
 .R-hs-pl
-	border-left: 10px solid rgba(102, 187, 106, 1)
+	border-left: 8px solid #4CAF50
+	transition: all 0.3s
 
 .R-ns-pl
-	border-left: 10px solid rgba(255, 202, 40, 1)
+	border-left: 8px solid #FF5722
 
 #homework-review-container
 	md-tabs-wrapper
 		padding: 0px 24px
 		border-bottom: 1px solid rgba(225, 225, 225, 1)
 
-	.md-tab
-		min-width: 160px
-		max-width: 160px
 
 	.group-title-due-info, .review-container
 		min-width: 800px
@@ -31,8 +29,10 @@
 		min-height: 160px
 		min-width: 160px
 
-	.comment-container
+	.comment-container,.review-ms-comment
 		text-align: left
+		max-height: 160px
+		// overflow: auto
 
 		.error-comment
 			border-bottom: 1px solid red
@@ -73,10 +73,10 @@
 			margin: 0
 
 		.submit
-			background-color: rgba(255, 202, 40, 1)
+			background-color: #FF5722
 		.edit
-			background-color: rgba(102, 187, 106, 1)
+			background-color: #4CAF50
 		.update
-			background-color: rgba(102, 187, 106, 1)
+			background-color: #4CAF50
 		.cancle
 			background-color: rgba(100, 100, 100, 0.5)

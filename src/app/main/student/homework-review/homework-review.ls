@@ -5,12 +5,12 @@ angular.module 'app.student'
 .config ($state-provider) !->
   $state-provider.state 'app.student.homework-review', {
     url: '/homework-review/:id'
-    # resolve:
-    #   homeworks: ($resource) ->
-    #     $resource('app/data/homework/homeworks.json').get!.$promise
-    #       .then (result)->
-    #         homeworks = result.data
-    #         Promise.resolve homeworks
+    resolve:
+      homeworks: ($resource) ->
+        $resource('app/data/homework/homeworks.json').get!.$promise
+          .then (result)->
+            homeworks = result.data
+            Promise.resolve homeworks
     data:
       role: 'student'
 
@@ -37,6 +37,7 @@ angular.module 'app.student'
               review.score   = review.temp-score
               review-manager.add-review review
               review.editing = false
+              review.t-score = "hs"
               review.error = {}
             else
               review.error = status.error
