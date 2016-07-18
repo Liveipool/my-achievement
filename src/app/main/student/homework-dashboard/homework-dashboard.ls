@@ -2,6 +2,59 @@
 
 angular.module 'app.student'
 
+.controller 'hwTimer', ($scope, $interval, timerService) !->
+  timer = $interval (!->
+    $scope.remain = timerService.calculateRemain $scope.homework.classes[0].startTime, $scope.homework.classes[0].endTime, $scope.homework.classes[0].status
+    $scope.homework.classes[0].status = $scope.remain.status), 1000
+  
+
+.factory 'timerService', ->
+  calculate = (start, end, status) ->
+    nowTime = new Date!
+    startTime = new Date start
+    endTime = new Date end
+
+    if nowTime < startTime
+      status = 'future'
+    else if nowTime < endTime
+      status = 'present'
+    else 
+      status = 'finish'
+
+    switch status
+    case 'future' 
+    then 
+      iRemain = (startTime.getTime! - nowTime.getTime!)/1000
+    case 'present'
+      iRemain = (endTime.getTime! - nowTime.getTime!)/1000
+    case 'finish'
+      iRemain = 0
+
+    remain = {}
+    remain.days =  parseInt iRemain/86400
+    iRemain %= 86400
+    remain.hours = parseInt iRemain/3600
+    iRemain %= 3600
+    remain.mins = parseInt iRemain/60
+    iRemain %= 60
+    remain.secs = parseInt iRemain
+    remain.status = status
+
+    timeSum = 0
+    for key, value of remain
+      timeSum = timeSum + value
+    if timeSum == 0 and status == 'future' then remain.status = 'present'
+    if timeSum == 0 and status == 'present' then remain.status = 'finish'
+      # body...
+    remain 
+
+  calculateRemain: (start, end, status)->
+    calculate start, end, status
+
+
+
+
+
 .config ($state-provider) !->
   $state-provider.state 'app.student.homework-dashboard', {
     url: '/homework-dashboard'
