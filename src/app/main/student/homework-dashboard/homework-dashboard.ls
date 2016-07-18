@@ -5,7 +5,8 @@ angular.module 'app.student'
 .controller 'hwTimer', ($scope, $interval, timerService) !->
   timer = $interval (!->
     $scope.remain = timerService.calculateRemain $scope.homework.classes[0].startTime, $scope.homework.classes[0].endTime, $scope.homework.classes[0].status
-    $scope.homework.classes[0].status = $scope.remain.status), 1000
+    $scope.homework.classes[0].status = $scope.remain.status
+    if $scope.remain.status == "finish" then $interval.cancel(timer)), 1000
   
 
 .factory 'timerService', ->
@@ -16,20 +17,14 @@ angular.module 'app.student'
 
     if nowTime < startTime
       status = 'future'
+      iRemain = (startTime.getTime! - nowTime.getTime!)/1000
     else if nowTime < endTime
       status = 'present'
+      iRemain = (endTime.getTime! - nowTime.getTime!)/1000
     else 
       status = 'finish'
-
-    switch status
-    case 'future' 
-    then 
-      iRemain = (startTime.getTime! - nowTime.getTime!)/1000
-    case 'present'
-      iRemain = (endTime.getTime! - nowTime.getTime!)/1000
-    case 'finish'
       iRemain = 0
-
+ 
     remain = {}
     remain.days =  parseInt iRemain/86400
     iRemain %= 86400
