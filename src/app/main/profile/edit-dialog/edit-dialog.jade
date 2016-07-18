@@ -1,17 +1,25 @@
 
 mixin change-password
-  div(layout="row" layout-align="center center")
+  div.p-12(layout="row" layout-align="center center")
     button.md-button.change-password.md-accent(ng-click="vm.changePassword()") 修改密码
 
   div.change-password-container.pv-12#change-password-container(layout="column")
-    div(layout="column")
-      md-input-container.mb-0
-        label(for="old") 旧密码
-        md-icon(md-font-icon="icon-key")
-        input(type="password" name="old" ng-model="password" required ng-pattern=/^\d{6}$/)
-        div.ng-invalid(ng-show="informationForm.old.$invalid && informationForm.new.$dirty")
-          small(ng-show="informationForm.old.$error.pattern") 密码不正确
-          small(ng-show="informationForm.old.$error.required") 密码不能为空
+
+      div(layout="column")
+        md-input-container.mb-0
+          label(for="old") 旧密码
+          md-icon(md-font-icon="icon-key")
+          input(type="password" name="old" ng-model="vm.oldPassword" ng-blur="vm.validateOldPassword()")
+
+        md-input-container.mb-0
+          label(for="new") 新密码
+          md-icon(md-font-icon="icon-key")
+          input(type="password" name="new")
+
+        md-input-container
+          label(for="confirm") 确认密码
+          md-icon(md-font-icon="icon-key")
+          input(type="password" name="confirm")
 
       md-input-container.mb-0
         label(for="new") 新密码
@@ -54,27 +62,30 @@ md-dialog.contact-dialog#dialog
 
       md-input-container.mb-0
         label(for="email") 邮箱
-        md-icon.ng-invalid(md-font-icon="icon-email")
-        input(type="text" name="email" ng-model="email" required ng-pattern=/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/)
-        div.ng-invalid(ng-show="informationForm.email.$invalid")
-          small(ng-show="informationForm.email.$error.pattern") 邮箱格式不正确
-          small(ng-show="informationForm.email.$error.required") 邮箱不能为空
 
-      md-input-container.mb-5(ng-if="vm.user.role === 'student' || vm.user.role === 'ta'")
+        md-icon(md-font-icon="icon-email")
+        input(type="email" name="email" ng-model="vm.email" required ng-change="vm.change()")
+        div(ng-messages="informationForm.email.$error")
+          div(ng-message="required") 请输入邮箱
+          div(ng-message="pattern") 请输入正确的邮箱
+
+
+      md-input-container.mb-6(ng-if="vm.user.role === 'student' || vm.user.role === 'ta'")
         label(for="sid") 学号
-        md-icon.ng-invalid(md-font-icon="icon-book")
-        input(type="text" name="sid" ng-model="sid" required ng-pattern=/^\d{8}$/)
-        div.ng-invalid(ng-show="informationForm.sid.$invalid")
-          small(ng-show="informationForm.sid.$error.pattern") 学号格式不正确
-          small(ng-show="informationForm.sid.$error.required") 邮箱不能为空
+
+        md-icon(md-font-icon="icon-book")
+        input(type="text" name="sid" ng-model="vm.sid" required ng-pattern="/^[0-9]{8}$/" ng-change="vm.change()")
+        div(ng-messages="informationForm.sid.$error")
+          div(ng-message="required") 请输入学号
+          div(ng-message="pattern") 请输入正确的学号
 
 
       +change-password
 
+    md-dialog-actions.p-12.pt-0.wrapper-bg(layout="row" layout-align="space-between center")
+      md-button.raised(ng-click="vm.addTest()") 保存
+      md-button.raised(ng-click="vm.reset()") 重置
 
-      div.p-12.pt-0.wrapper-bg(layout="row" layout-align="space-between center")
-        md-button.raised(ng-click="vm.addTest()") 保存
-        md-button.raised(type="reset") 重置
 
 
 
