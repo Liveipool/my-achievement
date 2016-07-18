@@ -30,14 +30,20 @@ angular.module 'app.student'
         template-url: 'app/main/student/homework-dashboard/homework-dashboard.html'
         controller-as : 'vm'
         controller: ($scope, Authentication, homeworks, $mdDialog, Interaction, homework-detail)!->
-          console.log "欢迎回来!"
-          console.log homework-detail
+
+          arr2string = (arr)->
+            _string = ""
+            i = 0
+            while i != arr.length - 1
+              _string += arr[i] + ','
+              i++
+            _string += arr[i]
+            return _string
 
           vm = @
           vm.user = Authentication.get-user!
-          vm.scores = homework-detail.scores
-          vm.homework-ids = homework-detail.homework-ids
-
+          vm.scores = arr2string homework-detail.scores
+          vm.homework-ids = arr2string homework-detail.homework-ids
           vm.location = "作业列表"
           vm.theme = Interaction.get-bg-by-month 2
 
@@ -47,6 +53,7 @@ angular.module 'app.student'
 
           for homework in vm.homeworks
             _.remove homework.classes, (c) -> c.class_id isnt vm.user.class
+
 
 
           vm.style =
@@ -68,10 +75,11 @@ angular.module 'app.student'
           vm.tickFormat = (d)!->
             if (d == 0)
               return 1
-            else 
+            else
               return d
 
           $scope.jump = (description)!->
+            #TODO 实际中改为作业链接
             window.open "http://www.baidu.com"
 
           $scope.showSubmitDialog = (id)!->
@@ -128,7 +136,7 @@ angular.module 'app.student'
                   $scope.showProgress = true
                   pictureUploader.uploadAll();
                   coreUploader.uploadAll();
-                  
+
             }
 
   }
