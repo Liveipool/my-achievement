@@ -12,31 +12,30 @@ angular.module 'app.student'
             'content@app':
                 template-url: 'app/main/student/homework-detail/homework-detail.html'
                 controller-as: 'vm'
-                controller: (result, user, Interaction)!->
+                controller: (result, user, Pagination, Interaction)!->
                     vm = @
                     vm.reviews = result.data
                     vm.user = user
                     vm.greeting = vm.user.fullname
                     vm.location = '作业详情'
                     vm.theme = Interaction.get-bg-by-month 2
+                    vm.pagination = Pagination.get-new!
+                    vm.reset-current-page = !->
+                        vm.pagination.currentPage = 0
                     username = vm.user.username
-                    # console.log vm.reviews
-                    console.log user
-
                     homeworks = _.filter vm.reviews, (review)->
                         review.reviewee.username == username
-
                     vm.num-of-sixty-to-seventy = 0
                     vm.num-of-seventy-to-eighty = 0
                     vm.num-of-eighty-to-ninety = 0
                     vm.num-of-failed = 0
                     vm.num-of-ninety-to-full = 0
 
-                    console.log homeworks
+                    # console.log homeworks
                     homeworks.forEach (homework)!->
-                        console.log homework.reviewer
-                        if (homework.reviewer.role != 'teacher')
-                            return
+                        # console.log homework.reviewer
+                        if (homework.reviewer.role != 'teacher') 
+                            return 
 
                         score = homework.finalScore
 
@@ -139,4 +138,47 @@ angular.module 'app.student'
                     # console.log vm.widget7.ranklists['HW1']
 
                     # console.log vm.widget7.ranklists
+
+                    vm.pagination.numOfPages = Math.ceil(vm.widget7.ranklists[vm.widget7.currentRange].length/vm.pagination.pageSize)
+
     }
+
+.filter 'startFrom', ->
+    (input, start)->
+        if (input === undefined)
+            return input
+        else
+            return input.slice +start
+
+.factory 'Pagination', ->
+    pagination = {}
+
+    pagination.get-new = (perPage)->
+
+        if perPage === undefined
+            perPage = 10
+
+        console.log perPage
+
+        paginator = 
+            numOfPages: 1
+            pageSize: perPage
+            currentPage: 0
+
+        paginator.prev-page = !->
+            if not paginator.is-first-page!
+                paginator.currentPage -= 1
+
+        paginator.next-page = !->
+            if not paginator.is-last-page!
+                paginator.currentPage += 1
+
+        paginator.is-last-page = ->
+            paginator.currentPage >= paginator.numOfPages - 1
+
+        paginator.is-first-page = ->
+            paginator.currentPage == 0
+
+        paginator
+    pagination
+

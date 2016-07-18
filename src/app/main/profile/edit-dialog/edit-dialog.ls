@@ -16,6 +16,7 @@ angular.module 'app.profile'
 
     @is-changed = false
     @is-correct = false
+
     @close-edit-dialog = !->
       $mdDialog.hide!
 
