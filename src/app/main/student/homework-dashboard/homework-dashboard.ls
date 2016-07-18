@@ -65,6 +65,12 @@ angular.module 'app.student'
             present: true
             finish: true
 
+          vm.tickFormat = (d)!->
+            if (d == 0)
+              return 1
+            else 
+              return d
+
           $scope.jump = (description)!->
             window.open "http://www.baidu.com"
 
@@ -73,9 +79,16 @@ angular.module 'app.student'
               templateUrl: 'app/main/student/homework-dashboard/submitDialog.html',
               parent: angular.element(document.body),
               clickOutsideToClose: false,
-              controller: ($scope, $mdDialog, FileUploader) !->
+              controller: ($scope, $mdDialog, FileUploader, $interval) !->
+                $scope.determinateValue = 30
                 $scope.id = id
+                $scope.showProgress = false
 
+                $interval !->
+                  $scope.determinateValue += 1
+                  if ($scope.determinateValue > 100)
+                    $scope.determinateValue = 30
+                ,100, 0, true
                 $scope.cancel = !->
                   $mdDialog.hide!
 
@@ -112,10 +125,10 @@ angular.module 'app.student'
                   $scope.coreUploadState = true
 
                 $scope.uploadFile = !->
+                  $scope.showProgress = true
                   pictureUploader.uploadAll();
                   coreUploader.uploadAll();
-
-
+                  
             }
 
   }

@@ -5,28 +5,29 @@ mixin chart
     .md-title.mb-12 我的成绩
     .card.md-whiteframe-2dp.white-bg.p-12
       c3chart(bindto-id="scoreChart")
-        chart-column(column-id="x" column-values="{{vm.homeworkIds}}")
-        chart-column(column-id="score" column-name="分数" column-color="#19b0f5" column-values="{{vm.scores}}" column-type="line")
+        chart-column(column-id="x" column-values="作业1, 作业2, 作业3, 作业4, 作业5, 作业6, 作业7, 作业8, 作业9, 作业10")
+        chart-column(column-id="score" column-name="分数" column-color="#19b0f5" column-values="95, 59, 100, 88, 90, 60, 94, 90, 82, 95" column-type="line")
         chart-points(point-radius="4" show-point="true" point-expand-enabled="true"
                       point-expand-radius="8")
         chart-grid(show-x="false" show-y="true")
+        chart-axis-x(axis-type="category")
+        chart-axis-y(axis-max="100")
         chart-axes(values-x="x" y="score")
-          chart-axis-x(axis-type="category")
-          chart-axis-y(axis-max="100")
-
 
   div.p-12(flex="50" flex-sm="100")
     .md-title.mb-12 我的排名
     .card.md-whiteframe-2dp.white-bg.p-12
       c3chart(bindto-id="rankChart")
         chart-column(column-id="x" column-values="作业1, 作业2, 作业3, 作业4, 作业5, 作业6, 作业7, 作业8, 作业9, 作业10")
-        chart-column(column-id="rank" column-name="排名" column-color="#ffb300" column-values="1,2,5,10,20,93,44,23,42,10" column-type="line")
-        chart-points(point-radius="4" show-point="true" point-expand-enabled="true" point-expand-radius="8")
+        chart-column(column-id="rank" column-name="排名" column-color="#ff9800" column-values="3,150,1,50,10,140,12,70,12,40" column-type="line")
+        chart-points(point-radius="4" show-point="true" point-expand-enabled="true"
+                      point-expand-radius="8")
         chart-grid(show-x="false" show-y="true")
-        chart-axes(values-x="x" y="rank")
-          chart-axis-x(axis-type="category")
-          chart-axis-y(axis-inverted="true")
-
+        chart-axis-x(axis-type="category")
+        chart-axis-y(axis-inverted="true" axis-min="1" padding-top="10" padding-bottom="20")
+          chart-axis-y-tick(tick-format-function="vm.tickFormat")
+        chart-axes(values-x="x" y="score")
+         
 
 mixin menu-item
   md-menu-item(width="4")

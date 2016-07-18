@@ -27,7 +27,15 @@ md-dialog(aria-label="submitDialog")
             div.pb-24
               label.pointer.m-0.icon-folder-multiple.md-headline(for="uploadCore")
                 input(hide type="file" id="uploadCore" nv-file-select uploader="coreUploader" ng-click="clearCoreItem()")
-
+        div.progress(ng-show="showProgress")
+          div.pictureProgress.m-12 picture progress: {{pictureUploader.progress}}%
+            md-progress-linear(md-mode="determinate" value="{{pictureUploader.progress}}")
+          div.coreProgress.m-12 core progress: {{coreUploader.progress}}%
+            md-progress-linear.md-warn(md-mode="determinate" value="{{coreUploader.progress}}")
     md-dialog-actions(layout="row")
-      md-button.md-raised.md-primary.md-light-blue-500-bg(ng-click="cancel()") 返回
-      md-button.md-raised.md-primary.md-light-blue-500-bg(ng-click="uploadFile()") 提交
+      md-button.md-raised.md-primary.md-red-300-bg(ng-click="cancel()")
+        md-icon(md-font-icon="icon-close")
+        span cancel
+      md-button.md-raised.md-primary.md-green-300-bg(ng-click="uploadFile()" ng-disabled="!pictureUploader.queue.length || !coreUploader.queue.length")
+        md-icon(md-font-icon="icon-upload")
+        span upload
