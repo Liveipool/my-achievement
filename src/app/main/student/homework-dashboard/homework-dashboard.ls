@@ -64,6 +64,17 @@ angular.module 'app.student'
           .then (result)->
             homeworks = result.data
             Promise.resolve homeworks
+
+      homework-detail: ($resource, Authentication) ->
+        $resource 'app/data/review/reviews.json' .get!.$promise
+        .then (result) ->
+          user = Authentication.get-user!
+          reviews = _.filter result.data, (review) -> review.reviewee.username == user.username && review.reviewer.role is 'teacher'
+          scores = [review.score for review in reviews]
+          homework-ids = [review.homework_id for review in reviews]
+
+          Promise.resolve {scores: scores, homework-ids: homework-ids}
+
     data:
       role: 'student'
 
@@ -71,11 +82,15 @@ angular.module 'app.student'
       'content@app':
         template-url: 'app/main/student/homework-dashboard/homework-dashboard.html'
         controller-as : 'vm'
-        controller: ($scope, Authentication, homeworks, $mdDialog, Interaction)!->
+        controller: ($scope, Authentication, homeworks, $mdDialog, Interaction, homework-detail)!->
           console.log "欢迎回来!"
+          console.log homework-detail
+
           vm = @
           vm.user = Authentication.get-user!
-          console.log vm.user
+          vm.scores = homework-detail.scores
+          vm.homework-ids = homework-detail.homework-ids
+
           vm.location = "作业列表"
           vm.theme = Interaction.get-bg-by-month 2
 
@@ -87,20 +102,16 @@ angular.module 'app.student'
             _.remove homework.classes, (c) -> c.class_id isnt vm.user.class
 
 
-          vm.status =
-            future: "未开始"
-            present: "进行中"
-            finish: "已结束"
-
-          vm.fg =
-            future: "light-blue-fg"
-            present: "red-fg"
-            finish: "grey-fg"
-
-          vm.bg =
-            future: "light-blue-bg"
-            present: "red-bg"
-            finish: "grey-bg"
+          vm.style =
+            future:
+              status: '未开始'
+              fg: "light-blue-fg"
+            present:
+              status: "进行中"
+              fg: "red-fg"
+            finish:
+              status: "已结束"
+              fg: "grey-fg"
 
           vm.switch =
             future: true
