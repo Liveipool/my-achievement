@@ -24,7 +24,7 @@ div#homework-detail.content.p-12
                         .md-title.pv-24 {{vm.widget7.title}}
 
                         .pv-24
-                            md-select.simplified( ng-model="vm.widget7.currentRange" aria-label="Change range")
+                            md-select.simplified( ng-model="vm.widget7.currentRange" ng-change="vm.resetCurrentPage()" aria-label="Change range")
                                 md-option( ng-repeat="(key, range) in vm.widget7.ranges" value="{{key}}") {{range}}
 
                     .rank-table.scrollable(ms-scroll)
@@ -37,13 +37,16 @@ div#homework-detail.content.p-12
                                     th 小组
                                     th 分数
                             tbody
-                                tr.ph-24.hover(ng-repeat="homework in vm.widget7.ranklists[vm.widget7.currentRange] ")
-                                    td {{$index+1}}
+                                tr.ph-24.hover(ng-repeat="homework in vm.widget7.ranklists[vm.widget7.currentRange] | startFrom:vm.pagination.currentPage*vm.pagination.pageSize | limitTo: vm.pagination.pageSize track by $index ")
+                                    td {{$index+1+vm.pagination.currentPage*vm.pagination.pageSize}}
                                     td {{homework.reviewee.username}}
                                     td {{homework.reviewee.fullname}}
                                     td {{homework.group}}
                                     td {{homework.score}}
-
+                    div(layout='row' layout-align="center center")
+                        md-button.m-12(ng-disabled="vm.pagination.isFirstPage()" ng-click="vm.pagination.prevPage()" ) 上一页
+                        {{vm.pagination.currentPage+1}}/{{vm.pagination.numOfPages}}
+                        md-button.m-12(ng-disabled="vm.pagination.isLastPage()" ng-click="vm.pagination.nextPage()")  下一页
 
             <!-- / Front -->
 
