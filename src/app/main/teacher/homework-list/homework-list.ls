@@ -2,7 +2,7 @@
 
 angular.module 'app.teacher'
 
-.config ($state-provider,  ms-navigation-service-provider) !->
+.config ($state-provider) !->
   $state-provider.state 'app.teacher.homework-list', {
     url: '/homework-list'
     resolve:
@@ -15,11 +15,11 @@ angular.module 'app.teacher'
       'content@app':
         template-url: 'app/main/teacher/homework-list/homework-list.html'
         controller-as : 'vm'
-        controller: ($scope, Authentication, homeworks, $state)!->
+        controller: ($scope, Authentication, homeworks, $state, Interaction)!->
 
-          console.log "欢迎回来!"
           @user = Authentication.get-user!
           @location = "所有作业"
+          @theme = Interaction.get-bg-by-month 2
           @greeting  = @user.fullname;
           if @user.role is 'teacher'
             @greeting = @greeting + '老师'
@@ -38,8 +38,8 @@ angular.module 'app.teacher'
             false
           @calculate-status = (hs) !->
             for h in hs
-              if @status-helper h.classes, 'current'
-                h.status = 'current'
+              if @status-helper h.classes, 'present'
+                h.status = 'present'
                 h.t-status = '进行中'
               else
                 if @status-helper h.classes, 'future'
@@ -50,8 +50,10 @@ angular.module 'app.teacher'
                   h.t-status = '已结束'
             for h in hs
               h.bg = 'image-div-' + (1 + parse-int 12 * Math.random!)
+              h.description = 'https://' + h.description if not /http/.test h.description
+              # avoid missing the 'http'
               for c in h.classes
-                c.t-status = '进行中' if c.status == 'current'
+                c.t-status = '进行中' if c.status == 'present'
                 c.t-status = '未开始' if c.status == 'future'
                 c.t-status = '已结束' if c.status == 'finish'
 

@@ -1,63 +1,71 @@
-div#dashboar(layout="column")
-  header(layout="column" layout-align="end")
-    span.md-display-1.font-weight-300 欢迎回来，{{vm.greeting}}老师!
+mixin container-header
+    header.p-24
+        .title 作业{{vm.currentHwNum}}
 
-md-card#main-content(md-whiteframe='3')
-    header.header.md-accent-bg.hw-header
-        div.title 作业{{vm.currentHwNum}}
+mixin form
     form(ng-submit='vm.Submit()' name='form')
-        md-content.md-padding(layout='row' layout-align='center center' layout-wrap)
-            md-input-container.md-icon-float.md-input-invalid.hw-title(flex-xs='80' flex-gt-sm='40')
-                md-icon.ng-scope.md-font.material-icons(md-font-icon='icon-pencil-box-outline')
-                label 作业标题
-                input(type='text' ng-model='vm.hwObj.title' required)
+        md-content(layout='row' layout-align='center center' layout-wrap)
+            +inputs
+            +class-detail
+            +buttons
 
-            md-input-container.md-icon-float.md-input-invalid.hw-url(flex-xs='80' flex-gt-sm='40')
-                md-icon.ng-scope.md-font.icon-link.material-icons(md-font-icon='icon-link')
-                label 作业链接
-                input(type='text' ng-model='vm.hwObj.description' required)
-        
-        md-content.md-padding(layout='row' layout-align='center center' layout-wrap)
-            md-card.date-card(ng-repeat='class in vm.classes' flex flex-gt-xs='45' layout='column')
-                header.header.md-accent-bg.class-header
-                    div.title 教务{{class.classId}}班
-                div(layout='row')
-                    md-input-container(flex='50')
-                        label 开始日期
-                        md-datepicker.datepicker(md-placeholder="日期" ng-model="class.startTime" name="date-start{{$index}}")
-                    md-input-container.margin-rt-40(flex='10')
-                        label 时
-                        md-select(ng-model='vm.startHour[$index]')
-                            md-option(ng-repeat='hour in vm.hours') {{hour}}     
-                    md-input-container.margin-rt-40(flex='10')
-                        label 分
-                        md-select(ng-model='vm.startMin[$index]')
-                            md-option(ng-repeat='min in vm.mins') {{min}}
+mixin inputs
+    md-content.p-12.wrapper-bg(layout='row' layout-align='center center' layout-wrap flex='100')
+        div.p-12(layout="row" flex="100" flex-gt-xs="50")
+            +input('icon-pencil-box-outline', '作业标题', 'vm.hwObj.title')
+        div.p-12(layout="row" flex="100" flex-gt-xs="50")
+            +input('icon-link', '作业链接', 'vm.hwObj.description')
 
-                div(layout='row')
-                    md-input-container(flex='50')
-                        label 结束日期
-                        md-datepicker.datepicker(md-placeholder="日期" ng-model="class.endTime" name="date-end{{$index}}")
-                    md-input-container.margin-rt-40(flex='10')
-                        label 时
-                        md-select(ng-model='vm.endHour[$index]')
-                            md-option(ng-repeat='hour in vm.hours') {{hour}}     
-                    md-input-container.margin-rt-40(flex='10')
-                        label 分
-                        md-select(ng-model='vm.endMin[$index]')
-                            md-option(ng-repeat='min in vm.mins') {{min}}
-                p.error-message(ng-show='vm.dateEmpty[$index]') 日期不能为空
-                p.error-message(ng-show='vm.dateInvalid[$index]') 开始时间不能大于结束时间
-                
-                
-                
-                
-        md-content.md-padding(layout='row' layout-align='center center' md-whiteframe='2')
-            md-button.md-raised.md-warn#button-submit(type='submit') 提交
-            md-button.md-raised#button-reset(ng-click='vm.Reset()') 重置
+mixin input(icon, label, ngModel)
+    md-input-container.md-icon-float.md-input-invalid.input-size(flex="100" layout='column')
+        md-icon.ng-scope.md-font.material-icons(md-font-icon=icon)
+        label=label
+        input(type='text' ng-model=ngModel required)
 
+mixin class-detail
+    md-content.p-12.wrapper-bg(layout='row' layout-wrap flex='100')
+        div.p-12(layout="row" flex="100" flex-gt-xs="50" ng-repeat="class in vm.classes")
+            div.white-bg.md-whiteframe-2dp(layout="column" flex="100")
+                header.md-accent-bg.ph-24.pv-12
+                    span 班级{{class.classId}}
+                +datepickers('开始日期', 'class.startTime', 'vm.startHour[$index]', 'vm.startMin[$index]')
+                +datepickers('结束日期', 'class.endTime', 'vm.endHour[$index]', 'vm.endMin[$index]')
+                +error
 
+mixin datepickers(label, ngModelDay, ngModelHour, ngModelMin)
+    div.pv-12.pr-24(layout='row')
+        md-input-container(flex='50' layout="row")
+            label=label
+            md-datepicker.datepicker.pr-0(md-placeholder="日期" ng-model=ngModelDay required flex="100")
+        md-input-container.hour(flex='25')
+            label 时
+            md-select(ng-model=ngModelHour)
+                md-option(ng-repeat='hour in vm.hours' value='{{hour}}') {{hour}}
+        md-input-container(flex='25')
+            label 分
+            md-select(ng-model=ngModelMin)
+                md-option(ng-repeat='min in vm.mins' value='{{min}}') {{min}}
+
+mixin buttons
+    md-content.md-padding(layout='row' layout-align='center center' flex="100" md-whiteframe='2')
+        md-button.md-raised.md-warn.margin-lf-rt-3(type='submit' ng-disabled='form.$invalid') 提交
+        md-button.md-raised.margin-lf-rt-3(ng-click='vm.Reset()') 重置
+
+mixin error
+    span.error-message(ng-show='vm.dateInvalid[$index]') 开始时间不能大于结束时间
 
 
+//--------------------------  主页面  ----------------------------
+div#header-container
+    div.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+        header.header.ph-24(layout='column' layout-align='end start' ng-class="vm.theme.bg")
+            .breadcrumb(layout='row' layout-align='start center')
+                md-icon.s16(md-font-icon='icon-home')
+                md-icon.s16.separator(md-font-icon='icon-chevron-right')
+                span {{vm.location}}
+                span.parent
+            .title(ng-class="vm.theme.fg") 欢迎回来, {{vm.greeting}}!
 
-
+div#publish-homework-container.wrapper-bg
+    +container-header
+    +form

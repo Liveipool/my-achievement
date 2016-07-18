@@ -1,32 +1,34 @@
 
 mixin chart
  //#TODOc3表格的具体实现还有bug，需要仔细阅读文档解决
- div.p-12(flex="50" flex-xs="100")
+ div.p-12(flex="50" flex-sm="100")
     .md-title.mb-12 我的成绩
     .card.md-whiteframe-2dp.white-bg.p-12
       c3chart(bindto-id="scoreChart")
-        chart-column(column-id="x" column-values="作业1, 作业2, 作业3, 作业4, 作业5, 作业6, 作业7, 作业8, 作业9, 作业10")
-        chart-column(column-id="score" column-name="分数" column-color="#19b0f5" column-values="95, 90, 100, 88, 90, 95, 94, 90, 90, 95" column-type="line")
-        chart-axis-y(axis-max="100")
+        chart-column(column-id="x" column-values="{{vm.homeworkIds}}")
+        chart-column(column-id="score" column-name="分数" column-color="#19b0f5" column-values="{{vm.scores}}" column-type="line")
         chart-points(point-radius="4" show-point="true" point-expand-enabled="true"
                       point-expand-radius="8")
         chart-grid(show-x="false" show-y="true")
-        chart-axis-x(axis-type="category")
-        chart-axis-y(axis-max="100")
         chart-axes(values-x="x" y="score")
+          chart-axis-x(axis-type="category")
+          chart-axis-y(axis-max="100")
 
-  div.p-12(flex="50" flex-xs="100")
+
+  div.p-12(flex="50" flex-sm="100")
     .md-title.mb-12 我的排名
     .card.md-whiteframe-2dp.white-bg.p-12
       c3chart(bindto-id="rankChart")
-        chart-column(column-id="x" column-values="作业1, 作业2, 作业3, 作业4, 作业5, 作业6, 作业7, 作业8, 作业9, 作业10, 作业11")
-        chart-column(column-id="rank" column-name="排名" column-color="#ffb300" column-values="30,200,100,400,150,250" column-type="area-spline")
+        chart-column(column-id="x" column-values="作业1, 作业2, 作业3, 作业4, 作业5, 作业6, 作业7, 作业8, 作业9, 作业10")
+        chart-column(column-id="rank" column-name="排名" column-color="#ffb300" column-values="1,2,5,10,20,93,44,23,42,10" column-type="line")
+        chart-points(point-radius="4" show-point="true" point-expand-enabled="true" point-expand-radius="8")
         chart-grid(show-x="false" show-y="true")
-        chart-axis-x(axis-type="category")
-        chart-axes(values-x="x" y="score")
+        chart-axes(values-x="x" y="rank")
+          chart-axis-x(axis-type="category")
+          chart-axis-y(axis-inverted="true")
+
 
 mixin menu-item
-  //#TODO根据作业的status来判断menu-item的内容
   md-menu-item(width="4")
     md-button(ng-click="jump(homework.description)")
       md-icon(md-font-icon="icon-book")
@@ -35,10 +37,15 @@ mixin menu-item
     md-button(ng-click="showSubmitDialog(homework.id)")
       md-icon(md-font-icon="icon-cloud-upload")
       span 提交作业
+  md-menu-item(ng-if="homework.classes[0].status === 'present'")
+    md-button(ui-sref="app.student.homework-review({ id: homework.id })")
+      md-icon(md-font-icon="icon-document")
+      span 互评
   md-menu-item(ng-if="homework.classes[0].status === 'finish'")
     md-button(ng-click="flipWidget()" aria-label="Flip widget")
       md-icon(md-font-icon="icon-document")
       span 作业详情
+
 
 mixin homework-widget-front
   ms-widget-front.white-bg
@@ -49,10 +56,10 @@ mixin homework-widget-front
           md-icon(md-font-icon="icon-dots-vertical")
         md-menu-content
           +menu-item
-    div.p-24.widget-body(layout="column" layout-align="center center")
-      span.font-weight-500(ng-class="vm.fg[homework.classes[0].status]") {{homework.title}}
+    div.p-24.widget-body.h-180(layout="column" layout-align="center center")
+      span.font-weight-500(ng-class="vm.style[homework.classes[0].status].fg") {{homework.title}}
     div.ph-24.pv-12.widget-foot
-      span 状态: {{vm.status[homework.classes[0].status]}}
+      span 状态: {{vm.style[homework.classes[0].status].status}}
 
 mixin homework-widget-back
   ms-widget-back.white-bg(layout="column" flex="100")
@@ -87,21 +94,22 @@ mixin homework-list
 
 
 
-div#homework-dashboard.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+div#header-container
+  div.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+    header.header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
+      .breadcrumb(layout='row' layout-align='start center')
+        md-icon.s16(md-font-icon='icon-home')
+        md-icon.s16.separator(md-font-icon='icon-chevron-right')
+        span {{vm.location}}
+        span.parent
+      span.md-display-1.font-weight-300(ng-class="vm.theme.fg")
+        | 欢迎回来,
+        |{{vm.greeting}}
+        |!
 
-  header.header.md-accent-bg.ph-24(layout="column" layout-align="end")
-    .breadcrumb(layout='row' layout-align='start center')
-      md-icon.s16(md-font-icon='icon-home')
-      md-icon.s16.separator(md-font-icon='icon-chevron-right')
-      span {{vm.location}}
-      span.parent
-    span.md-display-1.font-weight-300
-      | 欢迎回来,
-      |{{vm.greeting}}
-      |!
-  div
-    md-content.p-12.wrapper-bg
-      div#chart-container(layout="row")
-        +chart
-      div#homeworks-container
-        +homework-list
+div#homework-dashboard
+  md-content.p-12.wrapper-bg
+    div#chart-container(layout="row" layout-sm="column")
+      +chart
+    div#homeworks-container
+      +homework-list
