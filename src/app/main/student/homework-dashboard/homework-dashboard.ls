@@ -54,21 +54,68 @@ angular.module 'app.student'
             present: true
             finish: true
 
-          vm.score = "95, 90, 100, 88, 90, 95, 94, 90, 90, 95"
+          scoreChart = c3.generate {
+            bindto: '#scoreChart'
+            data:
+              columns: [
+                ['score', 95, 59, 100, 88, 90, 60, 94, 90, 90, 95]
+              ]
+              colors:
+                score: '#19b0f5'
+            grid:
+              x:
+                show: false
+              y:
+                show: true
+            axis:
+              x:
+                type: 'category'
+                categories: ['作业1', '作业2', '作业3', '作业4', '作业5', '作业6', '作业7', '作业8', '作业9', '作业10']
+          }
 
-          vm.rank = "10, 30, 60, 40, 3, 45, 32, 12, 65, 43"
+          rankChart = c3.generate {
+            bindto: '#rankChart'
+            data:
+              columns: [
+                ['rank', 30, 200, 100, 20, 150, 150, 50, 100, 70, 1]
+              ]
+              colors:
+                rank: '#ffb300'
+            grid:
+              x:
+                show: false
+              y:
+                show: true
+            axis:
+              x:
+                type: 'category'
+                categories: ['作业1', '作业2', '作业3', '作业4', '作业5', '作业6', '作业7', '作业8', '作业9', '作业10']
+              y:
+                tick:
+                  values: [1, 30, 60, 90, 120, 150, 180, 210]
+                inverted: true
+          }
 
           $scope.jump = (description)!->
             window.open "http://www.baidu.com"
+
+          
 
           $scope.showSubmitDialog = (id)!->
             $mdDialog.show {
               templateUrl: 'app/main/student/homework-dashboard/submitDialog.html',
               parent: angular.element(document.body),
               clickOutsideToClose: false,
-              controller: ($scope, $mdDialog, FileUploader) !->
+              controller: ($scope, $mdDialog, FileUploader, $interval) !->
+                $scope.determinateValue = 30
                 $scope.id = id
+                $scope.showProgress = false
 
+                $interval !->
+                  $scope.determinateValue += 1
+                  if ($scope.determinateValue > 100)
+                    $scope.determinateValue = 30
+                ,100, 0, true
                 $scope.cancel = !->
                   $mdDialog.hide!
 
@@ -105,8 +152,10 @@ angular.module 'app.student'
                   $scope.coreUploadState = true
 
                 $scope.uploadFile = !->
+                  $scope.showProgress = true
                   pictureUploader.uploadAll();
                   coreUploader.uploadAll();
+                  
             }
 
   }
