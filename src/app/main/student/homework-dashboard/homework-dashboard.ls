@@ -65,52 +65,14 @@ angular.module 'app.student'
             present: true
             finish: true
 
-          scoreChart = c3.generate {
-            bindto: '#scoreChart'
-            data:
-              columns: [
-                ['score', 95, 59, 100, 88, 90, 60, 94, 90, 90, 95]
-              ]
-              colors:
-                score: '#19b0f5'
-            grid:
-              x:
-                show: false
-              y:
-                show: true
-            axis:
-              x:
-                type: 'category'
-                categories: ['作业1', '作业2', '作业3', '作业4', '作业5', '作业6', '作业7', '作业8', '作业9', '作业10']
-          }
-
-          rankChart = c3.generate {
-            bindto: '#rankChart'
-            data:
-              columns: [
-                ['rank', 30, 200, 100, 20, 150, 150, 50, 100, 70, 1]
-              ]
-              colors:
-                rank: '#ffb300'
-            grid:
-              x:
-                show: false
-              y:
-                show: true
-            axis:
-              x:
-                type: 'category'
-                categories: ['作业1', '作业2', '作业3', '作业4', '作业5', '作业6', '作业7', '作业8', '作业9', '作业10']
-              y:
-                tick:
-                  values: [1, 30, 60, 90, 120, 150, 180, 210]
-                inverted: true
-          }
+          vm.tickFormat = (d)!->
+            if (d == 0)
+              return 1
+            else 
+              return d
 
           $scope.jump = (description)!->
             window.open "http://www.baidu.com"
-
-          
 
           $scope.showSubmitDialog = (id)!->
             $mdDialog.show {
