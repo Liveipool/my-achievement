@@ -1,15 +1,14 @@
 
 mixin change-password
-  div(layout="row" layout-align="center center")
+  div.p-12(layout="row" layout-align="center center")
     button.md-button.change-password.md-accent(ng-click="vm.changePassword()") 修改密码
 
   div.change-password-container.pv-12#change-password-container(layout="column")
-    form(name="changePasswordForm")
       div(layout="column")
         md-input-container.mb-0
           label(for="old") 旧密码
           md-icon(md-font-icon="icon-key")
-          input(type="password" name="old")
+          input(type="password" name="old" ng-model="vm.oldPassword" ng-blur="vm.validateOldPassword()")
 
         md-input-container.mb-0
           label(for="new") 新密码
@@ -48,19 +47,25 @@ md-dialog.contact-dialog#dialog
       md-input-container.mb-0
         label(for="email") 邮箱
         md-icon(md-font-icon="icon-email")
-        input(type="email" name="email" value="{{vm.user.email}}" required)
+        input(type="email" name="email" ng-model="vm.email" required ng-change="vm.change()")
+        div(ng-messages="informationForm.email.$error")
+          div(ng-message="required") 请输入邮箱
+          div(ng-message="pattern") 请输入正确的邮箱
 
-      md-input-container.mb-5(ng-if="vm.user.role === 'student' || vm.user.role === 'ta'")
+      md-input-container.mb-6(ng-if="vm.user.role === 'student' || vm.user.role === 'ta'")
         label(for="sid") 学号
         md-icon(md-font-icon="icon-book")
-        input(type="text" name="sid" value="{{vm.user.sid}}" required)
+        input(type="text" name="sid" ng-model="vm.sid" required ng-pattern="/^[0-9]{8}$/" ng-change="vm.change()")
+        div(ng-messages="informationForm.sid.$error")
+          div(ng-message="required") 请输入学号
+          div(ng-message="pattern") 请输入正确的学号
 
 
       +change-password
 
-    div.p-12.pt-0.wrapper-bg(layout="row" layout-align="space-between center")
+    md-dialog-actions.p-12.pt-0.wrapper-bg(layout="row" layout-align="space-between center")
       md-button.raised(ng-click="vm.addTest()") 保存
-      md-button.raised(type="reset") 重置
+      md-button.raised(ng-click="vm.reset()") 重置
 
 
 

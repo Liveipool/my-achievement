@@ -1,12 +1,49 @@
 'use strict'
 
 angular.module 'app.profile'
-  .controller 'edit-dialog-controller', (Authentication, $mdDialog, $interval) !->
+  .controller 'edit-dialog-controller', (Authentication, $mdDialog, $interval, $scope) !->
     @user = Authentication.get-user!
-    @show-or-hide = false
-    @isChanged = false
+
+    @raw-data =
+      sid: @user.sid
+      email: @user.email
+      old-password: ""
+
+    @is-change = false
+    @sid = @user.sid
+    @email = @user.email
+    @old-password = ""
+
+    @is-changed = false
+    @is-correct = false
     @close-edit-dialog = !->
       $mdDialog.hide!
+
+
+    @change = !->
+      if @sid
+        if @sid === @raw-data.sid
+          is-changed = false
+          console.log "no change"
+        else
+          is-changed = true
+          console.log "has change"
+
+    @reset = !->
+      @sid = @raw-data.sid
+      @email = @raw-data.email
+      @old-password = @raw-data.old-password
+
+    @validate-old-password = !->
+      console.log @old-password
+      console.log valid
+      if @old-password == @user.password
+        #密码正确
+        @is-correct = true
+      else
+        @is-correct = false
+        valid = false
+        #密码不正确，将该input设为invalid
 
     @change-password = !->
       btn = $ '.change-password-container'
