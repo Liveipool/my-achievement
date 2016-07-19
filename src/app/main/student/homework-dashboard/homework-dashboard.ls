@@ -3,10 +3,15 @@
 angular.module 'app.student'
 
 .controller 'hwTimer', ($scope, $interval, timerService) !->
+  $scope.timerHide = true
   timer = $interval (!->
     $scope.remain = timerService.calculateRemain $scope.homework.classes[0].startTime, $scope.homework.classes[0].endTime, $scope.homework.classes[0].status
     $scope.homework.classes[0].status = $scope.remain.status
-    if $scope.remain.status == "finish" then $interval.cancel(timer)), 1000
+    if $scope.remain.status == 'future' then $scope.timerHide = false
+    if $scope.remain.status == "finish" or $scope.remain.status == 'present' 
+      $interval.cancel(timer)
+      $scope.timerHide = true
+    ), 1000
   
 
 .factory 'timerService', ->

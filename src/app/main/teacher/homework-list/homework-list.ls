@@ -3,6 +3,7 @@
 angular.module 'app.teacher'
 
 .controller 'teacherTimer', ($scope, $interval, timerService) !->
+  $scope.timerHide = true
   $scope.status-table = 
     'future':'未开始'
     'present': '进行中'
@@ -14,6 +15,7 @@ angular.module 'app.teacher'
     false
   timer = $interval (!->
     $scope.remain = timerService.calculateRemain $scope.class.startTime, $scope.class.endTime, $scope.class.status
+    $scope.timerHide = false if $scope.remain.status == 'future'
     if $scope.class.status != $scope.remain.status
       $scope.class.status = $scope.remain.status
       $scope.class.t-status = $scope.status-table[$scope.remain.status]
@@ -27,7 +29,10 @@ angular.module 'app.teacher'
         else
           $scope.homework.status = 'finish'
           $scope.homework.t-status = '已结束'
-    if $scope.remain.status == "finish" then $interval.cancel(timer)), 1000
+    if $scope.remain.status == "finish" or $scope.remain.status == 'present' 
+      $scope.timerHide = true
+      $interval.cancel(timer)
+    ), 1000
 
 
 

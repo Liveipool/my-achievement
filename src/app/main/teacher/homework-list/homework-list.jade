@@ -32,7 +32,7 @@ mixin class-id
 	.class.md-subhead class {{class.class_id}}
 
 mixin comming-soon
-	div#time-format(layout="row" layout-wrap ng-controller='teacherTimer'  layout-align='center')
+	div#time-format(layout="row" layout-wrap ng-controller='teacherTimer' ng-hide='timerHide' layout-align='center')
 		div(flex="25%")
 			div.number-font {{remain.days}}
 			div.date-font days

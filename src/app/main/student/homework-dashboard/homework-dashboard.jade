@@ -48,7 +48,7 @@ mixin menu-item
 
 
 mixin comming-soon
-  div#time-format(layout="row" layout-wrap ng-controller='hwTimer'  layout-align='center')
+  div#time-format(layout="row" layout-wrap ng-controller='hwTimer' ng-hide='timerHide' layout-align='center')
     div(flex="25%")
       div.number-font {{remain.days}}
       div.date-font days
