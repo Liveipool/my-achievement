@@ -11,6 +11,17 @@ angular.module 'app.student'
           .then (result)->
             homeworks = result.data
             Promise.resolve homeworks
+
+      homework-detail: ($resource, Authentication) ->
+        $resource 'app/data/review/reviews.json' .get!.$promise
+        .then (result) ->
+          user = Authentication.get-user!
+          reviews = _.filter result.data, (review) -> review.reviewee.username == user.username && review.reviewer.role is 'teacher'
+          scores = [review.score for review in reviews]
+          homework-ids = [review.homework_id for review in reviews]
+
+          Promise.resolve {scores: scores, homework-ids: homework-ids}
+
     data:
       role: 'student'
 
@@ -18,10 +29,21 @@ angular.module 'app.student'
       'content@app':
         template-url: 'app/main/student/homework-dashboard/homework-dashboard.html'
         controller-as : 'vm'
-        controller: ($scope, Authentication, homeworks, $mdDialog, Interaction)!->
-          console.log "欢迎回来!"
+        controller: ($scope, Authentication, homeworks, $mdDialog, Interaction, homework-detail)!->
+
+          arr2string = (arr)->
+            _string = ""
+            i = 0
+            while i != arr.length - 1
+              _string += arr[i] + ','
+              i++
+            _string += arr[i]
+            return _string
+
           vm = @
           vm.user = Authentication.get-user!
+          vm.scores = arr2string homework-detail.scores
+          vm.homework-ids = arr2string homework-detail.homework-ids
           vm.location = "作业列表"
           vm.theme = Interaction.get-bg-by-month 2
 
@@ -33,27 +55,31 @@ angular.module 'app.student'
             _.remove homework.classes, (c) -> c.class_id isnt vm.user.class
 
 
-          vm.status =
-            future: "未开始"
-            present: "进行中"
-            finish: "已结束"
 
-          vm.fg =
-            future: "light-blue-fg"
-            present: "red-fg"
-            finish: "grey-fg"
-
-          vm.bg =
-            future: "light-blue-bg"
-            present: "red-bg"
-            finish: "grey-bg"
+          vm.style =
+            future:
+              status: '未开始'
+              fg: "light-blue-fg"
+            present:
+              status: "进行中"
+              fg: "red-fg"
+            finish:
+              status: "已结束"
+              fg: "grey-fg"
 
           vm.switch =
             future: true
             present: true
             finish: true
 
+          vm.tickFormat = (d)!->
+            if (d == 0)
+              return 1
+            else
+              return d
+
           $scope.jump = (description)!->
+            #TODO 实际中改为作业链接
             window.open "http://www.baidu.com"
 
           $scope.showSubmitDialog = (id)!->
@@ -61,9 +87,16 @@ angular.module 'app.student'
               templateUrl: 'app/main/student/homework-dashboard/submitDialog.html',
               parent: angular.element(document.body),
               clickOutsideToClose: false,
-              controller: ($scope, $mdDialog, FileUploader) !->
+              controller: ($scope, $mdDialog, FileUploader, $interval) !->
+                $scope.determinateValue = 30
                 $scope.id = id
+                $scope.showProgress = false
 
+                $interval !->
+                  $scope.determinateValue += 1
+                  if ($scope.determinateValue > 100)
+                    $scope.determinateValue = 30
+                ,100, 0, true
                 $scope.cancel = !->
                   $mdDialog.hide!
 
@@ -100,9 +133,9 @@ angular.module 'app.student'
                   $scope.coreUploadState = true
 
                 $scope.uploadFile = !->
+                  $scope.showProgress = true
                   pictureUploader.uploadAll();
                   coreUploader.uploadAll();
-
 
             }
 
