@@ -2,7 +2,7 @@
 
 angular.module 'app.teacher'
 
-.controller 'hwTimer', ($scope, $interval, timerService) !->
+.controller 'teacherTimer', ($scope, $interval, timerService) !->
   $scope.status-table = 
     'future':'未开始'
     'present': '进行中'
