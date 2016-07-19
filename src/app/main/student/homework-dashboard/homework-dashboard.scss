@@ -10,7 +10,7 @@
     }
     .widget-foot {
       border-top: 1px solid rgba(0,0,0,.12);
-      background-color: #F5F5F5;
+      // background-color: #F5F5F5;
     }
   }
 }
@@ -27,6 +27,7 @@ md-dialog {
   stroke-width: 3px;
 }
 
+
 #time-format {
   text-align: center !important;
 }
@@ -39,3 +40,4 @@ md-dialog {
   font-family: Roboto,"Helvetica Neue",Arial,sans-serif;
   font-size: 2em;
 }
+
