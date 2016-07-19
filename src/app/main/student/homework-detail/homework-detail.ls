@@ -12,14 +12,14 @@ angular.module 'app.student'
             'content@app':
                 template-url: 'app/main/student/homework-detail/homework-detail.html'
                 controller-as: 'vm'
-                controller: (result, user, Pagination, Interaction)!->
+                controller: (result, user, pagination-service, Interaction)!->
                     vm = @
                     vm.reviews = result.data
                     vm.user = user
                     vm.greeting = vm.user.fullname
                     vm.location = '作业详情'
                     vm.theme = Interaction.get-bg-by-month 2
-                    vm.pagination = Pagination.get-new!
+                    vm.pagination = pagination-service.get-new!
                     vm.reset-current-page = (currentRange)!->
                         vm.get-class-scores-distribution(currentRange)
                         vm.pagination.currentPage = 0
@@ -290,36 +290,4 @@ angular.module 'app.student'
             return input
         else
             return input.slice +start
-
-.factory 'Pagination', ->
-    pagination = {}
-
-    pagination.get-new = (perPage)->
-
-        if perPage === undefined
-            perPage = 10
-
-        console.log perPage
-
-        paginator = 
-            numOfPages: 1
-            pageSize: perPage
-            currentPage: 0
-
-        paginator.prev-page = !->
-            if not paginator.is-first-page!
-                paginator.currentPage -= 1
-
-        paginator.next-page = !->
-            if not paginator.is-last-page!
-                paginator.currentPage += 1
-
-        paginator.is-last-page = ->
-            paginator.currentPage >= paginator.numOfPages - 1
-
-        paginator.is-first-page = ->
-            paginator.currentPage == 0
-
-        paginator
-    pagination
 

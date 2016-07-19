@@ -9,17 +9,17 @@ angular.module 'app.admin'
       'content@app':
         template-url: 'app/main/admin/add-user/add-user.html'
         controller-as : 'vm'
-        controller: ($scope, valid-manager, $md-toast, user-manager, Interaction)!->
+        controller: ($scope, valid-manager-service, $md-toast, user-manager-service, Interaction)!->
           @theme = Interaction.get-bg-by-month 2
           @location = "添加用户"
           @greeting = "管理员"
 
           $scope.add-user = !->
             $scope.user ||= {}
-            invalid-arr = valid-manager.add-user-valid $scope.user
+            invalid-arr = valid-manager-service.add-user-valid $scope.user
             if invalid-arr.length ~= 0
               # 发送新增请求
-              user-manager.add-user $scope.user
+              user-manager-service.add-user $scope.user
             else
               $md-toast.show(
                 $md-toast.simple!
