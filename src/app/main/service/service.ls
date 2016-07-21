@@ -101,7 +101,6 @@ angular.module 'fuse'
         if perPage === undefined
             perPage = 10
 
-        console.log perPage
 
         paginator = 
             numOfPages: 1
