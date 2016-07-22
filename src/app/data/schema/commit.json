@@ -1,0 +1,22 @@
+{
+    "type": "object",
+    "properties": {
+
+        "github": {
+            "type": "string",
+            "faker": {}
+        },
+        "filePath": {
+            "type": "string",
+            "faker": "random.uuid"
+        },
+        "description": {
+            "type": "string",
+            "minimum": 1,
+            "maximum": 50,
+            "faker": "lorem.sentence"
+        }
+
+    },
+    "required": [ "github","filePath", "description"]
+}
