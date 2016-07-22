@@ -156,13 +156,13 @@ angular.module 'app.student'
                 $scope.pictureUploadState = $scope.coreUploadState = false
 
                 pictureUploader = $scope.pictureUploader = new FileUploader {
-                  url: 'upload.php',
+                  # url: 'upload.php',
                   queueLimit: 1,
                   removeAfterUpload: false
                 }
 
                 coreUploader = $scope.coreUploader = new FileUploader {
-                  url: 'upload.php',
+                  # url: 'upload.php',
                   queueLimit: 1,
                   removeAfterUpload: false
                 }
@@ -189,6 +189,20 @@ angular.module 'app.student'
                   $scope.showProgress = true
                   pictureUploader.uploadAll();
                   coreUploader.uploadAll();
+
+                pictureUploader.filters.push({
+                    name: 'pictureFilter',
+                    fn: (item) ->
+                      type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 4) + '|';
+                      '|jpg|png|'.indexOf(type) !== -1
+                });
+
+                coreUploader.filters.push({
+                    name: 'coreFilter',
+                    fn: (item) ->
+                      type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 4) + '|';
+                      '|zip|rar|'.indexOf(type) !== -1
+                });
 
             }
 

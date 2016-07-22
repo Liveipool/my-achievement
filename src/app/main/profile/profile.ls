@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app.profile', []
+angular.module 'app.profile', ['angularFileUpload']
 
 .config ($state-provider) !->
   $state-provider.state 'app.profile', {
