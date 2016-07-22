@@ -1,9 +1,9 @@
 'use strict'
 
 angular.module 'app.profile'
-  .controller 'edit-dialog-controller', (Authentication, $mdDialog, $interval, $scope) !->
+  .controller 'edit-dialog-controller', (Authentication, $mdDialog, $interval, FileUploader) !->
     @user = Authentication.get-user!
-
+    vm = @
     @raw-data =
       sid: @user.sid
       email: @user.email
@@ -71,3 +71,33 @@ angular.module 'app.profile'
       @is-new-password-invalid = false
       @is-confirm-password-invalid = false
 
+    
+    @picture-uploader = new FileUploader {
+      # url: '' 连接到对应api
+      queueLimit: 1
+      removeAfterUpload: false
+      # method: "post"
+    }
+
+    @clear-picture-item = !->
+      # console.log "vm.picture-uploader.queue.length: ", vm.picture-uploader.queue.length
+      vm.cancel!
+
+    @picture-uploader.onAfterAddingFile = (fileItem) !->
+      picture = fileItem._file
+      vm.name = picture.name
+
+    @upload-file = !->
+      vm.picture-uploader.uploadAll!
+      vm.cancel!
+
+    @cancel = !->
+      vm.picture-uploader.clearQueue!
+      vm.name = ""
+
+    @picture-uploader.filters.push({
+        name: 'pictureFilter',
+        fn: (item) ->
+          type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 4) + '|';
+          '|jpg|png|'.indexOf(type) !== -1
+    });
