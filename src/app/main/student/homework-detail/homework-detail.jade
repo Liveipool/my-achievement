@@ -38,20 +38,8 @@ div#header-container
 
 div#homework-detail.content.p-12
     .widget-group(layout="row" layout-sm="column")
-        div(flex="100" flex-gt-sm="50")
 
-            div.p-12(flex="100" layout="column")
-                div.white-bg.md-whiteframe-2dp.rank
-
-                    .ph-24.border-bottom( layout="row" layout-align="space-between center")
-                        .md-title.pv-24 {{vm.classHomeworks.title}}
-
-                        .pv-24
-                            md-select.simplified( ng-model="vm.classHomeworks.currentRange" ng-change="vm.resetCurrentPage(vm.classHomeworks.currentRange)" aria-label="Change range")
-                                md-option( ng-repeat="(key, range) in vm.classHomeworks.ranges" value="{{key}}") {{range}}
-                    
-                    //- rank-table directive see homework-detail.directive.ls
-                    rank-table(homeworks="vm.classHomeworks.ranklists[vm.classHomeworks.currentRange]", pagination="vm.pagination")
+        rank-table(class-homeworks="vm.classHomeworks" pagination="vm.pagination" on-page-change="vm.resetCurrentPage(currentPage)" flex="100" flex-gt-sm="50")
 
         div(layout="column" flex="100" flex-gt-sm="50")
 
