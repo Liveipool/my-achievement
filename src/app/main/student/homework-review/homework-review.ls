@@ -11,6 +11,7 @@ angular.module 'app.student'
           .then (result)->
             homeworks = result.data
             Promise.resolve homeworks
+
     data:
       role: 'student'
 
@@ -18,7 +19,7 @@ angular.module 'app.student'
       'content@app':
         template-url: 'app/main/student/homework-review/homework-review.html'
         controller-as : 'vm'
-        controller: ($scope, Authentication, $state, Interaction, $state-params, review-manager)!->
+        controller: ($scope, Authentication, $state, Interaction, $state-params, homework-review-service)!->
 
           console.log "here is homework review"
           @user = Authentication.get-user!
@@ -31,11 +32,11 @@ angular.module 'app.student'
 
           # functions of the buttons
           @submit = (review)->
-            status = review-manager.validator review
+            status = homework-review-service.validator review
             if status.state
               review.comment = review.temp-comment
               review.score   = review.temp-score
-              review-manager.add-review review
+              homework-review-service.add-review review
               review.editing = false
               review.t-score = "hs"
               review.error = {}
@@ -47,11 +48,11 @@ angular.module 'app.student'
             review.editing = true
 
           @update = (review) ->
-            status = review-manager.validator review
+            status = homework-review-service.validator review
             if status.state
               review.comment = review.temp-comment
               review.score   = review.temp-score
-              review-manager.update-review review
+              homework-review-service.update-review review
               review.editing = false
               review.error = {}
             else
@@ -59,7 +60,7 @@ angular.module 'app.student'
             console.log review.error
 
           @cancle = (review) ->
-            review-manager.cancle-update-review review
+            homework-review-service.cancle-update-review review
             review.temp-comment = review.comment
             review.temp-score   = review.score
             review.editing      = false
@@ -75,13 +76,13 @@ angular.module 'app.student'
           vm = @
 
           # first get all reviews
-          review-manager.get-all-reviews!
+          homework-review-service.get-all-reviews!
           # then filtering by homework id
           .then (all-reviews) ->
-            review-manager.reviews-filter-by-id all-reviews, vm.homework-id
+            homework-review-service.reviews-filter-by-id all-reviews, vm.homework-id
           # then filtering by @user.username, being careful about the @ and vm
           .then (reviews-id) ->
-            review-manager.reviews-filter-by-username reviews-id, vm.user.username
+            homework-review-service.reviews-filter-by-username reviews-id, vm.user.username
           # then we get what we want
           .then (reviews-id-username) ->
             vm.reviews-gr = reviews-id-username.gr

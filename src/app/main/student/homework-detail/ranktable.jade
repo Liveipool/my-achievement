@@ -1,0 +1,20 @@
+.rank-table.scrollable(ms-scroll)
+    table.simple
+        thead
+            tr.ph-24
+                th 排名
+                th 学号
+                th 姓名
+                th 小组
+                th 分数
+        tbody
+            tr.ph-24.hover(ng-repeat="homework in homeworks | startFrom:pagination.currentPage*pagination.pageSize | limitTo: pagination.pageSize track by $index ")
+                td {{$index+1+pagination.currentPage*pagination.pageSize}}
+                td {{homework.reviewee.username}}
+                td {{homework.reviewee.fullname}}
+                td {{homework.group}}
+                td {{homework.score}}
+div(layout='row' layout-align="center center")
+    md-button.m-12(ng-disabled="pagination.isFirstPage()" ng-click="pagination.prevPage()" ) 上一页
+    {{pagination.currentPage+1}}/{{pagination.numOfPages}}
+    md-button.m-12(ng-disabled="pagination.isLastPage()" ng-click="pagination.nextPage()")  下一页

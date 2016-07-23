@@ -12,58 +12,47 @@ angular.module 'app.student'
             'content@app':
                 template-url: 'app/main/student/homework-detail/homework-detail.html'
                 controller-as: 'vm'
-                controller: (result, user, Pagination, Interaction)!->
+                controller: (result, user, pagination-service, Interaction)!->
+                    
                     vm = @
+
+                    # reviews
                     vm.reviews = result.data
+
+                    # current user
                     vm.user = user
+
+                    # data
                     vm.greeting = vm.user.fullname
                     vm.location = '作业详情'
                     vm.theme = Interaction.get-bg-by-month 2
-                    vm.pagination = Pagination.get-new!
-                    vm.reset-current-page = (currentRange)!->
-                        vm.get-class-scores-distribution(currentRange)
-                        vm.pagination.currentPage = 0
-                    username = vm.user.username
+                    vm.class-scores-distribution = {}
 
+                    # pagination 
+                    vm.pagination = pagination-service.get-new!
+                    vm.pagination.numOfPages = 0
 
-
+                    # person socre distribution
                     vm.person-num-of-sixty-to-seventy = 0
                     vm.person-num-of-seventy-to-eighty = 0
                     vm.person-num-of-eighty-to-ninety = 0
                     vm.person-num-of-failed = 0
                     vm.person-num-of-ninety-to-full = 0
 
+                    # Class score distribution
                     vm.class-num-of-sixty-to-seventy = 0
                     vm.class-num-of-seventy-to-eighty = 0
                     vm.class-num-of-eighty-to-ninety = 0
                     vm.class-num-of-failed = 0
                     vm.class-num-of-ninety-to-full = 0
 
-                    person-homeworks = _.filter vm.reviews, (review)->
-                        review.reviewee.username == username
+                    # Method
+                    vm.get-class-scores-distribution = get-class-scores-distribution
+                    vm.reset-current-page = (currentRange)!->
+                        vm.get-class-scores-distribution(currentRange)
+                        vm.pagination.currentPage = 0
 
-                    # console.log homeworks
-                    person-homeworks.forEach (homework)!->
-                        # console.log homework.reviewer
-                        if (homework.reviewer.role != 'teacher') 
-                            return 
-
-                        score = homework.finalScore
-
-                        if (score < 60)
-                            vm.person-num-of-failed++
-                        else if (score >= 60 and score < 70)
-                            vm.person-num-of-sixty-to-seventy++
-                        else if (score >= 70 and score < 80)
-                            vm.person-num-of-seventy-to-eighty++
-                        else if (score >= 80 and score < 90)
-                            vm.person-num-of-eighty-to-ninety++
-                        else if (score >= 90 and score <= 100)
-                            vm.person-num-of-ninety-to-full++
-
-
-
-                    # console.log vm.person-num-of-eighty-to-ninety
+                    # Nvd3 chart option
                     vm.person-score = {
                         title       : '个人作业成绩分布'
                         mainChart   :
@@ -94,28 +83,7 @@ angular.module 'app.student'
                                     tooltip     :
                                         gravity: 's'
                                         classes: 'gravity-s'
-                            data   : [
-                                {
-                                    label: '<60'
-                                    value: vm.person-num-of-failed
-                                },
-                                {
-                                    label: '60~70'
-                                    value: vm.person-num-of-sixty-to-seventy
-                                },
-                                {
-                                    label: '70~80'
-                                    value: vm.person-num-of-seventy-to-eighty
-                                },
-                                {
-                                    label: '80~90'
-                                    value: vm.person-num-of-eighty-to-ninety
-                                },
-                                {
-                                    label: '90~100'
-                                    value: vm.person-num-of-ninety-to-full
-                                }
-                            ]
+                            data   : []
 
                     }
 
@@ -195,53 +163,83 @@ angular.module 'app.student'
                         currentRange: '作业1'
                     }
 
-                    final-reviews = _.filter vm.reviews, (review)->
-                        review.reviewer.role == 'teacher'
+                    # controller activate function: deal with data
+                    activate!
 
-                    for i in [1 to final-reviews.length]
-                        hw_ranklist = _.filter final-reviews, (review)->
-                                    review.homework_id == i and review.class == user.class
-                        vm.class-homeworks.ranklists['作业'+i] = _.order-by hw_ranklist, 'score', 'desc'
+                    !function activate
+                        get-person-score-distribution!
+                        vm.person-score.mainChart.data = [
+                                {
+                                    label: '<60'
+                                    value: vm.person-num-of-failed
+                                },
+                                {
+                                    label: '60~70'
+                                    value: vm.person-num-of-sixty-to-seventy
+                                },
+                                {
+                                    label: '70~80'
+                                    value: vm.person-num-of-seventy-to-eighty
+                                },
+                                {
+                                    label: '80~90'
+                                    value: vm.person-num-of-eighty-to-ninety
+                                },
+                                {
+                                    label: '90~100'
+                                    value: vm.person-num-of-ninety-to-full
+                                }
+                        ]
+                        get-class-ranklists!
+                        vm.get-class-scores-distribution '作业1'
+                        vm.pagination.numOfPages = Math.ceil(vm.class-homeworks.ranklists[vm.class-homeworks.currentRange].length/vm.pagination.pageSize)
 
-                    # console.log vm.class-homeworks.ranklists['HW1']
+                    !function get-person-score-distribution 
+                        person-homeworks = get-person-homeworks!
+                        set-person-num-of-different-score person-homeworks
+                        
+                    !function set-person-num-of-different-score person-homeworks
+                        person-homeworks.forEach (homework)!->
+                            # console.log homework.reviewer
+                            if (homework.reviewer.role != 'teacher') 
+                                return 
 
-                    # console.log vm.class-homeworks.ranklists
+                            score = homework.finalScore
 
-                    vm.pagination.numOfPages = Math.ceil(vm.class-homeworks.ranklists[vm.class-homeworks.currentRange].length/vm.pagination.pageSize)
+                            if (score < 60)
+                                vm.person-num-of-failed++
+                            else if (score >= 60 and score < 70)
+                                vm.person-num-of-sixty-to-seventy++
+                            else if (score >= 70 and score < 80)
+                                vm.person-num-of-seventy-to-eighty++
+                            else if (score >= 80 and score < 90)
+                                vm.person-num-of-eighty-to-ninety++
+                            else if (score >= 90 and score <= 100)
+                                vm.person-num-of-ninety-to-full++
 
-                    vm.class-scores-distribution = {}
+                    function get-person-homeworks 
+                        _.filter vm.reviews, (review)->
+                            review.reviewee.username == vm.user.username
 
-                    vm.get-class-scores-distribution = (currentRange)!->
+                    !function get-class-ranklists 
+                        final-reviews = _.filter vm.reviews, (review)->
+                            review.reviewer.role == 'teacher'
+
+                        for i in [1 to final-reviews.length]
+                            hw_ranklist = _.filter final-reviews, (review)->
+                                        review.homework_id == i and review.class == user.class
+                            vm.class-homeworks.ranklists['作业'+i] = _.order-by hw_ranklist, 'score', 'desc'
+
+                    !function get-class-scores-distribution currentRange
+
                         distribution = vm.class-scores-distribution[currentRange]
-                        if distribution
-                            vm.class-num-of-failed = distribution.class-num-of-failed
-                            vm.class-num-of-sixty-to-seventy = distribution.class-num-of-sixty-to-seventy
-                            vm.class-num-of-seventy-to-eighty = distribution.class-num-of-seventy-to-eighty
-                            vm.class-num-of-eighty-to-ninety = distribution.class-num-of-eighty-to-ninety
-                            vm.class-num-of-ninety-to-full = distribution.class-num-of-ninety-to-full
+
+                        if distribution then
+                            set-class-score-distribution-from-cache distribution
                         else
-                            vm.class-num-of-failed = 0 
-                            vm.class-num-of-sixty-to-seventy = 0
-                            vm.class-num-of-seventy-to-eighty = 0 
-                            vm.class-num-of-eighty-to-ninety = 0
-                            vm.class-num-of-ninety-to-full = 0
-
-                            console.log currentRange
-
-                            vm.class-homeworks.ranklists[currentRange].for-each (homework)!->
-
-                                score = homework.finalScore
-
-                                if (score < 60)
-                                    vm.class-num-of-failed++
-                                else if (score >= 60 and score < 70)
-                                    vm.class-num-of-sixty-to-seventy++
-                                else if (score >= 70 and score < 80)
-                                    vm.class-num-of-seventy-to-eighty++
-                                else if (score >= 80 and score < 90)
-                                    vm.class-num-of-eighty-to-ninety++
-                                else if (score >= 90 and score <= 100)
-                                    vm.class-num-of-ninety-to-full++
+                            reset-class-num-of-different-score!
+                            # console.log currentRange
+                            set-class-num-of-different-score currentRange
 
                         console.log vm.class-num-of-eighty-to-ninety
 
@@ -275,51 +273,38 @@ angular.module 'app.student'
                             }
                         ]
 
-                    vm.scores-init = !->
-                        vm.get-class-scores-distribution('作业1')
+                    !function set-class-score-distribution-from-cache distribution
+                        vm.class-num-of-failed = distribution.class-num-of-failed
+                        vm.class-num-of-sixty-to-seventy = distribution.class-num-of-sixty-to-seventy
+                        vm.class-num-of-seventy-to-eighty = distribution.class-num-of-seventy-to-eighty
+                        vm.class-num-of-eighty-to-ninety = distribution.class-num-of-eighty-to-ninety
+                        vm.class-num-of-ninety-to-full = distribution.class-num-of-ninety-to-full
 
-                    vm.scores-init!
+                    !function reset-class-num-of-different-score
+                        vm.class-num-of-failed = 0 
+                        vm.class-num-of-sixty-to-seventy = 0
+                        vm.class-num-of-seventy-to-eighty = 0 
+                        vm.class-num-of-eighty-to-ninety = 0
+                        vm.class-num-of-ninety-to-full = 0
+
+                    !function set-class-num-of-different-score currentRange
+                        vm.class-homeworks.ranklists[currentRange].for-each (homework)!->
+                    
+                            score = homework.finalScore
+
+                            if (score < 60)
+                                vm.class-num-of-failed++
+                            else if (score >= 60 and score < 70)
+                                vm.class-num-of-sixty-to-seventy++
+                            else if (score >= 70 and score < 80)
+                                vm.class-num-of-seventy-to-eighty++
+                            else if (score >= 80 and score < 90)
+                                vm.class-num-of-eighty-to-ninety++
+                            else if (score >= 90 and score <= 100)
+                                vm.class-num-of-ninety-to-full++
 
 
 
     }
 
-.filter 'startFrom', ->
-    (input, start)->
-        if (input === undefined)
-            return input
-        else
-            return input.slice +start
-
-.factory 'Pagination', ->
-    pagination = {}
-
-    pagination.get-new = (perPage)->
-
-        if perPage === undefined
-            perPage = 10
-
-        console.log perPage
-
-        paginator = 
-            numOfPages: 1
-            pageSize: perPage
-            currentPage: 0
-
-        paginator.prev-page = !->
-            if not paginator.is-first-page!
-                paginator.currentPage -= 1
-
-        paginator.next-page = !->
-            if not paginator.is-last-page!
-                paginator.currentPage += 1
-
-        paginator.is-last-page = ->
-            paginator.currentPage >= paginator.numOfPages - 1
-
-        paginator.is-first-page = ->
-            paginator.currentPage == 0
-
-        paginator
-    pagination
 
