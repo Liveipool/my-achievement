@@ -4,11 +4,13 @@ angular.module 'app.student'
 
 .directive 'rankTable', ->
     directive-object = 
-        template-url: 'app/main/student/homework-detail/ranktable.html'
+        template-url: 'app/main/student/homework-detail/ranktable/ranktable.html'
         scope: 
-            homeworks: '='
+            classHomeworks: '='
             pagination: '='
-
+            resetPage: '&onPageChange'
+        controller: ($scope)!->
+            console.log $scope.classHomeworks
+            
     directive-object
-
 
