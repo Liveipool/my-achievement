@@ -1,13 +1,5 @@
 
 #homework-dashboard {
-  header {
-    height: 160px;
-    min-height: 160px;
-    max-height: 106px;
-    padding-bottom: 32px;
-    background: url('/assets/images/backgrounds/may.jpg') no-repeat 0 45%;
-    background-size: 100% auto;
-  }
   ms-widget {
     .widget-head {
       font-size: 18px;
@@ -18,7 +10,7 @@
     }
     .widget-foot {
       border-top: 1px solid rgba(0,0,0,.12);
-      background-color: #F5F5F5;
+      // background-color: #F5F5F5;
     }
   }
 }
@@ -34,3 +26,18 @@ md-dialog {
 #rankChart .c3-line-rank {
   stroke-width: 3px;
 }
+
+
+#time-format {
+  text-align: center !important;
+}
+
+#time-format .date-font {
+  color: gray;
+}
+
+#time-format .number-font {
+  font-family: Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size: 2em;
+}
+

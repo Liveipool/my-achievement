@@ -1,0 +1,28 @@
+#dialog {
+    width: 400px;
+    .title {
+        font-size: 17px;
+    }
+}
+.hide {
+    display: none;
+}
+.change-password-container {
+    display: none;
+}
+.ng-invalid {
+  // border: 1px solid red;
+  color: rgb(221,44,0);
+}
+.ng-valid {
+  // border: 1px solid green;
+}
+
+.pristine {
+    color: rgb(0, 0, 0);
+}
+
+.errordiv {
+  color: rgb(221,44,0);
+  font-size: 13px;
+}
