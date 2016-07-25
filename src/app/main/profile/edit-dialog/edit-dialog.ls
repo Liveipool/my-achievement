@@ -1,8 +1,15 @@
 'use strict'
 
 angular.module 'app.profile'
-  .controller 'edit-dialog-controller', (Authentication, $mdDialog, $interval, FileUploader) !->
+  .controller 'edit-dialog-controller', (Authentication, $mdDialog, $interval, FileUploader, $http) !->
     @user = Authentication.get-user!
+
+    $http({
+      method: 'GET',
+      url: 'http://localhost:3005/api/Customers'
+    }).then (response) !->
+      console.log 'response: ', response.data
+
     vm = @
     @raw-data =
       sid: @user.sid
@@ -73,7 +80,9 @@ angular.module 'app.profile'
 
     
     @picture-uploader = new FileUploader {
-      # url: '' 连接到对应api
+      url: 'http://localhost:3005/api/Customers'
+      alias: 'image'
+      # formData: ['ooooo']
       queueLimit: 1
       removeAfterUpload: false
       # method: "post"
@@ -85,19 +94,38 @@ angular.module 'app.profile'
 
     @picture-uploader.onAfterAddingFile = (fileItem) !->
       picture = fileItem._file
+      # console.log 'picture: ', fileItem
       vm.name = picture.name
+
+    @picture-uploader.onSuccessItem = (fileItem) !->
+      console.log "success: ", fileItem
+    # @picture-uploader.onErrorItem = (fileItem) !->
+    #   console.log "error"
+    # @picture-uploader.onBeforeUploadItem = (fileItem) !->
+    #   console.log "before"
+    # @picture-uploader.onProgressItem = (fileItem) !->
+    #   console.log 'progress'  
+    # @picture-uploader.onCompleteItem = (fileItem) !->
+    #   console.log 'complete'
+    # @picture-uploader.onCancelItem = (fileItem) !->
+    #   console.log 'cancel'
 
     @upload-file = !->
       vm.picture-uploader.uploadAll!
-      vm.cancel!
+      vm.name = ""
+      # vm.cancel!
 
     @cancel = !->
       vm.picture-uploader.clearQueue!
       vm.name = ""
 
+    # @picture-uploader.formData.push({
+    #   avatar: 'sssss'
+    # })
+
     @picture-uploader.filters.push({
-        name: 'pictureFilter',
-        fn: (item) ->
-          type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 4) + '|';
-          '|jpg|png|'.indexOf(type) !== -1
+      name: 'pictureFilter',
+      fn: (item) ->
+        type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 4) + '|';
+        '|jpg|png|'.indexOf(type) !== -1
     });
