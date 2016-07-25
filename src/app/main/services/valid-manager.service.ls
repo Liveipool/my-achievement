@@ -31,6 +31,8 @@ angular.module 'fuse'
 
   @password-valid = (pw, repw)->
     valid = (pw and pw !~= "" and pw ~= repw)
+    console.log pw
+    console.log repw
     if !valid
       @invalid-arr ||= []
       @invalid-arr.push "密码框"
@@ -61,6 +63,5 @@ angular.module 'fuse'
   @edit-user-valid = (user)->
     @invalid-arr = []
     @uniform-valid user
-    if !(user.password ~= "" or @password-valid user.password, user.repassword)
-      @invalid-arr.push "重复密码框"
+    @password-valid user.newpassword, user.repassword if !(!user.newpassword and !user.repassword)
     @invalid-arr
