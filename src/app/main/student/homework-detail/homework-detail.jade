@@ -38,40 +38,8 @@ div#header-container
 
 div#homework-detail.content.p-12
     .widget-group(layout="row" layout-sm="column")
-        div(flex="100" flex-gt-sm="50")
 
-            div.p-12(flex="100" layout="column")
-                div.white-bg.md-whiteframe-2dp.rank
-
-                    .ph-24.border-bottom( layout="row" layout-align="space-between center")
-                        .md-title.pv-24 {{vm.classHomeworks.title}}
-
-                        .pv-24
-                            md-select.simplified( ng-model="vm.classHomeworks.currentRange" ng-change="vm.resetCurrentPage(vm.classHomeworks.currentRange)" aria-label="Change range")
-                                md-option( ng-repeat="(key, range) in vm.classHomeworks.ranges" value="{{key}}") {{range}}
-
-                    .rank-table.scrollable(ms-scroll)
-                        table.simple
-                            thead
-                                tr.ph-24
-                                    th 排名
-                                    th 学号
-                                    th 姓名
-                                    th 小组
-                                    th 分数
-                            tbody
-                                tr.ph-24.hover(ng-repeat="homework in vm.classHomeworks.ranklists[vm.classHomeworks.currentRange] | startFrom:vm.pagination.currentPage*vm.pagination.pageSize | limitTo: vm.pagination.pageSize track by $index ")
-                                    td {{$index+1+vm.pagination.currentPage*vm.pagination.pageSize}}
-                                    td {{homework.reviewee.username}}
-                                    td {{homework.reviewee.fullname}}
-                                    td {{homework.group}}
-                                    td {{homework.score}}
-                    div(layout='row' layout-align="center center")
-                        md-button.m-12(ng-disabled="vm.pagination.isFirstPage()" ng-click="vm.pagination.prevPage()" ) 上一页
-                        {{vm.pagination.currentPage+1}}/{{vm.pagination.numOfPages}}
-                        md-button.m-12(ng-disabled="vm.pagination.isLastPage()" ng-click="vm.pagination.nextPage()")  下一页
-
-
+        rank-table(class-homeworks="vm.classHomeworks" pagination="vm.pagination" on-page-change="vm.resetCurrentPage(currentPage)" flex="100" flex-gt-sm="50")
 
         div(layout="column" flex="100" flex-gt-sm="50")
 
