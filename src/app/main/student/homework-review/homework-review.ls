@@ -23,9 +23,6 @@ angular.module 'app.student'
 
           console.log "here is homework review"
           @user = Authentication.get-user!
-          @location = "作业互评"
-          @theme = Interaction.get-bg-by-month 2
-          @greeting  = @user.fullname;
 
           @homework-id = $state-params.id
           @date-time = new Date()

@@ -12,8 +12,6 @@ angular.module 'app.admin'
         controller-as : 'vm'
         controller: ($scope, $md-dialog, $md-media, valid-manager-service, user-manager-service, Interaction)!->
 
-          @theme = Interaction.get-bg-by-month 2
-          @location = "所有用户"
           @greeting = "管理员"
 
           # 监听窗口大小事件改变表格展示高度
