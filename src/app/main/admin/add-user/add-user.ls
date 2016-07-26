@@ -10,8 +10,6 @@ angular.module 'app.admin'
         template-url: 'app/main/admin/add-user/add-user.html'
         controller-as : 'vm'
         controller: ($scope, valid-manager-service, $md-toast, user-manager-service, Interaction)!->
-          @theme = Interaction.get-bg-by-month 2
-          @location = "添加用户"
           @greeting = "管理员"
 
           $scope.add-user = !->

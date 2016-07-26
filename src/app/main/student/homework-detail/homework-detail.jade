@@ -23,18 +23,8 @@ mixin score-list(type)
             +hw-score-num("80~90分人数", "vm.classNumOfEightyToNinety")
             +hw-score-num("90~100分人数", "vm.classNumOfNinetyToFull")
 
-div#header-container
-    div.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
-        header.header.layout-header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
-            .breadcrumb(layout='row' layout-align='start center')
-              md-icon.s16(md-font-icon='icon-home')
-              md-icon.s16.separator(md-font-icon='icon-chevron-right')
-              span {{vm.location}}
-              span.parent
-            span.md-display-1.font-weight-300(ng-class="vm.theme.fg")
-              | 欢迎回来,
-              |{{vm.greeting}}
-              |!
+page-header(location="作业详情" greeting="vm.user.fullname" month="2")
+
 
 div#homework-detail.content.p-12
     .widget-group(layout="row" layout-sm="column")
