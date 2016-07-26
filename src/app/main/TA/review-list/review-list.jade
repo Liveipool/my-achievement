@@ -49,18 +49,8 @@ mixin tab-content
       div.white-bg.md-whiteframe-2dp.mt-24
         +chart
 
-div#header-container
-  div.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
-    header.header.layout-header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
-      .breadcrumb(layout='row' layout-align='start center')
-        md-icon.s16(md-font-icon='icon-home')
-        md-icon.s16.separator(md-font-icon='icon-chevron-right')
-        span {{vm.location}}
-        span.parent
-      span.md-display-1.font-weight-300(ng-class="vm.theme.fg")
-        | 欢迎回来,
-        |{{vm.greeting}}
-        |!
+page-header(location="评审列表" greeting="vm.user.fullname" month="2")
+
 
 #review-list
   md-content(layout="column")
