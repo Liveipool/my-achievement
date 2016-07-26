@@ -85,7 +85,7 @@ mixin homework-widget-back
       div.flip-to-front
         md-button(class="md-icon-button" ng-click="flipWidget()" aria-label="Flip widget")
               md-icon(md-font-icon="icon-close")
-    div.md-headline(layout="column" layout-align="center center")
+    div.md-headline.height-150(layout="column" layout-align="center center")
       span 平均分：89
       span 你的分数：89
       span 你的排名：78
@@ -109,20 +109,7 @@ mixin homework-list
       ms-widget.p-12(ng-if="vm.switch[homework.classes[0].status]" flippable="true" layout="column" flex="100" flex-gt-xs="50" flex-gt-sm="33" flex-gt-md="25" ng-repeat="homework in vm.homeworks")
         +homework-widget
 
-
-
-div#header-container
-  div.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
-    header.header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
-      .breadcrumb(layout='row' layout-align='start center')
-        md-icon.s16(md-font-icon='icon-home')
-        md-icon.s16.separator(md-font-icon='icon-chevron-right')
-        span {{vm.location}}
-        span.parent
-      span.md-display-1.font-weight-300(ng-class="vm.theme.fg")
-        | 欢迎回来,
-        |{{vm.greeting}}
-        |!
+page-header(location="作业列表" greeting="vm.user.fullname" month="2")
 
 div#homework-dashboard
   md-content.p-12.wrapper-bg
