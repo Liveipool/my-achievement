@@ -33,7 +33,7 @@ md-dialog.contact-dialog#dialog
       div.ph-12(layout="column")
         div(layout="column")
           div(flex="100" layout="row" layout-align="center start")
-            img.md-avatar.avatar.huge(ng-src="{{vm.user.avatar}}")
+            img.md-avatar.avatar.huge(ng-src="{{vm.avatar}}")
           div.p-12(layout="row" layout-align="center center")
             label.md-button(for="upload-avatar") 更改头像
             input#upload-avatar.hide(type="file" nv-file-select uploader="vm.pictureUploader" ng-click="vm.clearPictureItem()")
