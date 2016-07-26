@@ -65,15 +65,17 @@ angular.module 'app.student'
             homeworks = result.data
             Promise.resolve homeworks
 
-      homework-detail: ($resource, Authentication) ->
+      homework-detail: ($resource, Authentication, homework-detail-service) ->
         $resource 'app/data/review/reviews.json' .get!.$promise
         .then (result) ->
+          allReviews = result.data
           user = Authentication.get-user!
           reviews = _.filter result.data, (review) -> review.reviewee.username == user.username && review.reviewer.role is 'teacher'
           scores = [review.score for review in reviews]
           homework-ids = [review.homework_id for review in reviews]
+          ranks = homework-detail-service.getRanks scores, homework-ids, allReviews
 
-          Promise.resolve {scores: scores, homework-ids: homework-ids}
+          Promise.resolve {scores: scores, homework-ids: homework-ids, ranks: ranks}
 
     data:
       role: 'student'
@@ -97,11 +99,13 @@ angular.module 'app.student'
           vm.user = Authentication.get-user!
           vm.scores = arr2string homework-detail.scores
           vm.homework-ids = arr2string homework-detail.homework-ids
+          vm.ranks = arr2string homework-detail.ranks
 
 
           vm.homeworks = homeworks
 
           console.log homeworks
+          console.log vm.ranks
 
           for homework in vm.homeworks
             _.remove homework.classes, (c) -> c.class_id isnt vm.user.class
