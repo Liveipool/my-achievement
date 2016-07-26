@@ -4,12 +4,6 @@ angular.module 'app.profile'
   .controller 'edit-dialog-controller', (Authentication, $mdDialog, $interval, FileUploader, $http) !->
     @user = Authentication.get-user!
 
-    $http({
-      method: 'GET',
-      url: 'http://localhost:3005/api/Customers'
-    }).then (response) !->
-      console.log 'response: ', response.data
-
     vm = @
     @raw-data =
       sid: @user.sid
@@ -80,16 +74,12 @@ angular.module 'app.profile'
 
     
     @picture-uploader = new FileUploader {
-      url: 'http://localhost:3005/api/Customers'
-      alias: 'image'
-      # formData: ['ooooo']
+      url: 'http://localhost:3005/upload-images'
       queueLimit: 1
       removeAfterUpload: false
-      # method: "post"
     }
 
     @clear-picture-item = !->
-      # console.log "vm.picture-uploader.queue.length: ", vm.picture-uploader.queue.length
       vm.cancel!
 
     @picture-uploader.onAfterAddingFile = (fileItem) !->
@@ -97,31 +87,26 @@ angular.module 'app.profile'
       # console.log 'picture: ', fileItem
       vm.name = picture.name
 
-    @picture-uploader.onSuccessItem = (fileItem) !->
-      console.log "success: ", fileItem
+    # @picture-uploader.onSuccessItem = (fileItem) !->
+    #   console.log "success: ", fileItem
     # @picture-uploader.onErrorItem = (fileItem) !->
-    #   console.log "error"
+    #   console.log "error: ", fileItem
     # @picture-uploader.onBeforeUploadItem = (fileItem) !->
-    #   console.log "before"
+    #   console.log "before: ", fileItem
     # @picture-uploader.onProgressItem = (fileItem) !->
-    #   console.log 'progress'  
+    #   console.log 'progress: ', fileItem 
     # @picture-uploader.onCompleteItem = (fileItem) !->
-    #   console.log 'complete'
+    #   console.log 'complete: ', fileItem
     # @picture-uploader.onCancelItem = (fileItem) !->
-    #   console.log 'cancel'
+    #   console.log 'cancel: ', fileItem
 
     @upload-file = !->
       vm.picture-uploader.uploadAll!
       vm.name = ""
-      # vm.cancel!
 
     @cancel = !->
       vm.picture-uploader.clearQueue!
       vm.name = ""
-
-    # @picture-uploader.formData.push({
-    #   avatar: 'sssss'
-    # })
 
     @picture-uploader.filters.push({
       name: 'pictureFilter',
