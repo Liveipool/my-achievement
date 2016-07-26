@@ -1,0 +1,30 @@
+div.p-12(flex="100" layout="column")
+    div.white-bg.md-whiteframe-2dp.rank
+        
+        .ph-24.border-bottom( layout="row" layout-align="space-between center")
+            .md-title.pv-24 {{classHomeworks.title}}
+
+            .pv-24
+                md-select.simplified( ng-model="classHomeworks.currentRange" ng-change="resetPage({currentPage: classHomeworks.currentRange})" aria-label="Change range")
+                    md-option( ng-repeat="(key, range) in classHomeworks.ranges" value="{{key}}") {{range}}
+
+        .rank-table.scrollable(ms-scroll)
+            table.simple
+                thead
+                    tr.ph-24
+                        th 排名
+                        th 学号
+                        th 姓名
+                        th 小组
+                        th 分数
+                tbody
+                    tr.ph-24.hover(ng-repeat="homework in classHomeworks.ranklists[classHomeworks.currentRange] | startFrom:pagination.currentPage*pagination.pageSize | limitTo: pagination.pageSize track by $index ")
+                        td {{$index+1+pagination.currentPage*pagination.pageSize}}
+                        td {{homework.reviewee.username}}
+                        td {{homework.reviewee.fullname}}
+                        td {{homework.group}}
+                        td {{homework.score}}
+        div(layout='row' layout-align="center center")
+            md-button.m-12(ng-disabled="pagination.isFirstPage()" ng-click="pagination.prevPage()" ) 上一页
+            {{pagination.currentPage+1}}/{{pagination.numOfPages}}
+            md-button.m-12(ng-disabled="pagination.isLastPage()" ng-click="pagination.nextPage()")  下一页
