@@ -82,7 +82,7 @@ angular.module 'app.student'
       'content@app':
         template-url: 'app/main/student/homework-dashboard/homework-dashboard.html'
         controller-as : 'vm'
-        controller: ($scope, Authentication, homeworks, $mdDialog, Interaction, homework-detail)!->
+        controller: ($scope, Authentication, homeworks, $mdDialog, homework-detail)!->
 
           arr2string = (arr)->
             _string = ""
@@ -97,12 +97,11 @@ angular.module 'app.student'
           vm.user = Authentication.get-user!
           vm.scores = arr2string homework-detail.scores
           vm.homework-ids = arr2string homework-detail.homework-ids
-          vm.location = "作业列表"
-          vm.theme = Interaction.get-bg-by-month 2
 
-          vm.greeting  = vm.user.fullname;
 
           vm.homeworks = homeworks
+
+          console.log homeworks
 
           for homework in vm.homeworks
             _.remove homework.classes, (c) -> c.class_id isnt vm.user.class
