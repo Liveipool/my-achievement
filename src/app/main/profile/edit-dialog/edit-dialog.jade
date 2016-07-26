@@ -38,10 +38,10 @@ md-dialog.contact-dialog#dialog
             label.md-button(for="upload-avatar") 更改头像
             input#upload-avatar.hide(type="file" nv-file-select uploader="vm.pictureUploader" ng-click="vm.clearPictureItem()")
 
-          div(layout="row")
+          div(layout="row" ng-show="vm.uploadRow")
             div.m-6.p-6.height-50(flex="60")
               md-input-container.m-0
-                label.pl-0.width-150 请选择图片
+                label.pl-0.width-150.fs-16 请选择图片(<1MB)
                 input.width-160(type="text" ng-model="vm.name" disabled)
             div.m-6(flex="20")
               md-button.md-raised.md-primary.md-green-300-bg.width-75(ng-click="vm.uploadFile()" ng-disabled="!vm.pictureUploader.queue.length")
