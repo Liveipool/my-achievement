@@ -26,3 +26,14 @@
   color: rgb(221,44,0);
   font-size: 13px;
 }
+
+// Font-size helpers
+@for $i from 0 through 300 {
+    .font-size-#{$i},
+    .fs-#{$i} {
+        font-size: #{$i + 'px'} !important;
+    } 
+}
+.ma {
+    margin: 0 2px 0 0; 
+}
