@@ -10,11 +10,12 @@ mixin table-container
           th 姓名
           th 小组
           th 评分
-        tbody(ng-repeat="student in group.members")
-          td {{student.sid}}
-          td {{student.fullname}}
-          td 小组{{student.group}}
-          td 90分
+        tbody
+          tr(ng-repeat="student in group.members" ng-click="vm.goToDetail(vm.homework.id, student.sid)")
+            td {{student.sid}}
+            td {{student.fullname}}
+            td 小组{{student.group}}
+            td 90分
 
 mixin chart
   div.p-24.h-h

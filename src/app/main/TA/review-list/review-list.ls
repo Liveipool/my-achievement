@@ -30,6 +30,12 @@ angular.module 'app.TA'
           while i > 0
             @selected[i] = i.to-string!
             i--
+
+          @goToDetail = (hid, sid)!->
+            $state.go 'app.TA.review-detail', {
+              hid: hid
+              sid: sid
+            }
   }
 
 
