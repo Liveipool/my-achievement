@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'app.profile'
-  .controller 'edit-dialog-controller', (Authentication, $mdDialog, $interval, FileUploader, $http) !->
+  .controller 'edit-dialog-controller', (Authentication, $mdDialog, FileUploader, $http) !->
     @user = Authentication.get-user!
 
     vm = @
@@ -12,6 +12,7 @@ angular.module 'app.profile'
       new-password: ""
       confirm-password: ""
 
+    # @avatar = @user.avatar
     @sid = @user.sid
     @email = @user.email
     @old-password = ""
@@ -22,6 +23,15 @@ angular.module 'app.profile'
     @is-new-password-invalid = false
     @is-confirm-password-invalid = false
     @upload-row = false
+
+    $http({
+      method: 'get'
+      url: 'http://localhost:3005/api/Customers?filter[where][username]=zhangshan'
+    }).then(success = (res) !->
+      console.log 'res: ', res.data[0].avatar
+      vm.avatar = res.data[0].avatar
+      )
+
 
     @change-password = !->
       btn = $ '.change-password-container'
