@@ -103,6 +103,7 @@ angular.module 'app.teacher'
                 c.t-status = '已结束' if c.status == 'finish'
 
           @homeworks = homeworks
+          console.log @homeworks
           @calculate-status @homeworks
 
   }
