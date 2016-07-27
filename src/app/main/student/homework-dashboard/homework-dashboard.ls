@@ -65,15 +65,18 @@ angular.module 'app.student'
             homeworks = result.data
             Promise.resolve homeworks
 
-      homework-detail: ($resource, Authentication) ->
+      homework-detail: ($resource, Authentication, homework-detail-service) ->
         $resource 'app/data/review/reviews.json' .get!.$promise
         .then (result) ->
+          allReviews = result.data
           user = Authentication.get-user!
           reviews = _.filter result.data, (review) -> review.reviewee.username == user.username && review.reviewer.role is 'teacher'
           scores = [review.score for review in reviews]
           homework-ids = [review.homework_id for review in reviews]
-
-          Promise.resolve {scores: scores, homework-ids: homework-ids}
+          
+          AR = homework-detail-service.getRanksAndAverScores scores, homework-ids, allReviews # AR stores average scores and ranks
+          ranks = homework-detail-service.getHomeworkRanks 1, 2, allReviews
+          Promise.resolve {scores: scores, homework-ids: homework-ids, AR: AR}
 
     data:
       role: 'student'
@@ -95,13 +98,19 @@ angular.module 'app.student'
 
           vm = @
           vm.user = Authentication.get-user!
-          vm.scores = arr2string homework-detail.scores
           vm.homework-ids = arr2string homework-detail.homework-ids
+          vm.scores = homework-detail.scores
+          vm.stringScores = arr2string vm.scores
+          vm.ranks = homework-detail.AR.ranks
+          vm.stringRanks = arr2string vm.ranks
+          vm.averScores = homework-detail.AR.averScores  #平均分数组
 
 
           vm.homeworks = homeworks
 
           console.log homeworks
+          console.log vm.ranks
+          console.log vm.averScores
 
           for homework in vm.homeworks
             _.remove homework.classes, (c) -> c.class_id isnt vm.user.class
@@ -131,8 +140,7 @@ angular.module 'app.student'
               return d
 
           $scope.jump = (description)!->
-            #TODO 实际中改为作业链接
-            window.open "http://www.baidu.com"
+            window.open description   # description必须为绝对地址
 
           $scope.showSubmitDialog = (id)!->
             $mdDialog.show {
@@ -140,19 +148,11 @@ angular.module 'app.student'
               parent: angular.element(document.body),
               clickOutsideToClose: false,
               controller: ($scope, $mdDialog, FileUploader, $interval) !->
-                $scope.determinateValue = 30
                 $scope.id = id
                 $scope.showProgress = false
 
-                $interval !->
-                  $scope.determinateValue += 1
-                  if ($scope.determinateValue > 100)
-                    $scope.determinateValue = 30
-                ,100, 0, true
                 $scope.cancel = !->
                   $mdDialog.hide!
-
-                $scope.pictureUploadState = $scope.coreUploadState = false
 
                 pictureUploader = $scope.pictureUploader = new FileUploader {
                   # url: 'upload.php',
@@ -177,12 +177,6 @@ angular.module 'app.student'
 
                 coreUploader.onAfterAddingFile = (fileItem) !->
                   $scope.core = fileItem._file
-
-                pictureUploader.onSuccessItem = (fileItem, response, status, headers) !->
-                  $scope.pictureUploadState = true
-
-                coreUploader.onSuccessItem = (fileItem, response, status, headers) !->
-                  $scope.coreUploadState = true
 
                 $scope.uploadFile = !->
                   $scope.showProgress = true
