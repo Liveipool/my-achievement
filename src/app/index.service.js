@@ -34,7 +34,7 @@
       },
 
       login: function(params) {
-        return $resource('http://localhost:3005/api/Customers').get().$promise.then(function(result) {
+        return $resource('app/data/auth/users.json').get().$promise.then(function(result) {
 
           var users = result.user;
 

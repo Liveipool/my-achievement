@@ -12,7 +12,7 @@ angular.module 'app.student'
             'content@app':
                 template-url: 'app/main/student/homework-detail/homework-detail.html'
                 controller-as: 'vm'
-                controller: (result, user, pagination-service, Interaction)!->
+                controller: (result, user, Interaction)!->
                     
                     vm = @
 
@@ -28,9 +28,6 @@ angular.module 'app.student'
                     vm.theme = Interaction.get-bg-by-month 2
                     vm.class-scores-distribution = {}
 
-                    # pagination 
-                    vm.pagination = pagination-service.get-new!
-                    vm.pagination.numOfPages = 0
 
                     # person socre distribution
                     vm.person-num-of-sixty-to-seventy = 0
@@ -48,9 +45,6 @@ angular.module 'app.student'
 
                     # Method
                     vm.get-class-scores-distribution = get-class-scores-distribution
-                    vm.reset-current-page = (currentRange)!->
-                        vm.get-class-scores-distribution(currentRange)
-                        vm.pagination.currentPage = 0
 
                     # Nvd3 chart option
                     vm.person-score = {
@@ -192,7 +186,6 @@ angular.module 'app.student'
                         ]
                         get-class-ranklists!
                         vm.get-class-scores-distribution '作业1'
-                        vm.pagination.numOfPages = Math.ceil(vm.class-homeworks.ranklists[vm.class-homeworks.currentRange].length/vm.pagination.pageSize)
 
                     !function get-person-score-distribution 
                         person-homeworks = get-person-homeworks!
