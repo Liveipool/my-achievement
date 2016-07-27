@@ -8,11 +8,12 @@ angular.module 'app.student'
         resolve:
             result: (api-resolver) -> api-resolver.resolve 'reviews@get'
             user: (Authentication)-> Authentication.getUser!
+            homeworks: (api-resolver) -> api-resolver.resolve 'homeworks@get'
         views:
             'content@app':
                 template-url: 'app/main/student/homework-detail/homework-detail.html'
                 controller-as: 'vm'
-                controller: (result, user, Interaction)!->
+                controller: (result, user, Interaction, homeworks)!->
                     
                     vm = @
 
@@ -23,9 +24,6 @@ angular.module 'app.student'
                     vm.user = user
 
                     # data
-                    vm.greeting = vm.user.fullname
-                    vm.location = '作业详情'
-                    vm.theme = Interaction.get-bg-by-month 2
                     vm.class-scores-distribution = {}
 
 
@@ -218,7 +216,7 @@ angular.module 'app.student'
                         final-reviews = _.filter vm.reviews, (review)->
                             review.reviewer.role == 'teacher'
 
-                        for i in [1 to final-reviews.length]
+                        for i in [1 to homeworks.data.length]
                             hw_ranklist = _.filter final-reviews, (review)->
                                         review.homework_id == i and review.class == user.class
                             vm.class-homeworks.ranklists['作业'+i] = _.order-by hw_ranklist, 'score', 'desc'
