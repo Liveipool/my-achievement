@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'app.profile'
-  .controller 'edit-dialog-controller', (Authentication, $mdDialog, FileUploader, $http) !->
+  .controller 'edit-dialog-controller', (Authentication, $mdDialog, FileUploader, $http, $interval) !->
     @user = Authentication.get-user!
 
     vm = @
@@ -28,11 +28,11 @@ angular.module 'app.profile'
       method: 'get'
       url: 'http://localhost:3005/api/Customers?filter[where][username]=zhangshan'
     }).then(success = (res) !->
-      console.log 'res: ', res.data[0].avatar
+      # console.log 'res: ', res.data[0].avatar
       vm.avatar = res.data[0].avatar
       )
 
-
+    # 点击更改密码按钮触发
     @change-password = !->
       btn = $ '.change-password-container'
       if @show-or-hide then btn.hide! else btn.show!
@@ -85,7 +85,7 @@ angular.module 'app.profile'
       @is-new-password-invalid = false
       @is-confirm-password-invalid = false
 
-    
+    # 上传图片
     @picture-uploader = new FileUploader {
       url: 'http://localhost:3005/upload-images'
       # url: "http://localhost:3005/api/Customers/update?where[username]=zhangshan"
@@ -95,6 +95,7 @@ angular.module 'app.profile'
       alias: 'upload-images'
     }
 
+    # 点击更改头像按钮清空上传队列
     @clear-picture-item = !->
       vm.cancel!
       vm.upload-row = true
