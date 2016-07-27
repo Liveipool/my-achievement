@@ -170,7 +170,6 @@
 
         var api = {};
 
-
         // Base Url
         api.baseUrl = 'app/data/';
         api.classes = $resource(api.baseUrl + 'faker/classes.json');
