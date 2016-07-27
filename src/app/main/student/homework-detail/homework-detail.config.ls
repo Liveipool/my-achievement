@@ -13,7 +13,7 @@ angular.module 'app.student'
             'content@app':
                 template-url: 'app/main/student/homework-detail/homework-detail.html'
                 controller-as: 'vm'
-                controller: (result, user, Interaction)!->
+                controller: (result, user, Interaction, homeworks)!->
                     
                     vm = @
 
