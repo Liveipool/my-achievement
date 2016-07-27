@@ -23,13 +23,13 @@ angular.module 'fuse'
         console.log $scope.homeworks
 
     $scope.edit-homework = (hid) ->
-        $state.go 'app.teacher.edit-homework', {id : hid}
+        $state.go 'app.teacher.edit-homework', {hid : hid}
 
     $scope.review-homework = (hid) ->
         if $scope.role == 'teacher'
-            $state.go 'app.teacher.review-homework', {id : hid}
+            $state.go 'app.teacher.review-homework', {hid : hid}
         else if $scope.role == 'ta'
-            $state.go 'app.TA.review-list', {id: hid}  
+            $state.go 'app.TA.review-list', {hid: hid}  
 
     function calculate-status hs
         for h in hs
