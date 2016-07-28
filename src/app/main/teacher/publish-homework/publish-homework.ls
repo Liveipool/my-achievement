@@ -12,7 +12,6 @@ angular.module 'app.teacher'
             'content@app':
               template-url: 'app/main/teacher/publish-homework/publish-homework.html'
               controller-as: 'vm'
-
               controller: ($state, Authentication, Interaction, homework-manager)!->
                 # header
                 @user = Authentication.get-user!
@@ -20,63 +19,62 @@ angular.module 'app.teacher'
                 @location = "发布作业"
                 @theme = Interaction.get-bg-by-month 2
 
-                # hw-card header
-                # TODO
-                @current-hw-num = homework-manager.get-current-id!
+                homework-manager.get-current-id-num!
+                  .then (result)!~>
+                    @current-hw-num = result.id
+                    @class-num = result.num
 
-                @class-num = homework-manager.get-class-num!
-                console.log @current-hw-num
-                console.log @class-num
+                    console.log @current-hw-num
+                    console.log @class-num
 
-                @class-detail = []
-                for from 0 to @class-num - 1
-                  @class-detail.push {
-                    class_id: i$ + 1
-                    start-time: ""
-                    end-time: ""
-                    status: "present"
-                  }
-                @classes = @class-detail
+                    @class-detail = []
+                    for from 0 to @class-num - 1
+                      @class-detail.push {
+                        class_id: i$ + 1
+                        start-time: ""
+                        end-time: ""
+                        status: "present"
+                      }
+                    @classes = @class-detail
 
-                # datepicker
-                @hours = []
-                @mins = []
-                @start-hour = []
-                @start-min = []
-                @end-hour = []
-                @end-min = []
+                    # datepicker
+                    @hours = []
+                    @mins = []
+                    @start-hour = []
+                    @start-min = []
+                    @end-hour = []
+                    @end-min = []
 
-                # select框options
-                for from 0 to 59
-                  @mins[i$] = i$
-                  if i$ < 24
-                    @hours[i$] = i$
+                    # select框options
+                    for from 0 to 59
+                      @mins[i$] = i$
+                      if i$ < 24
+                        @hours[i$] = i$
 
-                # validator bools
-                @date-invalid = []
+                    # validator bools
+                    @date-invalid = []
 
-                init-time = !~>
-                  for from 0 to @class-num - 1
-                    @date-invalid[i$] = false
-                    @start-hour[i$] = 0
-                    @start-min[i$] = 0
-                    @end-hour[i$] = 0
-                    @end-min[i$] = 0
-                init-time!
+                    init-time = !~>
+                      for from 0 to @class-num - 1
+                        @date-invalid[i$] = false
+                        @start-hour[i$] = 0
+                        @start-min[i$] = 0
+                        @end-hour[i$] = 0
+                        @end-min[i$] = 0
+                    init-time!
 
-                # 从页面获取的数据
-                @hw-obj =
-                  id: @current-hw-num
-                  title: ""
-                  description: ""
-                  classes: @class-detail
+                    # 从页面获取的数据
+                    @hw-obj =
+                      id: @current-hw-num
+                      title: ""
+                      description: ""
+                      classes: @class-detail
 
-                console.log @hw-obj
+                    console.log @hw-obj
 
-                # 注：数据未保存
                 @Submit = !->
                    console.log 'Submit'
-                   console.log "new-obj: ", @hw-obj # TODO：待插入的数据
+                   console.log "new-obj: ", @hw-obj
                    if @validator!
                       homework-manager.insert-homework @hw-obj
                         .then !->

@@ -61,18 +61,20 @@ angular.module 'app.teacher', []
           break
       Promise.resolve homework
 
-  # @get-homework-count = ~>
-  #     $resource('http://localhost:3000/api/Homework/count').get!.$promise
-  #       .then (count)->
-  #         count
+  @get-current-id-num = ~>
+        $resource('http://localhost:3000/api/Homework').query({"filter":{"order":"id DESC", "limit":1}}).$promise
+          .then (result) ~>
+            console.log 'max', result
+            @homework-id-num = {}
+            if result.length != 0
+              @homework-id-num.id = result[0].id + 1
+              @homework-id-num.num = result[0].classes.length
+            else
+              @homework-id-num.id = 1
+              @homework-id-num.num = 2
+            Promise.resolve @homework-id-num
 
-  @get-current-id = ~>
-      @homework-cache[@homework-cache.length - 1].id + 1
 
-  @get-class-num = ~>
-    if @homework-cache
-      @homework-cache[0].classes.length
-    else 2
 
 .directive 'urlValidator', ->
     # 参考http://stackoverflow.com/questions/161738/what-is-the-best-regular-expression-to-check-if-a-string-is-a-valid-url
