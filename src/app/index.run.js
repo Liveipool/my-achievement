@@ -22,7 +22,7 @@
 
                         if (!Authentication.isToStateAuthenticated(toState)) {
                             event.preventDefault();
-                            $state.go('app.access-denied');
+                            $state.go('app.error-404');
                         }
                         else if (toState.name == 'app.login') {
                             var dest = Authentication.filterRoute(user);
@@ -30,7 +30,7 @@
                         }
 
                     }
-                    else if (user === null && toState.name !== 'app.login' && toState.name !== 'app.access-denied') {
+                    else if (user === null && toState.name !== 'app.login' && toState.name !== 'app.error-404') {
                         $state.go('app.login');
                         event.preventDefault();
                     }

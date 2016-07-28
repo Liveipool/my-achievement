@@ -8,11 +8,11 @@ angular.module 'app.student'
     $scope.remain = timerService.calculateRemain $scope.homework.classes[0].startTime, $scope.homework.classes[0].endTime, $scope.homework.classes[0].status
     $scope.homework.classes[0].status = $scope.remain.status
     if $scope.remain.status == 'future' then $scope.timerHide = false
-    if $scope.remain.status == "finish" or $scope.remain.status == 'present' 
+    if $scope.remain.status == "finish" or $scope.remain.status == 'present'
       $interval.cancel(timer)
       $scope.timerHide = true
     ), 1000
-  
+
 
 .factory 'timerService', ->
   calculate = (start, end, status) ->
@@ -26,10 +26,10 @@ angular.module 'app.student'
     else if nowTime < endTime
       status = 'present'
       iRemain = (endTime.getTime! - nowTime.getTime!)/1000
-    else 
+    else
       status = 'finish'
       iRemain = 0
- 
+
     remain = {}
     remain.days =  parseInt iRemain/86400
     iRemain %= 86400
@@ -46,7 +46,7 @@ angular.module 'app.student'
     if timeSum == 0 and status == 'future' then remain.status = 'present'
     if timeSum == 0 and status == 'present' then remain.status = 'finish'
       # body...
-    remain 
+    remain
 
   calculateRemain: (start, end, status)->
     calculate start, end, status
@@ -65,15 +65,18 @@ angular.module 'app.student'
             homeworks = result.data
             Promise.resolve homeworks
 
-      homework-detail: ($resource, Authentication) ->
+      homework-detail: ($resource, Authentication, homework-detail-service) ->
         $resource 'app/data/review/reviews.json' .get!.$promise
         .then (result) ->
+          allReviews = result.data
           user = Authentication.get-user!
           reviews = _.filter result.data, (review) -> review.reviewee.username == user.username && review.reviewer.role is 'teacher'
           scores = [review.score for review in reviews]
           homework-ids = [review.homework_id for review in reviews]
 
-          Promise.resolve {scores: scores, homework-ids: homework-ids}
+          AR = homework-detail-service.getRanksAndAverScores scores, homework-ids, allReviews # AR stores average scores and ranks
+          ranks = homework-detail-service.getHomeworkRanks 1, 2, allReviews
+          Promise.resolve {scores: scores, homework-ids: homework-ids, AR: AR}
 
     data:
       role: 'student'
@@ -82,7 +85,7 @@ angular.module 'app.student'
       'content@app':
         template-url: 'app/main/student/homework-dashboard/homework-dashboard.html'
         controller-as : 'vm'
-        controller: ($scope, Authentication, homeworks, $mdDialog, Interaction, homework-detail)!->
+        controller: ($scope, Authentication, homeworks, $mdDialog, homework-detail)!->
 
           arr2string = (arr)->
             _string = ""
@@ -95,14 +98,16 @@ angular.module 'app.student'
 
           vm = @
           vm.user = Authentication.get-user!
-          vm.scores = arr2string homework-detail.scores
           vm.homework-ids = arr2string homework-detail.homework-ids
-          vm.location = "作业列表"
-          vm.theme = Interaction.get-bg-by-month 2
+          vm.scores = homework-detail.scores
+          vm.stringScores = arr2string vm.scores
+          vm.ranks = homework-detail.AR.ranks
+          vm.stringRanks = arr2string vm.ranks
+          vm.averScores = homework-detail.AR.averScores  #平均分数组
 
-          vm.greeting  = vm.user.fullname;
 
           vm.homeworks = homeworks
+
 
           for homework in vm.homeworks
             _.remove homework.classes, (c) -> c.class_id isnt vm.user.class
@@ -132,8 +137,7 @@ angular.module 'app.student'
               return d
 
           $scope.jump = (description)!->
-            #TODO 实际中改为作业链接
-            window.open "http://www.baidu.com"
+            window.open description   # description必须为绝对地址
 
           $scope.showSubmitDialog = (id)!->
             $mdDialog.show {
@@ -141,19 +145,11 @@ angular.module 'app.student'
               parent: angular.element(document.body),
               clickOutsideToClose: false,
               controller: ($scope, $mdDialog, FileUploader, $interval) !->
-                $scope.determinateValue = 30
                 $scope.id = id
                 $scope.showProgress = false
 
-                $interval !->
-                  $scope.determinateValue += 1
-                  if ($scope.determinateValue > 100)
-                    $scope.determinateValue = 30
-                ,100, 0, true
                 $scope.cancel = !->
                   $mdDialog.hide!
-
-                $scope.pictureUploadState = $scope.coreUploadState = false
 
                 pictureUploader = $scope.pictureUploader = new FileUploader {
                   # url: 'upload.php',
@@ -178,12 +174,6 @@ angular.module 'app.student'
 
                 coreUploader.onAfterAddingFile = (fileItem) !->
                   $scope.core = fileItem._file
-
-                pictureUploader.onSuccessItem = (fileItem, response, status, headers) !->
-                  $scope.pictureUploadState = true
-
-                coreUploader.onSuccessItem = (fileItem, response, status, headers) !->
-                  $scope.coreUploadState = true
 
                 $scope.uploadFile = !->
                   $scope.showProgress = true

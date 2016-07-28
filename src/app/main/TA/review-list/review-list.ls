@@ -11,7 +11,7 @@ angular.module 'app.TA'
       'content@app':
         template-url: 'app/main/TA/review-list/review-list.html'
         controller-as : 'vm'
-        controller: ($scope, $filter, $state-params, $state, reviewListService, Authentication, Interaction, homeworks, users)!->
+        controller: ($scope, $filter, $state-params, $state, reviewListService, Authentication, homeworks, users)!->
 
           service = reviewListService
           auth = Authentication
@@ -21,15 +21,11 @@ angular.module 'app.TA'
 
           @user = auth.get-user!
 
-          @greeting = @user.fullname
-
-          @location = "评审列表"
-
-          @theme = Interaction.get-bg-by-month 2
-
           @student-users = service.get-student-users-by-class users.user
 
           @classes = service.get-classes @student-users
+
+          @homeworks = homeworks.data
 
           @selected = []
           i = @classes.length

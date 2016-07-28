@@ -1,0 +1,73 @@
+
+mixin homework
+    md-card.white-bg.m-0
+        //- +card-image
+        .p-8
+            +card-title
+            +card-content
+            +card-actions
+
+mixin card-image
+    .image-div(ng-class='homework.bg')
+
+mixin card-title
+    md-card-title.p-8
+        md-card-title-text.md-headline 作业: {{homework.title}} ({{homework.tStatus}})
+
+mixin card-content
+    md-card-content.p-0
+        .classes-container(layout='column')
+            .class-container.p-8(flex ng-repeat='class in homework.classes')
+                +class
+
+mixin class
+    .pl-10(class='{{"AH-" + class.status + "-pl"}}' layout='column')
+        +class-id
+        //- +comming-soon
+        +class-status
+        +class-time
+        md-divider
+
+mixin class-id
+    .class.md-subhead class {{class.class_id}}
+
+mixin comming-soon
+    div#time-format(layout="row" layout-wrap ng-controller='teacherTimer' ng-hide='timerHide' layout-align='center')
+        div(flex="25%")
+            div.number-font {{remain.days}}
+            div.date-font days
+        div(flex="25%")
+            div.number-font {{remain.hours}}
+            div.date-font hours
+        div(flex='25%')
+            div.number-font {{remain.mins}}
+            div.date-font minutes
+        div(flex='25%')
+            div.number-font {{remain.secs}}
+            div.date-font seconds
+
+mixin class-status
+    .status.md-subhead(layout='row' layout-align='space-between space-between')
+        small.label 状态:
+        small.content  {{class.tStatus}}
+
+mixin class-time
+    .time(layout='row' layout-align='space-between space-between')
+        .md-subhead(layout='row')
+            small.label 开始日期:
+            small.content {{class.startTime | date: 'yyyy-MM-dd  HH:mm' }}
+        .md-subhead(layout='row')
+            small.label 结束日期:
+            small.content {{class.endTime | date: 'yyyy-MM-dd  HH:mm' }}
+
+mixin card-actions
+    md-card-actions(layout="row" layout-align="center center")
+        md-button(flex='33' ng-click='' ng-href="{{homework.description}}" target="_blank") 作业链接
+        md-button(flex='33' ng-click='editHomework(homework.id)' ng-show='isTeacher()') 编辑
+        md-button(flex='33' ng-click='reviewHomework(homework.id)' ng-hide="homework.status == 'future'") 评审
+
+
+
+div#all-homeworks-container.p-12(layout-wrap='' layout='row' flex='100')
+    .homework-container.m-0.p-12(flex='100' flex-gt-sm='50' flex-gt-md='33' ng-repeat='homework in homeworks' layout='column')
+        +homework

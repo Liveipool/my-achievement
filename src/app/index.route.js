@@ -25,7 +25,7 @@
                           })
                           .otherwise( function($injector, $location) {
                                 var $state = $injector.get("$state");
-                                $state.go("app.access-denied");
+                                $state.go("app.error-404");
                             });
 
 
