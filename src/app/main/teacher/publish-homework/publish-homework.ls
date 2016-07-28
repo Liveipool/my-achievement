@@ -7,19 +7,13 @@ angular.module 'app.teacher'
 
     $state-provider.state 'app.teacher.publish-homework', {
         url: '/publish-homework'
-        resolve:
-          homeworks: ($resource) ->
-            $resource('app/data/homework/homeworks.json').get!.$promise
-              .then (result)->
-                homeworks = result.data
-                Promise.resolve homeworks
+        # resolve: 都迁移到了homework-manager服务里面(teacher.ls文件中)
         views:
             'content@app':
               template-url: 'app/main/teacher/publish-homework/publish-homework.html'
               controller-as: 'vm'
 
-              controller: ($state, Authentication, homeworks, Interaction)!->
-
+              controller: ($state, Authentication, Interaction, homework-manager)!->
                 # header
                 @user = Authentication.get-user!
                 @greeting  = @user.fullname + "老师"
@@ -27,14 +21,17 @@ angular.module 'app.teacher'
                 @theme = Interaction.get-bg-by-month 2
 
                 # hw-card header
-                @current-hw-num = homeworks.length + 1
+                # TODO
+                @current-hw-num = homework-manager.get-current-id!
 
-                @class-num = homeworks[0].classes.length
+                @class-num = homework-manager.get-class-num!
+                console.log @current-hw-num
+                console.log @class-num
 
                 @class-detail = []
                 for from 0 to @class-num - 1
                   @class-detail.push {
-                    class-id: i$ + 1
+                    class_id: i$ + 1
                     start-time: ""
                     end-time: ""
                     status: "present"
@@ -72,7 +69,7 @@ angular.module 'app.teacher'
                   id: @current-hw-num
                   title: ""
                   description: ""
-                  class-detail: @class-detail
+                  classes: @class-detail
 
                 console.log @hw-obj
 
@@ -81,13 +78,15 @@ angular.module 'app.teacher'
                    console.log 'Submit'
                    console.log "new-obj: ", @hw-obj # TODO：待插入的数据
                    if @validator!
-                      $state.go 'app.teacher.homework-list'
+                      homework-manager.insert-homework @hw-obj
+                        .then !->
+                        $state.go 'app.teacher.homework-list'
 
                 @Reset = !~>
                   console.log 'Reset'
                   @hw-obj.title = ''
                   @hw-obj.description = ''
-                  for each-class in @hw-obj.class-detail
+                  for each-class in @hw-obj.classes
                     for k of each-class
                       if k != 'status' && k != 'classId'
                         each-class[k] = ""
@@ -103,8 +102,8 @@ angular.module 'app.teacher'
 
                 @validator = ->
                   valid = true
-                  for item in @hw-obj.class-detail
-                      @parse-class-detail @hw-obj.class-detail
+                  for item in @hw-obj.classes
+                      @parse-class-detail @hw-obj.classes
                       if item.start-time >= item.end-time
                         @date-invalid[i$] = true
                         console.log "data invalid: ", i$
