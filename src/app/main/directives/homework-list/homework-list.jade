@@ -63,7 +63,7 @@ mixin class-time
 mixin card-actions
     md-card-actions(layout="row" layout-align="center center")
         md-button(flex='33' ng-click='' ng-href="{{homework.description}}" target="_blank") 作业链接
-        md-button(flex='33' ng-click='editHomework(homework.id)' ng-show='isTeacher()') 编辑
+        md-button(flex='33' ng-click='editHomeworkFn({hid: homework.id})' ng-show='isTeacher()') 编辑
         md-button(flex='33' ng-click='reviewHomework(homework.id)' ng-hide="homework.status == 'future'") 评审
 
 
