@@ -1,0 +1,7 @@
+// background image div url
+$months : ('january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december')
+@for $i from 1 through 12
+    .image-div-#{$i}
+        height: 100px
+        background: url('/assets/images/backgrounds/#{nth($months, $i)}.jpg') no-repeat
+        background-size: 100% auto
