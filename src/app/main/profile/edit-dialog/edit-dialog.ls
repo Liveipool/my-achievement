@@ -23,14 +23,15 @@ angular.module 'app.profile'
     @is-new-password-invalid = false
     @is-confirm-password-invalid = false
     @upload-row = false
+    @image-invalid = false
 
-    $http({
-      method: 'get'
-      url: 'http://localhost:3005/api/Customers?filter[where][username]=zhangshan'
-    }).then(success = (res) !->
-      # console.log 'res: ', res.data[0].avatar
-      vm.avatar = res.data[0].avatar
-      )
+    # $http({
+    #   method: 'get'
+    #   url: 'http://localhost:3005/api/Customers?filter[where][username]=zhangshan'
+    # }).then(success = (res) !->
+    #   # console.log 'res: ', res.data[0].avatar
+    #   vm.avatar = res.data[0].avatar
+    #   )
 
     # 点击更改密码按钮触发
     @change-password = !->
@@ -87,7 +88,7 @@ angular.module 'app.profile'
 
     # 上传图片
     @picture-uploader = new FileUploader {
-      url: 'http://localhost:3005/upload-images'
+      # url: 'http://localhost:3005/upload-images'
       # url: "http://localhost:3005/api/Customers/update?where[username]=zhangshan"
       queueLimit: 1
       removeAfterUpload: false
@@ -98,12 +99,16 @@ angular.module 'app.profile'
     # 点击更改头像按钮清空上传队列
     @clear-picture-item = !->
       vm.cancel!
-      vm.upload-row = true
 
     @picture-uploader.onAfterAddingFile = (fileItem) !->
       picture = fileItem._file
       # console.log 'picture: ', fileItem
       vm.name = picture.name
+      vm.image-invalid = false
+      vm.upload-row = true
+
+    @picture-uploader.onWhenAddingFileFailed = !->
+      vm.image-invalid = true
 
     @upload-file = !->
       vm.picture-uploader.uploadAll!
@@ -113,6 +118,7 @@ angular.module 'app.profile'
     @cancel = !->
       vm.picture-uploader.clearQueue!
       vm.name = ""
+      vm.upload-row = false
 
     @picture-uploader.filters.push({
       name: 'pictureFilter'
