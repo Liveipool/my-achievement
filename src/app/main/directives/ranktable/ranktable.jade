@@ -5,7 +5,7 @@ div.p-12(flex="100" layout="column")
             .md-title.pv-24 {{classHomeworks.title}}
 
             .pv-24
-                md-select.simplified( ng-model="classHomeworks.currentRange" ng-change="resetPage({currentPage: classHomeworks.currentRange})" aria-label="Change range")
+                md-select.simplified( ng-model="classHomeworks.currentRange" ng-change="changeRange()" aria-label="Change range")
                     md-option( ng-repeat="(key, range) in classHomeworks.ranges" value="{{key}}") {{range}}
 
         .rank-table.scrollable(ms-scroll)

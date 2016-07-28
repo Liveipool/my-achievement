@@ -8,11 +8,12 @@ angular.module 'app.student'
         resolve:
             result: (api-resolver) -> api-resolver.resolve 'reviews@get'
             user: (Authentication)-> Authentication.getUser!
+            homeworks: (api-resolver) -> api-resolver.resolve 'homeworks@get'
         views:
             'content@app':
                 template-url: 'app/main/student/homework-detail/homework-detail.html'
                 controller-as: 'vm'
-                controller: (result, user, pagination-service, Interaction)!->
+                controller: (result, user, Interaction, homeworks)!->
                     
                     vm = @
 
@@ -23,14 +24,8 @@ angular.module 'app.student'
                     vm.user = user
 
                     # data
-                    vm.greeting = vm.user.fullname
-                    vm.location = '作业详情'
-                    vm.theme = Interaction.get-bg-by-month 2
                     vm.class-scores-distribution = {}
 
-                    # pagination 
-                    vm.pagination = pagination-service.get-new!
-                    vm.pagination.numOfPages = 0
 
                     # person socre distribution
                     vm.person-num-of-sixty-to-seventy = 0
@@ -48,9 +43,6 @@ angular.module 'app.student'
 
                     # Method
                     vm.get-class-scores-distribution = get-class-scores-distribution
-                    vm.reset-current-page = (currentRange)!->
-                        vm.get-class-scores-distribution(currentRange)
-                        vm.pagination.currentPage = 0
 
                     # Nvd3 chart option
                     vm.person-score = {
@@ -192,7 +184,6 @@ angular.module 'app.student'
                         ]
                         get-class-ranklists!
                         vm.get-class-scores-distribution '作业1'
-                        vm.pagination.numOfPages = Math.ceil(vm.class-homeworks.ranklists[vm.class-homeworks.currentRange].length/vm.pagination.pageSize)
 
                     !function get-person-score-distribution 
                         person-homeworks = get-person-homeworks!
@@ -225,7 +216,7 @@ angular.module 'app.student'
                         final-reviews = _.filter vm.reviews, (review)->
                             review.reviewer.role == 'teacher'
 
-                        for i in [1 to final-reviews.length]
+                        for i in [1 to homeworks.data.length]
                             hw_ranklist = _.filter final-reviews, (review)->
                                         review.homework_id == i and review.class == user.class
                             vm.class-homeworks.ranklists['作业'+i] = _.order-by hw_ranklist, 'score', 'desc'

@@ -29,7 +29,7 @@ page-header(location="作业详情" greeting="vm.user.fullname" month="2")
 div#homework-detail.content.p-12
     .widget-group(layout="row" layout-sm="column")
 
-        rank-table(class-homeworks="vm.classHomeworks" pagination="vm.pagination" on-page-change="vm.resetCurrentPage(currentPage)" flex="100" flex-gt-sm="50")
+        rank-table(class-homeworks="vm.classHomeworks" pagination="vm.pagination" on-page-change="vm.getClassScoresDistribution(currentRange)" flex="100" flex-gt-sm="50")
 
         div(layout="column" flex="100" flex-gt-sm="50")
 

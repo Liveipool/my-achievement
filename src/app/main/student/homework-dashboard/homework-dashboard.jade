@@ -5,7 +5,7 @@ mixin chart
     .card.md-whiteframe-2dp.white-bg.p-12
       c3chart(bindto-id="scoreChart")
         chart-column(column-id="x" column-values="{{vm.homeworkIds}}")
-        chart-column(column-id="score" column-name="分数" column-color="#19b0f5" column-values="{{vm.scores}}" column-type="line")
+        chart-column(column-id="score" column-name="分数" column-color="#19b0f5" column-values="{{vm.stringScores}}" column-type="line")
         chart-points(point-radius="4" show-point="true" point-expand-enabled="true"
                       point-expand-radius="8")
         chart-grid(show-x="false" show-y="true")
@@ -17,13 +17,13 @@ mixin chart
     .md-title.mb-12 我的排名
     .card.md-whiteframe-2dp.white-bg.p-12
       c3chart(bindto-id="rankChart")
-        chart-column(column-id="x" column-values="作业1, 作业2, 作业3, 作业4, 作业5, 作业6, 作业7, 作业8, 作业9, 作业10")
-        chart-column(column-id="rank" column-name="排名" column-color="#ff9800" column-values="3,150,1,50,10,140,12,70,12,40" column-type="line")
+        chart-column(column-id="x" column-values="{{vm.homeworkIds}}")
+        chart-column(column-id="rank" column-name="排名" column-color="#ff9800" column-values="{{vm.stringRanks}}" column-type="line")
         chart-points(point-radius="4" show-point="true" point-expand-enabled="true"
                       point-expand-radius="8")
         chart-grid(show-x="false" show-y="true")
         chart-axis-x(axis-type="category")
-        chart-axis-y(axis-inverted="true" axis-min="1" padding-top="10" padding-bottom="20")
+        chart-axis-y(axis-inverted="true" axis-max="150" padding-top="10" padding-bottom="20")
           chart-axis-y-tick(tick-format-function="vm.tickFormat")
         chart-axes(values-x="x" y="score")
 
@@ -85,10 +85,10 @@ mixin homework-widget-back
       div.flip-to-front
         md-button(class="md-icon-button" ng-click="flipWidget()" aria-label="Flip widget")
               md-icon(md-font-icon="icon-close")
-    div.md-headline(layout="column" layout-align="center center")
-      span 平均分：89
-      span 你的分数：89
-      span 你的排名：78
+    div.md-headline.height-150(layout="column" layout-align="center center")
+      span 平均分：{{vm.averScores[homework.id-1]}}
+      span 你的分数：{{vm.scores[homework.id-1]}}
+      span 你的排名：{{vm.ranks[homework.id-1]}}
 
 mixin homework-widget
   +homework-widget-front

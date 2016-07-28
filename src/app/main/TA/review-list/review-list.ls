@@ -25,6 +25,8 @@ angular.module 'app.TA'
 
           @classes = service.get-classes @student-users
 
+          @homeworks = homeworks.data
+
           @selected = []
           i = @classes.length
           while i > 0

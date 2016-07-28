@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'app.admin', []
+angular.module 'app.admin', ['angularFileUpload']
 
 .config ($state-provider)!->
   $state-provider.state 'app.admin', {
