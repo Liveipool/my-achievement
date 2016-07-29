@@ -178,7 +178,7 @@
         api.reviews = $resource(api.baseUrl + 'review/reviews.json');
 
         //db base url
-        loopbackApiBaseUrl = 'http://localhost:3000/api'
+        var loopbackApiBaseUrl = 'http://localhost:3000/api'
         api.lb_users = $resource(loopbackApiBaseUrl + '/Customers')
         api.lb_reviews = $resource(loopbackApiBaseUrl + '/Reviews')
         api.lb_commits = $resource(loopbackApiBaseUrl + '/Commits')
