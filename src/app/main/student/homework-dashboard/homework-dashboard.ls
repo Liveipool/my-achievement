@@ -66,16 +66,16 @@ angular.module 'app.student'
             Promise.resolve homeworks
 
       homework-detail: ($resource, Authentication, homework-detail-service) ->
-        $resource 'app/data/review/reviews.json' .get!.$promise
+        $resource 'http://localhost:3000/api/Reviews' .query!.$promise
         .then (result) ->
-          allReviews = result.data
+          allReviews = result
           user = Authentication.get-user!
-          reviews = _.filter result.data, (review) -> review.reviewee.username == user.username && review.reviewer.role is 'teacher'
+          reviews = _.filter result, (review) -> review.reviewee.username == user.username && review.reviewer.role is 'teacher'
           scores = [review.score for review in reviews]
           homework-ids = [review.homework_id for review in reviews]
           
           AR = homework-detail-service.getRanksAndAverScores scores, homework-ids, allReviews # AR stores average scores and ranks
-          ranks = homework-detail-service.getHomeworkRanks 1, 2, allReviews
+          ranks = homework-detail-service.getHomeworkRanks 1, 2
           Promise.resolve {scores: scores, homework-ids: homework-ids, AR: AR}
 
     data:
@@ -85,7 +85,7 @@ angular.module 'app.student'
       'content@app':
         template-url: 'app/main/student/homework-dashboard/homework-dashboard.html'
         controller-as : 'vm'
-        controller: ($scope, Authentication, homeworks, $mdDialog, homework-detail)!->
+        controller: ($scope, Authentication, homeworks, $mdDialog, homework-detail-service)!->
 
           arr2string = (arr)->
             _string = ""
@@ -98,19 +98,20 @@ angular.module 'app.student'
 
           vm = @
           vm.user = Authentication.get-user!
-          vm.homework-ids = arr2string homework-detail.homework-ids
-          vm.scores = homework-detail.scores
-          vm.stringScores = arr2string vm.scores
-          vm.ranks = homework-detail.AR.ranks
-          vm.stringRanks = arr2string vm.ranks
-          vm.averScores = homework-detail.AR.averScores  #平均分数组
+          vm.IS = homework-detail-service.getScoresAndHomeworkIds vm.user
+          console.log "sdfgd"
+          console.log vm.IS
+          # vm.homework-ids = arr2string vm.IS.homework-ids
+          # vm.stringScores = arr2string vm.IS.scores
+          vm.AR = homework-detail-service.getRanksAndAverScores vm.IS.scores, vm.IS.homework_ids
+          # vm.stringRanks = arr2string vm.AR.ranks
 
 
           vm.homeworks = homeworks
 
-          console.log homeworks
-          console.log vm.ranks
-          console.log vm.averScores
+          # console.log homeworks
+          # console.log vm.ranks
+          # console.log vm.averScores
 
           for homework in vm.homeworks
             _.remove homework.classes, (c) -> c.class_id isnt vm.user.class
@@ -200,3 +201,4 @@ angular.module 'app.student'
             }
 
   }
+
