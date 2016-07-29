@@ -21,12 +21,12 @@ angular.module 'fuse'
 
     $scope.$watch 'homeworks', (newValue, oldValue)!->
         
-        console.log 'newvalue: ', newValue
-        console.log 'oldvalue: ', oldValue
+        # console.log 'newvalue: ', newValue
+        # console.log 'oldvalue: ', oldValue
         if newValue
             $scope.homeworks = calculate-status newValue
 
-        console.log $scope.homeworks
+        # console.log $scope.homeworks
 
     
     $scope.review-homework = (hid) ->
