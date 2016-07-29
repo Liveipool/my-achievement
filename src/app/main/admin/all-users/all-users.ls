@@ -12,8 +12,6 @@ angular.module 'app.admin'
         controller-as : 'vm'
         controller: ($scope, $md-dialog, $md-media, valid-manager-service, user-manager-service, Interaction)!->
 
-          @theme = Interaction.get-bg-by-month 2
-          @location = "所有用户"
           @greeting = "管理员"
 
           # 监听窗口大小事件改变表格展示高度
@@ -80,15 +78,22 @@ angular.module 'app.admin'
                   $scope.hide = !-> $md-dialog.hide!
                   $scope.cancel = !-> $md-dialog.cancel!
 
-                  user-manager-service.find-user-by-username ev.current-target.attributes["username"].value
-                    .then (user)!->
-                      $scope.user = user
+                  #直接使用返回的promise 对象，会造成编辑框的修改直接引起后面列表中信息的同步刷新，如果取消修改，刷新也应成功。
+                  # user-manager-service.find-user-by-username ev.current-target.attributes["username"].value
+                  #   .then (user)!->
+                  #     $scope.user = user
+
+                  #使用事件，用属性把值传回来
+                  $scope.user = JSON.parse(ev.current-target.attributes['user'].value);
+                  
 
                   $scope.edit-user = !->
                     $scope.user ||= {}
                     invalid-arr = valid-manager-service.edit-user-valid $scope.user
                     if invalid-arr.length ~= 0
                       # 发送修改请求
+                      if $scope.user.newpassword
+                        $scope.user.password = $scope.user.newpassword
                       user-manager-service.edit-user $scope.user
                     else
                       $md-toast.show(

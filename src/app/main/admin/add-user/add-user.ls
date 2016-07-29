@@ -9,9 +9,7 @@ angular.module 'app.admin'
       'content@app':
         template-url: 'app/main/admin/add-user/add-user.html'
         controller-as : 'vm'
-        controller: ($scope, valid-manager-service, $md-toast, user-manager-service, Interaction)!->
-          @theme = Interaction.get-bg-by-month 2
-          @location = "添加用户"
+        controller: ($scope, valid-manager-service, $md-toast, user-manager-service, Interaction, FileUploader)!->
           @greeting = "管理员"
 
           $scope.add-user = !->
@@ -34,6 +32,38 @@ angular.module 'app.admin'
           $scope.reset-user = !->
             $scope.user = {}
 
-          # TODO: 文件上传函数实现
+          # 上传文件批量添加用户
+          $scope.json-uploader = new FileUploader {
+            url: "http://localhost:3005/upload-jsons"
+            alias: "upload-jsons"
+            queueLimit: 1
+            autoUpload: true
+            removeAfterUpload: true
+          }
 
+          # $scope.json-uploader.onWhenAddingFileFailed = (item) !->
+          #   console.log 'onWhenAddingFileFailed: ', item
+          # $scope.json-uploader.onBeforeUploadItem = (item) !->
+          #   console.log 'onBeforeUploadItem: ', item
+          # $scope.json-uploader.onSuccessItem = (item) !->
+          #   console.log 'onSuccessItem'
+          # $scope.json-uploader.onCompleteItem = (item) !->
+          #   console.log 'onCompleteItem'
+          # $scope.json-uploader.onErrorItem = (item) !->
+          #   console.log 'onErrorItem'
+          # $scope.json-uploader.onCancelItem = (item) !->
+          #   console.log 'onCancelItem'
+
+          $scope.json-uploader.filters.push({
+            name: 'jsonFilter'
+            fn: (item) ->
+              type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 5) + '|';
+              '|json|'.indexOf(type) !== -1
+          })
+          $scope.json-uploader.filters.push({
+            name: 'jsonSizeFilter'
+            fn: (item) ->
+              # console.log 'item.size: ', item.size
+              item.size <= 50000
+          })
   }

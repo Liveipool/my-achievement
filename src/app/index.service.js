@@ -68,7 +68,7 @@
             return 'app.admin.all-users' // 'app.admin.dashboard';
             break;
           case 'ta':
-            return 'app.TA.review-list' // 'app.ta.homework.dashboard';
+            return 'app.TA.dashboard' // 'app.ta.homework.dashboard';
             break;
           default:
             return 'app.login';

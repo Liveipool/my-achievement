@@ -1,8 +1,9 @@
 'use strict'
 
 angular.module 'app.profile'
-  .controller 'edit-dialog-controller', (Authentication, $mdDialog, $interval, FileUploader) !->
+  .controller 'edit-dialog-controller', (Authentication, $mdDialog, FileUploader, $http, $interval) !->
     @user = Authentication.get-user!
+
     vm = @
     @raw-data =
       sid: @user.sid
@@ -11,6 +12,7 @@ angular.module 'app.profile'
       new-password: ""
       confirm-password: ""
 
+    # @avatar = @user.avatar
     @sid = @user.sid
     @email = @user.email
     @old-password = ""
@@ -20,7 +22,18 @@ angular.module 'app.profile'
     @is-old-password-invalid = false
     @is-new-password-invalid = false
     @is-confirm-password-invalid = false
+    @upload-row = false
+    @image-invalid = false
 
+    # $http({
+    #   method: 'get'
+    #   url: 'http://localhost:3005/api/Customers?filter[where][username]=zhangshan'
+    # }).then(success = (res) !->
+    #   # console.log 'res: ', res.data[0].avatar
+    #   vm.avatar = res.data[0].avatar
+    #   )
+
+    # 点击更改密码按钮触发
     @change-password = !->
       btn = $ '.change-password-container'
       if @show-or-hide then btn.hide! else btn.show!
@@ -29,6 +42,8 @@ angular.module 'app.profile'
         item.scroll-top += 2
       , 1, 125
       @show-or-hide = !@show-or-hide
+      # console.log 'queue.length: ', vm.picture-uploader.queue.length
+
 
     @validate-old-password = !->
       if @old-password == @user.password
@@ -71,33 +86,50 @@ angular.module 'app.profile'
       @is-new-password-invalid = false
       @is-confirm-password-invalid = false
 
-    
+    # 上传图片
     @picture-uploader = new FileUploader {
-      # url: '' 连接到对应api
+      # url: 'http://localhost:3005/upload-images'
+      # url: "http://localhost:3005/api/Customers/update?where[username]=zhangshan"
       queueLimit: 1
       removeAfterUpload: false
-      # method: "post"
+      form-data: [{"avatar": "xxx"}]
+      alias: 'upload-images'
     }
 
+    # 点击更改头像按钮清空上传队列
     @clear-picture-item = !->
-      # console.log "vm.picture-uploader.queue.length: ", vm.picture-uploader.queue.length
       vm.cancel!
 
     @picture-uploader.onAfterAddingFile = (fileItem) !->
       picture = fileItem._file
+      # console.log 'picture: ', fileItem
       vm.name = picture.name
+      vm.image-invalid = false
+      vm.upload-row = true
+
+    @picture-uploader.onWhenAddingFileFailed = !->
+      vm.image-invalid = true
 
     @upload-file = !->
       vm.picture-uploader.uploadAll!
-      vm.cancel!
+      vm.name = ""
+      vm.upload-row = false
 
     @cancel = !->
       vm.picture-uploader.clearQueue!
       vm.name = ""
+      vm.upload-row = false
 
     @picture-uploader.filters.push({
-        name: 'pictureFilter',
-        fn: (item) ->
-          type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 4) + '|';
-          '|jpg|png|'.indexOf(type) !== -1
-    });
+      name: 'pictureFilter'
+      fn: (item) ->
+        type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 4) + '|';
+        '|jpg|png|'.indexOf(type) !== -1
+    })
+
+    @picture-uploader.filters.push({
+      name: 'pictureSizeFilter'
+      fn: (item) ->
+        # console.log 'item.size: ', item.size
+        item.size <= 1000000
+    })
