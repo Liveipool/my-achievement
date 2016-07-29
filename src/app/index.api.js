@@ -177,6 +177,13 @@
         api.users = $resource(api.baseUrl + 'auth/users.json');
         api.reviews = $resource(api.baseUrl + 'review/reviews.json');
 
+        //db base url
+        loopbackApiBaseUrl = 'http://localhost:3000/api'
+        api.lb_users = $resource(loopbackApiBaseUrl + '/Customers')
+        api.lb_reviews = $resource(loopbackApiBaseUrl + '/Reviews')
+        api.lb_commits = $resource(loopbackApiBaseUrl + '/Commits')
+        api.lb_homeworks = $resource(loopbackApiBaseUrl + '/Homeworks')
+
         api.gfcUrl = '/'
 
         // console.log("API get services defined by GFC: ", GFC.services);
