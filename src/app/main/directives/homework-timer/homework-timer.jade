@@ -1,0 +1,13 @@
+div#time-format(layout="row" layout-wrap ng-hide='timerHide' layout-align='center')
+    div(flex="25%")
+          div.number-font {{remain.days}}
+          div.date-font days
+    div(flex="25%")
+          div.number-font {{remain.hours}}
+          div.date-font hours
+    div(flex='25%')
+          div.number-font {{remain.mins}}
+          div.date-font minutes
+    div(flex='25%')
+          div.number-font {{remain.secs}}
+          div.date-font seconds

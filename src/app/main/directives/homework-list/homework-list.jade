@@ -24,6 +24,7 @@ mixin class
     .pl-10(class='{{"AH-" + class.status + "-pl"}}' layout='column')
         +class-id
         //- +comming-soon
+        div(homework-timer="" hw-class='class' style="height: 45px;")
         +class-status
         +class-time
         md-divider
