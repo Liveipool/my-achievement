@@ -2,29 +2,33 @@
 
 angular.module 'fuse'
 
+
+
 .directive 'homeworkList', ->
     directiveObject = {
         template-url: 'app/main/directives/homework-list/homework-list.html'
         scope:
             homeworks: "="
             role: "="
+            editHomeworkFn: "&"
         controller: homeworkListController
     }
 
 
-!function homeworkListController $scope, $state then
+!function homeworkListController $scope, $state, $mdDialog, homework-manager then
     $scope.is-teacher = ->
         $scope.role == 'teacher'
 
-
-    if $scope.homeworks
-        $scope.homeworks = calculate-status $scope.homeworks
+    $scope.$watch 'homeworks', (newValue, oldValue)!->
+        
+        console.log 'newvalue: ', newValue
+        console.log 'oldvalue: ', oldValue
+        if newValue
+            $scope.homeworks = calculate-status newValue
 
         console.log $scope.homeworks
 
-    $scope.edit-homework = (hid) ->
-        $state.go 'app.teacher.edit-homework', {hid : hid}
-
+    
     $scope.review-homework = (hid) ->
         if $scope.role == 'teacher'
             $state.go 'app.teacher.review-homework', {hid : hid}
