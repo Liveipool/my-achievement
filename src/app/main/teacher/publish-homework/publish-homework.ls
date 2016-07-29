@@ -18,13 +18,10 @@ angular.module 'app.teacher'
               template-url: 'app/main/teacher/publish-homework/publish-homework.html'
               controller-as: 'vm'
 
-              controller: ($state, Authentication, homeworks, Interaction)!->
+              controller: ($state, Authentication, homeworks)!->
 
                 # header
                 @user = Authentication.get-user!
-                @greeting  = @user.fullname + "老师"
-                @location = "发布作业"
-                @theme = Interaction.get-bg-by-month 2
 
                 # hw-card header
                 @current-hw-num = homeworks.length + 1

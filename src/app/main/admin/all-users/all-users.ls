@@ -5,15 +5,13 @@ angular.module 'app.admin'
 .config ($state-provider) !->
   $state-provider.state 'app.admin.all-users', {
     url: '/all-users'
-    # resolve: 都迁移到了user-manager服务里面(admin.ls文件中)
+    # resolve: 都迁移到了user-manager-service服务里面(admin.ls文件中)
     views:
       'content@app':
         template-url: 'app/main/admin/all-users/all-users.html'
         controller-as : 'vm'
-        controller: ($scope, $md-dialog, $md-media, valid-manager, user-manager, Interaction)!->
+        controller: ($scope, $md-dialog, $md-media, valid-manager-service, user-manager-service, Interaction)!->
 
-          @theme = Interaction.get-bg-by-month 2
-          @location = "所有用户"
           @greeting = "管理员"
 
           # 监听窗口大小事件改变表格展示高度
@@ -25,7 +23,7 @@ angular.module 'app.admin'
 
           # 监听users的更新事件
           $scope.$on 'usersUpdate', (ev)!->
-            $scope.update-tables user-manager.users-cache
+            $scope.update-tables user-manager-service.users-cache
 
           # table头的展示信息
           $scope.ad-columns = $scope.tea-columns = $scope.ta-columns = ['用户名','姓名', '邮箱', '编辑']
@@ -33,7 +31,7 @@ angular.module 'app.admin'
           $scope.stu-columns-by-class = ['学号', '姓名', '组别', '编辑']
 
           # 初始化获取所有users的信息之后更新表格信息
-          user-manager.get-users!.then (users)!->
+          user-manager-service.get-users!.then (users)!->
             $scope.update-tables users
 
           $scope.update-tables = (users)!->
@@ -76,20 +74,27 @@ angular.module 'app.admin'
               use-full-screen = ($md-media 'sm' || $md-media 'xs')  && $scope.customFullscreen;
               $md-dialog.show {
                 # 编辑页面控制器
-                controller: ($scope, $md-dialog, $md-toast, user-manager)!->
+                controller: ($scope, $md-dialog, $md-toast, user-manager-service)!->
                   $scope.hide = !-> $md-dialog.hide!
                   $scope.cancel = !-> $md-dialog.cancel!
 
-                  user-manager.find-user-by-username ev.current-target.attributes["username"].value
-                    .then (user)!->
-                      $scope.user = user
+                  #直接使用返回的promise 对象，会造成编辑框的修改直接引起后面列表中信息的同步刷新，如果取消修改，刷新也应成功。
+                  # user-manager-service.find-user-by-username ev.current-target.attributes["username"].value
+                  #   .then (user)!->
+                  #     $scope.user = user
+
+                  #使用事件，用属性把值传回来
+                  $scope.user = JSON.parse(ev.current-target.attributes['user'].value);
+                  
 
                   $scope.edit-user = !->
                     $scope.user ||= {}
-                    invalid-arr = valid-manager.edit-user-valid $scope.user
+                    invalid-arr = valid-manager-service.edit-user-valid $scope.user
                     if invalid-arr.length ~= 0
                       # 发送修改请求
-                      user-manager.edit-user $scope.user
+                      if $scope.user.newpassword
+                        $scope.user.password = $scope.user.newpassword
+                      user-manager-service.edit-user $scope.user
                     else
                       $md-toast.show(
                         $md-toast.simple!
@@ -111,7 +116,7 @@ angular.module 'app.admin'
                       .cancel '取消'
                     $md-dialog.show confirm .then !->
                       # 发送删除请求
-                      user-manager.delete-user $scope.user.username
+                      user-manager-service.delete-user $scope.user.username
 
                 templateUrl: 'app/main/admin/all-users/admin-user-edit.html'
                 parent: angular.element(document.body)

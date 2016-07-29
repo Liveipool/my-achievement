@@ -2,7 +2,7 @@ include ./admin-widget.jade
 
 //- Tabs展示的第一个页面，展示的是所有用户信息
 mixin all-users
-  md-content.p-12
+  md-content.p-12.rank
     md-card.m-12
       md-content(flex, layout="column" style="max-height: {{widgetHeight}}px", ms-scroll)
         +table-section("管理员", "admin", "adColumns", ["username", "fullname", "email"])
@@ -32,17 +32,8 @@ mixin all-students
         div(ng-repeat="class in classes")
           +table-section("{{class.className}}", "class.students", "stuColumnsByClass", ["sid", "fullname", "group"])
 
-div#header-container.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
-  header.header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
-    .breadcrumb(layout='row' layout-align='start center')
-      md-icon.s16(md-font-icon='icon-home')
-      md-icon.s16.separator(md-font-icon='icon-chevron-right')
-      span {{vm.location}}
-      span.parent
-    span.md-display-1.font-weight-300(ng-class="vm.theme.fg")
-      | 欢迎回来,
-      |{{vm.greeting}}
-      |!
+page-header(location="所有用户" greeting="vm.greeting" month="2")
+
 
 div#admin-body(layout="column", ng-cloak)
   md-content(md-theme="default")

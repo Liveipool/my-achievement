@@ -1,53 +1,86 @@
-md-dialog.contact-dialog._md.md-default-theme._md-transition-in
-  form.md-inline-form.ng-valid.ng-valid-required.ng-dirty.ng-valid-parse.ng-valid-mindate.ng-valid-maxdate.ng-valid-filtered.ng-valid-valid.ng-valid-email(name='contactForm')
-    md-toolbar.md-accent.md-tall._md.layout-column.md-default-theme.height-220(layout="column")
-      div.md-toolbar-tools.md-toolbar-tools-top.layout-space-between-center.layout-row(layout="row" layout-align="space-between center")
-        span.title.ng-binding 修改信息
-        button.md-icon-button.md-button.ng-scope.md-ink-ripple.md-default-theme(type="button" ng-click="vm.closeEditDialog()")
-          md-icon.ng-scope.md-font.icon-close.material-icons.md-default-theme(md-font-icon="icon-close")
-      div.md-toolbar-tools.md-toolbar-tools-middle.layout-align-center-center.layout-column.flex(layout="colum" layout-align="center center")
-        div.layout-align-center-center.layout-column(layout="column" layout-align="center center")
-          img.md-avatar.avatar.contact-avatar.huge.mt-55(src="{{vm.user.avatar}}")
-          md-button 更改头像
+mixin change-password
+  div.p-12(layout="row" layout-align="center center")
+    button.md-button.change-password.md-accent(ng-click="vm.changePassword()") 修改密码
 
-    md-dialog-content.ms-scroll.ps.container.ps-theme-default(ms-scroll)
-      md-input-container.md-icon-float.md-block.md-icon-left.md-default-theme.md-input-has-value
-        label.ng-scope 姓名 (required)
-        md-icon.name.md-font.icon-account.material-icons.md-default-theme(md-font-icon="icon-account")
-        input#fullname.ng-pristine.ng-valid.md-input._md-autofocus.ng-not-empty.ng-valid-required.ng-touched(value="{{vm.user.fullname}}" type="text" ng-require)
-        .md-errors-spacer
-      md-input-container.md-icon-float.md-block.md-icon-left.md-default-theme.md-input-has-value
-        label.ng-scope 邮箱 (required)
-        md-icon.name.md-font.icon-account.material-icons.md-default-theme(md-font-icon="icon-email")
-        input#email.ng-pristine.ng-valid.md-input._md-autofocus.ng-not-empty.ng-valid-required.ng-touched(value="{{vm.user.email}}" type="text" ng-require)
-        .md-errors-spacer
-      md-input-container.md-icon-float.md-block.md-icon-left.md-default-theme.md-input-has-value.mb-0
-        label.ng-scope 学号 (required)
-        md-icon.name.md-font.icon-account.material-icons.md-default-theme(md-font-icon="icon-numeric-1-box")
-        input#sid.ng-pristine.ng-valid.md-input._md-autofocus.ng-not-empty.ng-valid-required.ng-touched(value="{{vm.user.sid}}" type="text" ng-require)
-        .md-errors-spacer
-      div.ng-scope.layout-align-center-center.layout-row(layout="row" layout-align="center center")
-        button#changePassword.md-accent.md-button.ng-scope.md-ink-ripple.md-default-theme(type="button" ng-click="vm.changePassword()") 更改密码
-      md-input-container.md-icon-float.md-block.md-icon-left.md-default-theme.md-input-has-value(ng-if="vm.showOrHide == true")
-        label.ng-scope 旧密码 (required)
-        md-icon.name.md-font.icon-account.material-icons.md-default-theme(md-font-icon="icon-key")
-        input#oldPassword.ng-pristine.ng-valid.md-input._md-autofocus.ng-not-empty.ng-valid-required.ng-touched(type="password" ng-require)
-        .md-errors-spacer
-      md-input-container.md-icon-float.md-block.md-icon-left.md-default-theme.md-input-has-value(ng-if="vm.showOrHide == true")
-        label.ng-scope 新密码 (required)
-        md-icon.name.md-font.icon-account.material-icons.md-default-theme(md-font-icon="icon-key")
-        input#newPassword.ng-pristine.ng-valid.md-input._md-autofocus.ng-not-empty.ng-valid-required.ng-touched(type="password" ng-require)
-        .md-errors-spacer
-      md-input-container.md-icon-float.md-block.md-icon-left.md-default-theme.md-input-has-value(ng-if="vm.showOrHide == true")
-        label.ng-scope 重复新密码 (required)
-        md-icon.name.md-font.icon-account.material-icons.md-default-theme(md-font-icon="icon-key")
-        input#repeatNewPassword.ng-pristine.ng-valid.md-input._md-autofocus.ng-not-empty.ng-valid-required.ng-touched(type="password" ng-require)
-        .md-errors-spacer
+  div.change-password-container.pv-12#change-password-container(layout="column")
+    div(layout="column")
+      md-input-container.mb-0
+        label(for="old") 旧密码
+        md-icon(md-font-icon="icon-key")
+        input(type="password" name="old" ng-model="vm.oldPassword" ng-blur="vm.validateOldPassword()")
+        div.errordiv(ng-show="vm.isOldPasswordInvalid") 请输入正确的密码
+
+      md-input-container.mb-0
+        label(for="new") 新密码
+        md-icon(md-font-icon="icon-key")
+        input(type="password" name="new" ng-model="vm.newPassword" ng-disabled="!vm.isOldPasswordCorrect" ng-blur="vm.checkNewPasswordValid()")
+        div.errordiv(ng-show="vm.isNewPasswordInvalid") 6-18位密码,由数字、字母和下划线组成
+
+      md-input-container
+        label(for="confirm") 确认密码
+        md-icon(md-font-icon="icon-key")
+        input(type="password" name="confirm" ng-model="vm.confirmPassword" ng-disabled="!vm.isOldPasswordCorrect" ng-blur="vm.checkConfirmPasswordValid()")
+        div.errordiv(ng-show="vm.isConfirmPasswordInvalid") 两次输入密码不一致
+
+md-dialog.contact-dialog#dialog
+
+  form(name="informationForm" novalidate ng-submit="signupForm()")
+    md-toolbar.md-accent.md-tall.height-270(layout="column")
+      header.title.ph-24.pv-12.md-toolbar-tools(layout="row" layout-align="space-between center" )
+        div 修改信息
+        button.md-icon-button(ng-click="vm.closeEditDialog()")
+          md-icon(md-font-icon="icon-close")
+      div.ph-12(layout="column")
+        div(layout="column")
+          div(flex="100" layout="row" layout-align="center start")
+            img.md-avatar.avatar.huge(ng-src="{{vm.user.avatar}}")
+          div.pt-12(layout="row" layout-align="center center")
+            label.md-button(for="upload-avatar") 更改头像
+            input#upload-avatar.hide(type="file" nv-file-select uploader="vm.pictureUploader" ng-click="vm.clearPictureItem()")
+          div.fs-15.grey-400-fg(ng-show="vm.imageInvalid" layout="row" layout-align="center center") 上传失败：请上传<1MB的图片
+
+          div(layout="row" ng-show="vm.uploadRow").height-50
+            div.m-6(flex="60" layout="column")
+              md-input-container.m-0.p-0.height-35(layout-align="end start")
+                //- label.pl-0.width-150.fs-16 请选择图片(<1MB)
+                input.width-200.fs-17.p-0.height-35(type="text" ng-model="vm.name" disabled)
+            div.m-6(flex="20")
+              md-button.md-raised.md-primary.md-green-300-bg.width-70.m-0(ng-click="vm.uploadFile()" ng-disabled="!vm.pictureUploader.queue.length")
+                md-icon(md-font-icon="icon-upload")
+                span 上传
+            div.m-6(flex="20")
+              md-button.md-raised.md-primary.md-red-300-bg.width-70.m-0(ng-click="vm.cancel()")
+                md-icon(md-font-icon="icon-close")
+                span 取消
 
 
+    md-dialog-content.dialog-container(ms-scroll layout="column")
+      md-input-container.mb-0
+        label(for="fullname") 姓名
+        md-icon(md-font-icon="icon-account")
+        input(type="text" name="fullname" value="{{vm.user.fullname}}" disabled)
 
-    md-dialog-actions.layout-align-space-between-center.layout-row(layout="row" layout-align='space-between center')
-      div.layout-align-start-center.layout-row(layout="row" layout-align="start center")
-        button.send-button.md-accent.md-raised.md-button.ng-scope.md-ink-ripple.md-default-theme(type='submit' ng-click="vm.saveChanges()" ng-disabled="vm.isChanged == ture") 保存
-      div.layout-row(layout="row")
-        md-button(ng-click="vm.clearChanges()") 重置 
+      md-input-container.mb-0
+        label(for="email") 邮箱
+        md-icon(md-font-icon="icon-email")
+        input(type="text" name="email" ng-model="vm.email" required ng-pattern="/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/")
+        div(ng-messages="informationForm.email.$error")
+          div(ng-message="required") 请输入邮箱
+          div(ng-message="pattern") 请输入正确的邮箱
+
+
+      md-input-container.mb-6(ng-if="vm.user.role === 'student' || vm.user.role === 'ta'")
+        label(for="sid") 学号
+        md-icon(md-font-icon="icon-book")
+        input(type="text" name="sid" ng-model="vm.sid" required ng-pattern="/^[0-9]{8}$/")
+        div(ng-messages="informationForm.sid.$error")
+          div(ng-message="required") 请输入学号
+          div(ng-message="pattern") 请输入正确的学号
+
+
+      +change-password
+
+    md-dialog-actions.p-12.pt-0.wrapper-bg(layout="row" layout-align="space-between center")
+      md-button.raised(ng-click="vm.save()" ng-disabled="informationForm.email.$invalid || informationForm.sid.$invalid || vm.showOrHide && (vm.isOldPasswordInvalid || vm.isNewPasswordInvalid || isConfirmPasswordInvalid || vm.confirmPassword !== vm.newPassword || vm.newPassword == '')") 保存
+      md-button.raised(ng-click="vm.reset()") 重置
+

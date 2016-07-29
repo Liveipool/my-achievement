@@ -56,14 +56,7 @@ mixin error
 
 
 //--------------------------  主页面  ----------------------------
-div#header-container.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
-    header.header.ph-24(layout='column' layout-align='end start' ng-class="vm.theme.bg")
-        .breadcrumb(layout='row' layout-align='start center')
-            md-icon.s16(md-font-icon='icon-home')
-            md-icon.s16.separator(md-font-icon='icon-chevron-right')
-            span {{vm.location}}
-            span.parent
-        .title(ng-class="vm.theme.fg") 欢迎回来, {{vm.greeting}}!
+page-header(location="发布作业" greeting="vm.user.fullname" month="2")
 
 div#publish-homework-container.wrapper-bg
     +container-header

@@ -1,0 +1,14 @@
+include ./partials/group-review.jade
+include ./partials/my-score.jade
+
+page-header(location="作业互评" greeting="vm.user.fullname" month="2")
+
+#homework-review-container
+	md-content
+		md-tabs(md-dynamic-height)
+			md-tab(label="小组评审")
+				md-content.wrapper-bg.p-12
+					+group-review
+			md-tab(label="我的得分")
+				md-content.wrapper-bg.p-12
+					+my-score

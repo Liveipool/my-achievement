@@ -7,27 +7,38 @@ md-dialog(aria-label="submitDialog")
           i(class="icon-close" aria-label="Close dialog")
 
     md-dialog-content
-      div.md-dialog-content
+      div
         form(layout="column" layout-align="space-around center")
           div(layout="row" layout-align="space-around center")
             md-input-container.m-0(flex)
-              label 请选择作业缩略图
+              label 请选择作业缩略图 (jpg/png)
               input(type="text" ng-model="picture.name" disabled)
             div.pb-12
               label.pointer.m-0.icon-camera.md-headline(for="uploadPicture")
                 input(hide type="file" id="uploadPicture" nv-file-select uploader="pictureUploader" ng-click="clearPictureItem()")
-          div(layout="row")
-            md-input-container.m-0(flex)
-              label 请输入你的github地址
-              input(type="text")
+
           div(layout="row" layout-align="space-around center")
             md-input-container.m-0(flex)
-              label 请选择你的代码文件
+              label 请选择你的代码文件 (zip/rar)
               input(type="text" ng-model="core.name" disabled)
             div.pb-24
               label.pointer.m-0.icon-folder-multiple.md-headline(for="uploadCore")
                 input(hide type="file" id="uploadCore" nv-file-select uploader="coreUploader" ng-click="clearCoreItem()")
 
+          div(layout="row")
+            md-input-container.m-0(flex)
+              label 请输入你的github地址
+              input(type="url")
+
+        div.progress(ng-show="showProgress")
+          div.pictureProgress.m-12 图片上传进度: {{pictureUploader.progress}}%
+            md-progress-linear(md-mode="determinate" value="{{pictureUploader.progress}}")
+          div.coreProgress.m-12 文件上传进度: {{coreUploader.progress}}%
+            md-progress-linear(md-mode="determinate" value="{{coreUploader.progress}}")
     md-dialog-actions(layout="row")
-      md-button.md-raised.md-primary.md-light-blue-500-bg(ng-click="cancel()") 返回
-      md-button.md-raised.md-primary.md-light-blue-500-bg(ng-click="uploadFile()") 提交
+      md-button.md-raised.md-primary.md-red-300-bg(ng-click="cancel()")
+        md-icon(md-font-icon="icon-close")
+        span 取消
+      md-button.md-raised.md-primary.md-green-300-bg(ng-click="uploadFile()" ng-disabled="!pictureUploader.queue.length || !coreUploader.queue.length")
+        md-icon(md-font-icon="icon-upload")
+        span 上传
