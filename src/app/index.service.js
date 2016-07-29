@@ -34,22 +34,27 @@
       },
 
       login: function(params) {
-        return $resource('app/data/auth/users.json').get().$promise.then(function(result) {
+        var filter = {
+                        "where": {
+                          "username": params.username,
+                          "password": params.password
+                        }
+                      }
+                    
 
-          var users = result.user;
-
-          for (var i = users.length - 1; i >= 0; i--) {
-            if (users[i].username === params.username && users[i].password === params.password) {
-              authticatedUser = users[i];
+        return $resource('http://localhost:3000/api/Customers/findOne', {"filter":filter}).get().$promise
+        .then(function(user) {
+          if (user) {
+              authticatedUser = user;
               $cookies.putObject("cookieUser", authticatedUser);
               return Promise.resolve(authticatedUser);
             }
-          }
 
           return Promise.resolve(authticatedUser);
         });
 
       },
+
 
       logout: function() {
         authticatedUser = null;

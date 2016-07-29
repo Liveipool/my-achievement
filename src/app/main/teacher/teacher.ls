@@ -25,7 +25,7 @@ angular.module 'app.teacher', []
     $resource('http://localhost:3000/api/Homework').query!.$promise
       .then (result)->
         that.homework-cache = result
-        console.log result
+        # console.log result
         $root-scope.$broadcast 'homeworkUpdate' # 广播更新事件
         Promise.resolve that.homework-cache
 
