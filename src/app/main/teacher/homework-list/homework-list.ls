@@ -42,6 +42,11 @@ angular.module 'app.teacher'
                   h.t-status = '已结束'
             for h in hs
               h.bg = 'image-div-' + (1 + parse-int 12 * Math.random!)
+               # 对于不以"https://"或"http://"开头的，加上"http://"
+              unless /http/.test h.description
+                  unless /https/.test h.description
+                      h.description = 'http://' + h.description
+
               for c in h.classes
                 c.t-status = '进行中' if c.status == 'present'
                 c.t-status = '未开始' if c.status == 'future'

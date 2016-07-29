@@ -12,7 +12,7 @@ angular.module 'app.teacher'
             'content@app':
               template-url: 'app/main/teacher/publish-homework/publish-homework.html'
               controller-as: 'vm'
-              controller: ($state, Authentication, Interaction, homework-manager)!->
+              controller: ($state, Authentication, Interaction, homework-manager, $scope)!->
                 # header
                 @user = Authentication.get-user!
                 @greeting  = @user.fullname + "老师"
@@ -54,14 +54,14 @@ angular.module 'app.teacher'
                     # validator bools
                     @date-invalid = []
 
-                    init-time = !~>
+                    $scope.init-time = !~>
                       for from 0 to @class-num - 1
                         @date-invalid[i$] = false
                         @start-hour[i$] = 0
                         @start-min[i$] = 0
                         @end-hour[i$] = 0
                         @end-min[i$] = 0
-                    init-time!
+                    $scope.init-time!
 
                     # 从页面获取的数据
                     @hw-obj =
@@ -88,7 +88,7 @@ angular.module 'app.teacher'
                     for k of each-class
                       if k != 'status' && k != 'classId'
                         each-class[k] = ""
-                  init-time!
+                  $scope.init-time!
                   console.log @hw-obj
 
                 @parse-class-detail = (class-detail) !->
