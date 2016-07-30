@@ -59,24 +59,17 @@ angular.module 'app.student'
   $state-provider.state 'app.student.homework-dashboard', {
     url: '/homework-dashboard'
     resolve:
-      homeworks: ($resource) ->
-        $resource('app/data/homework/homeworks.json').get!.$promise
-          .then (result)->
-            homeworks = result.data
-            Promise.resolve homeworks
+      homeworks: (homework-detail-service) ->
+        homework-detail-service.getHomeworks!
 
-      homework-detail: ($resource, Authentication, homework-detail-service) ->
-        $resource 'http://localhost:3000/api/Reviews' .query!.$promise
-        .then (result) ->
-          allReviews = result
-          user = Authentication.get-user!
-          reviews = _.filter result, (review) -> review.reviewee.username == user.username && review.reviewer.role is 'teacher'
-          scores = [review.score for review in reviews]
-          homework-ids = [review.homework_id for review in reviews]
-          
-          AR = homework-detail-service.getRanksAndAverScores scores, homework-ids, allReviews # AR stores average scores and ranks
-          ranks = homework-detail-service.getHomeworkRanks 1, 2
-          Promise.resolve {scores: scores, homework-ids: homework-ids, AR: AR}
+
+      homework-detail: (Authentication, homework-detail-service) !->
+        user = Authentication.get-user!
+        return homework-detail-service.getScoresAndHomeworkIds user .then (result) !->
+          IS = result
+          return homework-detail-service.getRanksAndAverScores IS.scores, IS.homeworkIds .then (result) ->
+            AR = result
+            Promise.resolve {IS: IS, AR: AR}     # IS: homework-ids and scores, AR: average scores and ranks
 
     data:
       role: 'student'
@@ -85,7 +78,7 @@ angular.module 'app.student'
       'content@app':
         template-url: 'app/main/student/homework-dashboard/homework-dashboard.html'
         controller-as : 'vm'
-        controller: ($scope, Authentication, homeworks, $mdDialog, homework-detail-service)!->
+        controller: ($scope, Authentication, homeworks, $mdDialog, homework-detail)!->
 
           arr2string = (arr)->
             _string = ""
@@ -96,22 +89,21 @@ angular.module 'app.student'
             _string += arr[i]
             return _string
 
+          console.log "sda"
+          console.log homework-detail
+          
           vm = @
           vm.user = Authentication.get-user!
-          vm.IS = homework-detail-service.getScoresAndHomeworkIds vm.user
-          console.log "sdfgd"
-          console.log vm.IS
-          # vm.homework-ids = arr2string vm.IS.homework-ids
-          # vm.stringScores = arr2string vm.IS.scores
-          vm.AR = homework-detail-service.getRanksAndAverScores vm.IS.scores, vm.IS.homework_ids
-          # vm.stringRanks = arr2string vm.AR.ranks
+          vm.IS = homework-detail.IS
+          vm.homework-ids = arr2string vm.IS.homeworkIds
+          vm.stringScores = arr2string vm.IS.scores
+          vm.AR = homework-detail.AR
+          vm.stringRanks = arr2string vm.AR.ranks
 
 
           vm.homeworks = homeworks
 
-          # console.log homeworks
-          # console.log vm.ranks
-          # console.log vm.averScores
+          console.log homeworks
 
           for homework in vm.homeworks
             _.remove homework.classes, (c) -> c.class_id isnt vm.user.class

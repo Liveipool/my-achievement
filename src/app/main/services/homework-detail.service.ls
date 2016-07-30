@@ -18,6 +18,11 @@ angular.module 'fuse'
         averScore = sum/allScores.length
         return averScore.toFixed(1)
 
+    @getHomeworks = ->
+        $resource('http://localhost:3000/api/Homework').query!.$promise
+          .then (result)->
+            Promise.resolve result
+
     @getScoresAndHomeworkIds = (user) ->
         $resource 'http://localhost:3000/api/Reviews', {
             filter:
@@ -56,7 +61,7 @@ angular.module 'fuse'
                 AR.ranks.push rank
                 AR.averScores.push averScore
 
-            AR
+            Promise.resolve AR
 
     @getHomeworkRanks = (classId, homeworkId, allReviews) ->
         $resource 'http://localhost:3000/api/Reviews', {
