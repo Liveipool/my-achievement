@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'app.profile'
-  .controller 'edit-dialog-controller', (Authentication, $mdDialog, FileUploader, $http, $interval) !->
+  .controller 'edit-dialog-controller', (Authentication, $mdDialog, FileUploader, $http, $interval, $timeout) !->
     @user = Authentication.get-user!
 
     vm = @
@@ -12,7 +12,8 @@ angular.module 'app.profile'
       new-password: ""
       confirm-password: ""
 
-    # @avatar = @user.avatar
+    @username = @user.username
+    @avatar = @user.avatar
     @sid = @user.sid
     @email = @user.email
     @old-password = ""
@@ -42,7 +43,11 @@ angular.module 'app.profile'
         item.scroll-top += 2
       , 1, 125
       @show-or-hide = !@show-or-hide
-      console.log 'queue.length: ', vm.picture-uploader.queue.length
+      
+      # console.log 'queue.length: ', vm.picture-uploader.queue.length
+      console.log "oldUser: ", Authentication.get-user!
+      Authentication.update-cookie @username
+      console.log "newUser: ", Authentication.get-user!
 
 
     @validate-old-password = !->
