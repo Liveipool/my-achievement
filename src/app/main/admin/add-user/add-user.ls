@@ -11,6 +11,7 @@ angular.module 'app.admin'
         controller-as : 'vm'
         controller: ($scope, valid-manager-service, $md-toast, user-manager-service, Interaction, FileUploader)!->
           @greeting = "管理员"
+          $scope.show-upload-progress = false
 
           $scope.add-user = !->
             $scope.user ||= {}
@@ -34,25 +35,28 @@ angular.module 'app.admin'
 
           # 上传文件批量添加用户
           $scope.json-uploader = new FileUploader {
-            url: "http://localhost:3005/upload-jsons"
+            url: "http://localhost:3000/upload-jsons"
             alias: "upload-jsons"
             queueLimit: 1
             autoUpload: true
             removeAfterUpload: true
           }
 
-          # $scope.json-uploader.onWhenAddingFileFailed = (item) !->
-          #   console.log 'onWhenAddingFileFailed: ', item
-          # $scope.json-uploader.onBeforeUploadItem = (item) !->
-          #   console.log 'onBeforeUploadItem: ', item
-          # $scope.json-uploader.onSuccessItem = (item) !->
-          #   console.log 'onSuccessItem'
-          # $scope.json-uploader.onCompleteItem = (item) !->
-          #   console.log 'onCompleteItem'
-          # $scope.json-uploader.onErrorItem = (item) !->
-          #   console.log 'onErrorItem'
-          # $scope.json-uploader.onCancelItem = (item) !->
-          #   console.log 'onCancelItem'
+          $scope.json-uploader.onWhenAddingFileFailed = (item) !->
+            console.log 'onWhenAddingFileFailed: ', item
+          $scope.json-uploader.onAfterAddingFile = (item) !->
+            $scope.show-upload-progress = true
+            console.log 'onAfterAddingFile: ', item
+          $scope.json-uploader.onBeforeUploadItem = (item) !->
+            console.log 'onBeforeUploadItem: ', item
+          $scope.json-uploader.onSuccessItem = (item) !->
+            console.log 'onSuccessItem'
+          $scope.json-uploader.onCompleteItem = (item) !->
+            console.log 'onCompleteItem'
+          $scope.json-uploader.onErrorItem = (item) !->
+            console.log 'onErrorItem'
+          $scope.json-uploader.onCancelItem = (item) !->
+            console.log 'onCancelItem'
 
           $scope.json-uploader.filters.push({
             name: 'jsonFilter'

@@ -88,8 +88,8 @@ angular.module 'app.profile'
 
     # 上传图片
     @picture-uploader = new FileUploader {
-      # url: 'http://localhost:3005/upload-images'
-      # url: "http://localhost:3005/api/Customers/update?where[username]=zhangshan"
+      # url: 'http://localhost:3000/upload-images'
+      # url: "http://localhost:3000/api/Customers/update?where[username]=zhangshan"
       queueLimit: 1
       removeAfterUpload: false
       form-data: [{"avatar": "xxx"}]

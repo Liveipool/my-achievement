@@ -60,10 +60,13 @@ mixin add-users-by-file-card
     md-toolbar.md-accent(md-whiteframe="1")
       .md-toolbar-tools
         h2.md-flex 批量添加用户
-    md-content#upload-img(flex="100", md-whiteframe="1", layout="row", ng-class="vm.theme.bg")
-      div(flex, layout="row", layout-align="center center")
+    md-content#upload-img(flex="100", md-whiteframe="1", layout="column", ng-class="vm.theme.bg")
+      div(flex="50", layout="row", layout-align="center end")
         label.md-button.md-raised.md-accent.m-12(for="uploadJson") 请选择JSON文件
         input(type="file", id="uploadJson", style="display:none", uploader="jsonUploader", ng-click="vm.clearJsonItem()", nv-file-select)
+      div(ng-show="showUploadProgress" flex="50" layout="row" layout-align="center start")
+        div 图片上传进度: {{jsonUploader.progress}}%
+          md-progress-linear(value="{{jsonUploader.progress}}")
         //- TODO: 文件上传进度条与文件信息展示
 
 
