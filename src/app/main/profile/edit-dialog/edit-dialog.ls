@@ -1,7 +1,8 @@
 'use strict'
 
 angular.module 'app.profile'
-  .controller 'edit-dialog-controller', (Authentication, $mdDialog, FileUploader, $http, $interval, $timeout) !->
+  .controller 'edit-dialog-controller', (Authentication, $mdDialog, FileUploader, $http, $interval, $timeout, $scope) !->
+    # $scope.$emit('toparent', 'parent')
     @user = Authentication.get-user!
 
     vm = @
@@ -35,6 +36,8 @@ angular.module 'app.profile'
         item.scroll-top += 2
       , 1, 125
       @show-or-hide = !@show-or-hide
+
+
 
     @validate-old-password = !->
       if @old-password == @user.password

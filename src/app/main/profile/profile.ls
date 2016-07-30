@@ -10,7 +10,8 @@ angular.module 'app.profile', ['angularFileUpload']
       'content@app':
         template-url: 'app/main/profile/profile.html'
         controller-as: 'vm'
-        controller: (Authentication, $mdDialog) !->
+        controller: (Authentication, $mdDialog, $scope) !->
+          # $scope.$on 'toparent', (event) !-> console.log "wwwwww"
           vm = @
           @raw-user-data = Authentication.get-user!
           @user = @raw-user-data
@@ -25,7 +26,6 @@ angular.module 'app.profile', ['angularFileUpload']
               controller: 'edit-dialog-controller'
               template-url: 'app/main/profile/edit-dialog/edit-dialog.html'
             ).finally(!->
-              console.log "hahahhh"
               Authentication.update-cookie vm.username .then !->
                 # console.log "newUser: ", Authentication.get-user!.avatar
                 vm.avatar = Authentication.get-user!.avatar

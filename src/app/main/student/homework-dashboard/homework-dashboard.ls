@@ -89,8 +89,8 @@ angular.module 'app.student'
             _string += arr[i]
             return _string
 
-          console.log "sda"
-          console.log homework-detail
+          # console.log "sda"
+          # console.log homework-detail
           
           vm = @
           vm.user = Authentication.get-user!
