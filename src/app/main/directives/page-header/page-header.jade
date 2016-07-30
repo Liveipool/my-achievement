@@ -1,0 +1,12 @@
+div#header-container
+  div.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
+    header.header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="theme.bg")
+      .breadcrumb(layout='row' layout-align='start center')
+        md-icon.s16(md-font-icon='icon-home')
+        md-icon.s16.separator(md-font-icon='icon-chevron-right')
+        span {{location}}
+        span.parent
+      span.md-display-1.font-weight-300(ng-class="theme.fg")
+        | 欢迎回来,
+        |{{greeting}}
+        |!

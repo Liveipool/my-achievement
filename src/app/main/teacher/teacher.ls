@@ -27,6 +27,28 @@ angular.module 'app.teacher', []
         $root-scope.$broadcast 'homeworkUpdate' # 广播更新事件
         Promise.resolve that.homework-cache
 
+.service 'homeworkManager', ($resource, $root-scope)!->
+  # 增删查改操作
+  Homework = $resource('http://localhost:3000/api/Homework/:id', null,
+    { 
+        'insert': { method : 'POST'},
+        'delete': { method : 'DELETE'},
+        'get': { method : 'GET'},
+        'update': { method : 'PUT'}
+    }); 
+  
+  # 重新获取数据、存入cache
+  @reload-homeworks = ~>
+    that = @
+    # console.warn 'test for develope'
+    # $resource('app/data/homework/homeworks.json').get!.$promise
+    $resource('http://localhost:3000/api/Homework').query!.$promise
+      .then (result)->
+        that.homework-cache = result
+        # console.log result
+        $root-scope.$broadcast 'homeworkUpdate' # 广播更新事件
+        Promise.resolve that.homework-cache
+
   @get-homeworks = ~>
     if @homework-cache
       Promise.resolve @homework-cache
@@ -73,8 +95,6 @@ angular.module 'app.teacher', []
               @homework-id-num.id = 1
               @homework-id-num.num = 2
             Promise.resolve @homework-id-num
-
-
 
 .directive 'urlValidator', ->
     # 参考http://stackoverflow.com/questions/161738/what-is-the-best-regular-expression-to-check-if-a-string-is-a-valid-url

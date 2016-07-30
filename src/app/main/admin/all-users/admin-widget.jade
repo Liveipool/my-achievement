@@ -12,5 +12,5 @@ mixin table-section(role, rolename, cloumns, info)
                 each val in info
                   td= "{{role." + val + "}}"
                 td
-                  md-button.md-icon-button(ng-click="showAdvanced($event)", username="{{role.username}}", aria-label="user-edit")
+                  md-button.md-icon-button(ng-click="showAdvanced($event)", user="{{role}}", aria-label="user-edit")
                     md-icon(md-font-icon="icon-table-edit")

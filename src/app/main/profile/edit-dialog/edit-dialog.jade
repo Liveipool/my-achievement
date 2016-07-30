@@ -1,46 +1,31 @@
-
 mixin change-password
   div.p-12(layout="row" layout-align="center center")
     button.md-button.change-password.md-accent(ng-click="vm.changePassword()") 修改密码
 
   div.change-password-container.pv-12#change-password-container(layout="column")
-
-      div(layout="column")
-        md-input-container.mb-0
-          label(for="old") 旧密码
-          md-icon(md-font-icon="icon-key")
-          input(type="password" name="old" ng-model="vm.oldPassword" ng-blur="vm.validateOldPassword()")
-
-        md-input-container.mb-0
-          label(for="new") 新密码
-          md-icon(md-font-icon="icon-key")
-          input(type="password" name="new")
-
-        md-input-container
-          label(for="confirm") 确认密码
-          md-icon(md-font-icon="icon-key")
-          input(type="password" name="confirm")
+    div(layout="column")
+      md-input-container.mb-0
+        label(for="old") 旧密码
+        md-icon(md-font-icon="icon-key")
+        input(type="password" name="old" ng-model="vm.oldPassword" ng-blur="vm.validateOldPassword()")
+        div.errordiv(ng-show="vm.isOldPasswordInvalid") 请输入正确的密码
 
       md-input-container.mb-0
         label(for="new") 新密码
         md-icon(md-font-icon="icon-key")
-        input(type="password" name="new" ng-model="newPassword" ng-disabled="!informationForm.old.$valid" required ng-pattern=/\w{6,18}/)
-        div.ng-invalid(ng-show="informationForm.new.$invalid && informationForm.new.$dirty")
-          small(ng-show="informationForm.new.$error.pattern") 密码为6-18位，由数字，字母和下划线组成
-          small(ng-show="informationForm.new.$error.required") 新密码不能为空
+        input(type="password" name="new" ng-model="vm.newPassword" ng-disabled="!vm.isOldPasswordCorrect" ng-blur="vm.checkNewPasswordValid()")
+        div.errordiv(ng-show="vm.isNewPasswordInvalid") 6-18位密码,由数字、字母和下划线组成
 
       md-input-container
         label(for="confirm") 确认密码
         md-icon(md-font-icon="icon-key")
-        input(type="password" name="confirm" ng-model="confirmPassword" ng-disabled="!informationForm.old.$valid" required)
-        div.ng-invalid(ng-show="informationForm.confirm.$invalid && informationForm.confirm.$dirty")
-          small(ng-show="informationForm.confirm.$error.pattern") 两次输入密码不一致
-          small(ng-show="informationForm.confirm.$error.required") 请重复输入新密码
+        input(type="password" name="confirm" ng-model="vm.confirmPassword" ng-disabled="!vm.isOldPasswordCorrect" ng-blur="vm.checkConfirmPasswordValid()")
+        div.errordiv(ng-show="vm.isConfirmPasswordInvalid") 两次输入密码不一致
 
 md-dialog.contact-dialog#dialog
 
   form(name="informationForm" novalidate ng-submit="signupForm()")
-    md-toolbar.md-accent.md-tall.height-220(layout="column")
+    md-toolbar.md-accent.md-tall.height-270(layout="column")
       header.title.ph-24.pv-12.md-toolbar-tools(layout="row" layout-align="space-between center" )
         div 修改信息
         button.md-icon-button(ng-click="vm.closeEditDialog()")
@@ -49,10 +34,25 @@ md-dialog.contact-dialog#dialog
         div(layout="column")
           div(flex="100" layout="row" layout-align="center start")
             img.md-avatar.avatar.huge(ng-src="{{vm.user.avatar}}")
+          div.pt-12(layout="row" layout-align="center center")
+            label.md-button(for="upload-avatar") 更改头像
+            input#upload-avatar.hide(type="file" nv-file-select uploader="vm.pictureUploader" ng-click="vm.clearPictureItem()")
+          div.fs-15.grey-400-fg(ng-show="vm.imageInvalid" layout="row" layout-align="center center") 上传失败：请上传<1MB的图片
 
-          div.p-12(layout="row" layout-align="center center")
-            label.md-button(for="upload-avatar") 上传头像
-            input#upload-avatar.hide(type="file")
+          div(layout="row" ng-show="vm.uploadRow").height-50
+            div.m-6(flex="60" layout="column")
+              md-input-container.m-0.p-0.height-35(layout-align="end start")
+                //- label.pl-0.width-150.fs-16 请选择图片(<1MB)
+                input.width-200.fs-17.p-0.height-35(type="text" ng-model="vm.name" disabled)
+            div.m-6(flex="20")
+              md-button.md-raised.md-primary.md-green-300-bg.width-70.m-0(ng-click="vm.uploadFile()" ng-disabled="!vm.pictureUploader.queue.length")
+                md-icon(md-font-icon="icon-upload")
+                span 上传
+            div.m-6(flex="20")
+              md-button.md-raised.md-primary.md-red-300-bg.width-70.m-0(ng-click="vm.cancel()")
+                md-icon(md-font-icon="icon-close")
+                span 取消
+
 
     md-dialog-content.dialog-container(ms-scroll layout="column")
       md-input-container.mb-0
@@ -62,9 +62,8 @@ md-dialog.contact-dialog#dialog
 
       md-input-container.mb-0
         label(for="email") 邮箱
-
         md-icon(md-font-icon="icon-email")
-        input(type="email" name="email" ng-model="vm.email" required ng-change="vm.change()")
+        input(type="text" name="email" ng-model="vm.email" required ng-pattern="/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/")
         div(ng-messages="informationForm.email.$error")
           div(ng-message="required") 请输入邮箱
           div(ng-message="pattern") 请输入正确的邮箱
@@ -72,9 +71,8 @@ md-dialog.contact-dialog#dialog
 
       md-input-container.mb-6(ng-if="vm.user.role === 'student' || vm.user.role === 'ta'")
         label(for="sid") 学号
-
         md-icon(md-font-icon="icon-book")
-        input(type="text" name="sid" ng-model="vm.sid" required ng-pattern="/^[0-9]{8}$/" ng-change="vm.change()")
+        input(type="text" name="sid" ng-model="vm.sid" required ng-pattern="/^[0-9]{8}$/")
         div(ng-messages="informationForm.sid.$error")
           div(ng-message="required") 请输入学号
           div(ng-message="pattern") 请输入正确的学号
@@ -83,9 +81,6 @@ md-dialog.contact-dialog#dialog
       +change-password
 
     md-dialog-actions.p-12.pt-0.wrapper-bg(layout="row" layout-align="space-between center")
-      md-button.raised(ng-click="vm.addTest()") 保存
+      md-button.raised(ng-click="vm.save()" ng-disabled="informationForm.email.$invalid || informationForm.sid.$invalid || vm.showOrHide && (vm.isOldPasswordInvalid || vm.isNewPasswordInvalid || isConfirmPasswordInvalid || vm.confirmPassword !== vm.newPassword || vm.newPassword == '')") 保存
       md-button.raised(ng-click="vm.reset()") 重置
-
-
-
 

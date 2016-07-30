@@ -5,7 +5,7 @@ mixin chart
     .card.md-whiteframe-2dp.white-bg.p-12
       c3chart(bindto-id="scoreChart")
         chart-column(column-id="x" column-values="{{vm.homeworkIds}}")
-        chart-column(column-id="score" column-name="分数" column-color="#19b0f5" column-values="{{vm.scores}}" column-type="line")
+        chart-column(column-id="score" column-name="分数" column-color="#19b0f5" column-values="{{vm.stringScores}}" column-type="line")
         chart-points(point-radius="4" show-point="true" point-expand-enabled="true"
                       point-expand-radius="8")
         chart-grid(show-x="false" show-y="true")
@@ -17,13 +17,13 @@ mixin chart
     .md-title.mb-12 我的排名
     .card.md-whiteframe-2dp.white-bg.p-12
       c3chart(bindto-id="rankChart")
-        chart-column(column-id="x" column-values="作业1, 作业2, 作业3, 作业4, 作业5, 作业6, 作业7, 作业8, 作业9, 作业10")
-        chart-column(column-id="rank" column-name="排名" column-color="#ff9800" column-values="3,150,1,50,10,140,12,70,12,40" column-type="line")
+        chart-column(column-id="x" column-values="{{vm.homeworkIds}}")
+        chart-column(column-id="rank" column-name="排名" column-color="#ff9800" column-values="{{vm.stringRanks}}" column-type="line")
         chart-points(point-radius="4" show-point="true" point-expand-enabled="true"
                       point-expand-radius="8")
         chart-grid(show-x="false" show-y="true")
         chart-axis-x(axis-type="category")
-        chart-axis-y(axis-inverted="true" axis-min="1" padding-top="10" padding-bottom="20")
+        chart-axis-y(axis-inverted="true" axis-max="150" padding-top="10" padding-bottom="20")
           chart-axis-y-tick(tick-format-function="vm.tickFormat")
         chart-axes(values-x="x" y="score")
 
@@ -47,6 +47,22 @@ mixin menu-item
       span 作业详情
 
 
+//- mixin comming-soon
+//-   div#time-format(layout="row" layout-wrap ng-controller='hwTimer' ng-hide='timerHide' layout-align='center')
+//-     div(flex="25%")
+//-       div.number-font {{remain.days}}
+//-       div.date-font days
+//-     div(flex="25%")
+//-       div.number-font {{remain.hours}}
+//-       div.date-font hours
+//-     div(flex='25%')
+//-       div.number-font {{remain.mins}}
+//-       div.date-font minutes
+//-     div(flex='25%')
+//-       div.number-font {{remain.secs}}
+//-       div.date-font seconds
+
+
 mixin homework-widget-front
   ms-widget-front.white-bg
     div.ph-24.pv-12.widget-head(layout="row" layout-align="space-between")
@@ -56,7 +72,9 @@ mixin homework-widget-front
           md-icon(md-font-icon="icon-dots-vertical")
         md-menu-content
           +menu-item
-    div.p-24.widget-body.h-180(layout="column" layout-align="center center")
+    //- +comming-soon
+    div(homework-timer="" hw-class='homework.classes[0]' style="height: 35px;")
+    div.p-24.widget-body(layout="column" layout-align="center center")
       span.font-weight-500(ng-class="vm.style[homework.classes[0].status].fg") {{homework.title}}
     div.ph-24.pv-12.widget-foot
       span 状态: {{vm.style[homework.classes[0].status].status}}
@@ -68,10 +86,10 @@ mixin homework-widget-back
       div.flip-to-front
         md-button(class="md-icon-button" ng-click="flipWidget()" aria-label="Flip widget")
               md-icon(md-font-icon="icon-close")
-    div.md-headline(layout="column" layout-align="center center")
-      span 平均分：89
-      span 你的分数：89
-      span 你的排名：78
+    div.md-headline.height-150(layout="column" layout-align="center center")
+      span 平均分：{{vm.averScores[homework.id-1]}}
+      span 你的分数：{{vm.scores[homework.id-1]}}
+      span 你的排名：{{vm.ranks[homework.id-1]}}
 
 mixin homework-widget
   +homework-widget-front
@@ -92,20 +110,7 @@ mixin homework-list
       ms-widget.p-12(ng-if="vm.switch[homework.classes[0].status]" flippable="true" layout="column" flex="100" flex-gt-xs="50" flex-gt-sm="33" flex-gt-md="25" ng-repeat="homework in vm.homeworks")
         +homework-widget
 
-
-
-div#header-container
-  div.page-layout.simple.fullwidth.doc-page.element-doc-page(layout="column")
-    header.header.md-accent-bg.ph-24(layout="column" layout-align="end" ng-class="vm.theme.bg")
-      .breadcrumb(layout='row' layout-align='start center')
-        md-icon.s16(md-font-icon='icon-home')
-        md-icon.s16.separator(md-font-icon='icon-chevron-right')
-        span {{vm.location}}
-        span.parent
-      span.md-display-1.font-weight-300(ng-class="vm.theme.fg")
-        | 欢迎回来,
-        |{{vm.greeting}}
-        |!
+page-header(location="作业列表" greeting="vm.user.fullname" month="2")
 
 div#homework-dashboard
   md-content.p-12.wrapper-bg
