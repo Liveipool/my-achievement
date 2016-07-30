@@ -3,12 +3,33 @@
 angular.module 'fuse'
 
 # admin/
-.service 'userManagerService' ($resource, $root-scope)!->
+.service 'userManagerService' ($resource, $root-scope, api-resolver)!->
+  fields =
+    "role",
+    "sid",
+    "username",
+    "fullname",
+    "avatar",
+    "class",
+    "group",
+    "email",
+    "password",
+    "id"
+
+  delete-other-field = (fields, user) ->
+    for key, value of user
+      if key not in fields
+        delete user[key] 
+    console.log  user
+    user
+
+
   @reload-users = ->
     that = @
     # TODO: 向服务器发出请求获取所有user信息
     # console.warn "TODO: function reload-users in userManager"
-    $resource('http://0.0.0.0:3000/api/Customers').query!.$promise
+
+    api-resolver.resolve 'lb_users@query' 
       .then (result)->
         that.users-cache = result
         $root-scope.$broadcast 'usersUpdate' # 广播更新事件
@@ -25,7 +46,8 @@ angular.module 'fuse'
     # TODO: 向服务器发出请求删除用户
     that = @
     console.warn "TODO: function 'delete-user' " + modelId + " in userManager."
-    $resource('http://0.0.0.0:3000/api/Customers/'+modelId).delete!.$promise
+    api-resolver.resolve 'lb_delete_user@delete' , {'id': modelId}
+    # $resource('http://0.0.0.0:3000/api/Customers/'+modelId).delete!.$promise
       .then (result)->
        console.log 'delete success'
        that.reload-users!
@@ -36,7 +58,11 @@ angular.module 'fuse'
     # TODO: 向服务器发出请求新增用户
     console.warn "TODO: function 'add-user' " + new-user + " in userManager."
     that = @
-    $resource('http://0.0.0.0:3000/api/Customers').save(new-user).$promise
+    # deep copy
+    copy-user = JSON.parse(JSON.stringify(new-user))
+    copy-user = delete-other-field fields, copy-user
+    console.log copy-user
+    api-resolver.resolve 'lb_users@save' , copy-user
       .then (user)->
         console.log 'add success'
         that.reload-users!
@@ -46,7 +72,17 @@ angular.module 'fuse'
     # TODO: 向服务器发出请求编辑用户
     that = @
     console.warn "TODO: function 'edit-user' " + user + " in userManager."
-    $resource('http://0.0.0.0:3000/api/Customers/update?where=%7B%22username%22%3A%22'+user.username+'%22%7D').save(user).$promise
+
+    filter = 
+      "where" :
+        'id' : user.id
+    # api-resolver.resolve 'lb_users@save', {'filter': filter}
+
+    # deep copy
+    copy-user = JSON.parse(JSON.stringify(user))
+    copy-user = delete-other-field fields, copy-user
+    console.log copy-user
+    $resource('http://0.0.0.0:3000/api/Customers/update?where=%7B%22id%22%3A%22'+copy-user.id+'%22%7D').save(copy-user).$promise
       .then (user)->
         console.log ('edit-user' + ' success')
         # console.log (user)
@@ -54,8 +90,13 @@ angular.module 'fuse'
     # @reload-users!
 
   @find-user-by-username = (username)->
-    $resource('http://0.0.0.0:3000/api/Customers/findOne?filter=%7B%22where%22%3A%20%7B%22username%22%3A%20%'+ username+'%22%7D%7D').get!.$promise
+
+    filter = 
+      "where" :
+        'username' : user.username
+    api-resolver.resolve 'lb_users@query', {'filter': filter}
       .then (user) ->
         console.log 'find-user-by-username' + "  success"
         Promise.resolve user
+    
 
