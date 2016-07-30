@@ -47,20 +47,20 @@ mixin menu-item
       span 作业详情
 
 
-mixin comming-soon
-  div#time-format(layout="row" layout-wrap ng-controller='hwTimer' ng-hide='timerHide' layout-align='center')
-    div(flex="25%")
-      div.number-font {{remain.days}}
-      div.date-font days
-    div(flex="25%")
-      div.number-font {{remain.hours}}
-      div.date-font hours
-    div(flex='25%')
-      div.number-font {{remain.mins}}
-      div.date-font minutes
-    div(flex='25%')
-      div.number-font {{remain.secs}}
-      div.date-font seconds
+//- mixin comming-soon
+//-   div#time-format(layout="row" layout-wrap ng-controller='hwTimer' ng-hide='timerHide' layout-align='center')
+//-     div(flex="25%")
+//-       div.number-font {{remain.days}}
+//-       div.date-font days
+//-     div(flex="25%")
+//-       div.number-font {{remain.hours}}
+//-       div.date-font hours
+//-     div(flex='25%')
+//-       div.number-font {{remain.mins}}
+//-       div.date-font minutes
+//-     div(flex='25%')
+//-       div.number-font {{remain.secs}}
+//-       div.date-font seconds
 
 
 mixin homework-widget-front
@@ -72,8 +72,9 @@ mixin homework-widget-front
           md-icon(md-font-icon="icon-dots-vertical")
         md-menu-content
           +menu-item
-    +comming-soon
-    div.p-24.widget-body.h-180(layout="column" layout-align="center center")
+    //- +comming-soon
+    div(homework-timer="" hw-class='homework.classes[0]' style="height: 35px;")
+    div.p-24.widget-body(layout="column" layout-align="center center")
       span.font-weight-500(ng-class="vm.style[homework.classes[0].status].fg") {{homework.title}}
     div.ph-24.pv-12.widget-foot
       span 状态: {{vm.style[homework.classes[0].status].status}}

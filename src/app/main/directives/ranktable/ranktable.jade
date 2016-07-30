@@ -26,5 +26,5 @@ div.p-12(flex="100" layout="column")
                         td {{homework.score}}
         div(layout='row' layout-align="center center")
             md-button.m-12(ng-disabled="pagination.isFirstPage()" ng-click="pagination.prevPage()" ) 上一页
-            {{pagination.currentPage+1}}/{{pagination.numOfPages}}
+            span {{pagination.currentPage+1}}/{{pagination.numOfPages}}
             md-button.m-12(ng-disabled="pagination.isLastPage()" ng-click="pagination.nextPage()")  下一页

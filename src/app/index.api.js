@@ -170,13 +170,19 @@
 
         var api = {};
 
-
         // Base Url
         api.baseUrl = 'app/data/';
         api.classes = $resource(api.baseUrl + 'faker/classes.json');
         api.homeworks = $resource(api.baseUrl + 'homework/homeworks.json');
         api.users = $resource(api.baseUrl + 'auth/users.json');
         api.reviews = $resource(api.baseUrl + 'review/reviews.json');
+
+        //db base url
+        var loopbackApiBaseUrl = 'http://localhost:3000/api'
+        api.lb_users = $resource(loopbackApiBaseUrl + '/Customers')
+        api.lb_reviews = $resource(loopbackApiBaseUrl + '/Reviews')
+        api.lb_commits = $resource(loopbackApiBaseUrl + '/Commits')
+        api.lb_homeworks = $resource(loopbackApiBaseUrl + '/Homeworks')
 
         api.gfcUrl = '/'
 

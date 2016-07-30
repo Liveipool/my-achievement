@@ -42,7 +42,7 @@ angular.module 'fuse'
 
     #---TA---#
     nav.save-item 'TA', {title: "作业", group: true, weight: 1, hidden: -> !auth.is-TA user}
-    nav.save-item 'TA.review-list', {title: "作业列表", weight: 1, icon: 'icon-book-open', state: 'app.TA.review-list', hidden: -> !auth.is-TA user}
+    nav.save-item 'TA.review-list', {title: "作业列表", weight: 1, icon: 'icon-book-open', state: 'app.TA.dashboard', hidden: -> !auth.is-TA user}
 
   else
     nav.delete-item 'user.profile'

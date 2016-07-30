@@ -2,54 +2,54 @@
 
 angular.module 'app.student'
 
-.controller 'hwTimer', ($scope, $interval, timerService) !->
-  $scope.timerHide = true
-  timer = $interval (!->
-    $scope.remain = timerService.calculateRemain $scope.homework.classes[0].startTime, $scope.homework.classes[0].endTime, $scope.homework.classes[0].status
-    $scope.homework.classes[0].status = $scope.remain.status
-    if $scope.remain.status == 'future' then $scope.timerHide = false
-    if $scope.remain.status == "finish" or $scope.remain.status == 'present' 
-      $interval.cancel(timer)
-      $scope.timerHide = true
-    ), 1000
-  
+# .controller 'hwTimer', ($scope, $interval, timerService) !->
+#   $scope.timerHide = true
+#   timer = $interval (!->
+#     $scope.remain = timerService.calculateRemain $scope.homework.classes[0].startTime, $scope.homework.classes[0].endTime, $scope.homework.classes[0].status
+#     $scope.homework.classes[0].status = $scope.remain.status
+#     if $scope.remain.status == 'future' then $scope.timerHide = false
+#     if $scope.remain.status == "finish" or $scope.remain.status == 'present'
+#       $interval.cancel(timer)
+#       $scope.timerHide = true
+#     ), 1000
 
-.factory 'timerService', ->
-  calculate = (start, end, status) ->
-    nowTime = new Date!
-    startTime = new Date start
-    endTime = new Date end
 
-    if nowTime < startTime
-      status = 'future'
-      iRemain = (startTime.getTime! - nowTime.getTime!)/1000
-    else if nowTime < endTime
-      status = 'present'
-      iRemain = (endTime.getTime! - nowTime.getTime!)/1000
-    else 
-      status = 'finish'
-      iRemain = 0
- 
-    remain = {}
-    remain.days =  parseInt iRemain/86400
-    iRemain %= 86400
-    remain.hours = parseInt iRemain/3600
-    iRemain %= 3600
-    remain.mins = parseInt iRemain/60
-    iRemain %= 60
-    remain.secs = parseInt iRemain
-    remain.status = status
+# .factory 'timerService', ->
+#   calculate = (start, end, status) ->
+#     nowTime = new Date!
+#     startTime = new Date start
+#     endTime = new Date end
 
-    timeSum = 0
-    for key, value of remain
-      timeSum = timeSum + value
-    if timeSum == 0 and status == 'future' then remain.status = 'present'
-    if timeSum == 0 and status == 'present' then remain.status = 'finish'
-      # body...
-    remain 
+#     if nowTime < startTime
+#       status = 'future'
+#       iRemain = (startTime.getTime! - nowTime.getTime!)/1000
+#     else if nowTime < endTime
+#       status = 'present'
+#       iRemain = (endTime.getTime! - nowTime.getTime!)/1000
+#     else
+#       status = 'finish'
+#       iRemain = 0
 
-  calculateRemain: (start, end, status)->
-    calculate start, end, status
+#     remain = {}
+#     remain.days =  parseInt iRemain/86400
+#     iRemain %= 86400
+#     remain.hours = parseInt iRemain/3600
+#     iRemain %= 3600
+#     remain.mins = parseInt iRemain/60
+#     iRemain %= 60
+#     remain.secs = parseInt iRemain
+#     remain.status = status
+
+#     timeSum = 0
+#     for key, value of remain
+#       timeSum = timeSum + value
+#     if timeSum == 0 and status == 'future' then remain.status = 'present'
+#     if timeSum == 0 and status == 'present' then remain.status = 'finish'
+#       # body...
+#     remain
+
+#   calculateRemain: (start, end, status)->
+#     calculate start, end, status
 
 
 
@@ -102,8 +102,6 @@ angular.module 'app.student'
 
 
           vm.homeworks = homeworks
-
-          console.log homeworks
 
           for homework in vm.homeworks
             _.remove homework.classes, (c) -> c.class_id isnt vm.user.class
