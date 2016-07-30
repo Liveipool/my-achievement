@@ -59,24 +59,17 @@ angular.module 'app.student'
   $state-provider.state 'app.student.homework-dashboard', {
     url: '/homework-dashboard'
     resolve:
-      homeworks: ($resource) ->
-        $resource('app/data/homework/homeworks.json').get!.$promise
-          .then (result)->
-            homeworks = result.data
-            Promise.resolve homeworks
+      homeworks: (homework-detail-service) ->
+        homework-detail-service.getHomeworks!
 
-      homework-detail: ($resource, Authentication, homework-detail-service) ->
-        $resource 'app/data/review/reviews.json' .get!.$promise
-        .then (result) ->
-          allReviews = result.data
-          user = Authentication.get-user!
-          reviews = _.filter result.data, (review) -> review.reviewee.username == user.username && review.reviewer.role is 'teacher'
-          scores = [review.score for review in reviews]
-          homework-ids = [review.homework_id for review in reviews]
 
-          AR = homework-detail-service.getRanksAndAverScores scores, homework-ids, allReviews # AR stores average scores and ranks
-          ranks = homework-detail-service.getHomeworkRanks 1, 2, allReviews
-          Promise.resolve {scores: scores, homework-ids: homework-ids, AR: AR}
+      homework-detail: (Authentication, homework-detail-service) !->
+        user = Authentication.get-user!
+        return homework-detail-service.getScoresAndHomeworkIds user .then (result) !->
+          IS = result
+          return homework-detail-service.getRanksAndAverScores IS.scores, IS.homeworkIds .then (result) ->
+            AR = result
+            Promise.resolve {IS: IS, AR: AR}     # IS: homework-ids and scores, AR: average scores and ranks
 
     data:
       role: 'student'
@@ -96,18 +89,19 @@ angular.module 'app.student'
             _string += arr[i]
             return _string
 
+          console.log "sda"
+          console.log homework-detail
+          
           vm = @
           vm.user = Authentication.get-user!
-          vm.homework-ids = arr2string homework-detail.homework-ids
-          vm.scores = homework-detail.scores
-          vm.stringScores = arr2string vm.scores
-          vm.ranks = homework-detail.AR.ranks
-          vm.stringRanks = arr2string vm.ranks
-          vm.averScores = homework-detail.AR.averScores  #平均分数组
+          vm.IS = homework-detail.IS
+          vm.homework-ids = arr2string vm.IS.homeworkIds
+          vm.stringScores = arr2string vm.IS.scores
+          vm.AR = homework-detail.AR
+          vm.stringRanks = arr2string vm.AR.ranks
 
 
           vm.homeworks = homeworks
-
 
           for homework in vm.homeworks
             _.remove homework.classes, (c) -> c.class_id isnt vm.user.class
@@ -197,3 +191,4 @@ angular.module 'app.student'
             }
 
   }
+

@@ -7,88 +7,88 @@ angular.module 'app.teacher'
 
     $state-provider.state 'app.teacher.publish-homework', {
         url: '/publish-homework'
-        resolve:
-          homeworks: ($resource) ->
-            $resource('app/data/homework/homeworks.json').get!.$promise
-              .then (result)->
-                homeworks = result.data
-                Promise.resolve homeworks
+        # resolve: 都迁移到了homework-manager服务里面(teacher.ls文件中)
         views:
             'content@app':
               template-url: 'app/main/teacher/publish-homework/publish-homework.html'
               controller-as: 'vm'
-
-              controller: ($state, Authentication, homeworks)!->
-
+              controller: ($state, Authentication, Interaction, homework-manager, $scope)!->
                 # header
                 @user = Authentication.get-user!
+                @greeting  = @user.fullname + "老师"
+                @location = "发布作业"
+                @theme = Interaction.get-bg-by-month 2
 
-                # hw-card header
-                @current-hw-num = homeworks.length + 1
+                homework-manager.get-current-id-num!
+                  .then (result)!~>
+                    @current-hw-num = result.id
+                    @class-num = result.num
 
-                @class-num = homeworks[0].classes.length
+                    console.log @current-hw-num
+                    console.log @class-num
 
-                @class-detail = []
-                for from 0 to @class-num - 1
-                  @class-detail.push {
-                    class-id: i$ + 1
-                    start-time: ""
-                    end-time: ""
-                    status: "present"
-                  }
-                @classes = @class-detail
+                    @class-detail = []
+                    for from 0 to @class-num - 1
+                      @class-detail.push {
+                        class_id: i$ + 1
+                        start-time: ""
+                        end-time: ""
+                        status: "present"
+                      }
+                    @classes = @class-detail
 
-                # datepicker
-                @hours = []
-                @mins = []
-                @start-hour = []
-                @start-min = []
-                @end-hour = []
-                @end-min = []
+                    # datepicker
+                    @hours = []
+                    @mins = []
+                    @start-hour = []
+                    @start-min = []
+                    @end-hour = []
+                    @end-min = []
 
-                # select框options
-                for from 0 to 59
-                  @mins[i$] = i$
-                  if i$ < 24
-                    @hours[i$] = i$
+                    # select框options
+                    for from 0 to 59
+                      @mins[i$] = i$
+                      if i$ < 24
+                        @hours[i$] = i$
 
-                # validator bools
-                @date-invalid = []
+                    # validator bools
+                    @date-invalid = []
 
-                init-time = !~>
-                  for from 0 to @class-num - 1
-                    @date-invalid[i$] = false
-                    @start-hour[i$] = 0
-                    @start-min[i$] = 0
-                    @end-hour[i$] = 0
-                    @end-min[i$] = 0
-                init-time!
+                    $scope.init-time = !~>
+                      for from 0 to @class-num - 1
+                        @date-invalid[i$] = false
+                        @start-hour[i$] = 0
+                        @start-min[i$] = 0
+                        @end-hour[i$] = 0
+                        @end-min[i$] = 0
+                    $scope.init-time!
 
-                # 从页面获取的数据
-                @hw-obj =
-                  id: @current-hw-num
-                  title: ""
-                  description: ""
-                  class-detail: @class-detail
+                    # 从页面获取的数据
+                    @hw-obj =
+                      id: @current-hw-num
+                      title: ""
+                      description: ""
+                      classes: @class-detail
 
-                console.log @hw-obj
+                    console.log @hw-obj
 
-                # 注：数据未保存
                 @Submit = !->
                    console.log 'Submit'
-                   console.log "new-obj: ", @hw-obj # TODO：待插入的数据
+                   console.log "new-obj: ", @hw-obj
                    if @validator!
-                      $state.go 'app.teacher.homework-list'
+                      homework-manager.insert-homework @hw-obj
+                        .then !->
+                        $state.go 'app.teacher.homework-list'
 
                 @Reset = !~>
                   console.log 'Reset'
                   @hw-obj.title = ''
                   @hw-obj.description = ''
-                  for each-class in @hw-obj.class-detail
+                  for each-class in @hw-obj.classes
                     for k of each-class
                       if k != 'status' && k != 'classId'
                         each-class[k] = ""
-                  init-time!
+                  $scope.init-time!
                   console.log @hw-obj
 
                 @parse-class-detail = (class-detail) !->
@@ -100,8 +100,8 @@ angular.module 'app.teacher'
 
                 @validator = ->
                   valid = true
-                  for item in @hw-obj.class-detail
-                      @parse-class-detail @hw-obj.class-detail
+                  for item in @hw-obj.classes
+                      @parse-class-detail @hw-obj.classes
                       if item.start-time >= item.end-time
                         @date-invalid[i$] = true
                         console.log "data invalid: ", i$

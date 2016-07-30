@@ -21,12 +21,12 @@ angular.module 'fuse'
 
     $scope.$watch 'homeworks', (newValue, oldValue)!->
         
-        console.log 'newvalue: ', newValue
-        console.log 'oldvalue: ', oldValue
+        # console.log 'newvalue: ', newValue
+        # console.log 'oldvalue: ', oldValue
         if newValue
             $scope.homeworks = calculate-status newValue
 
-        console.log $scope.homeworks
+        # console.log $scope.homeworks
 
     
     $scope.review-homework = (hid) ->
@@ -68,6 +68,7 @@ angular.module 'fuse'
             c.t-status = '进行中' if c.status == 'present'
             c.t-status = '未开始' if c.status == 'future'
             c.t-status = '已结束' if c.status == 'finish'
+        console.log 'finish calculate-status\' hs:', hs
         hs
 
     function status-helper classes, status
