@@ -32,19 +32,21 @@ angular.module 'app.admin'
 
           $scope.reset-user = !->
             $scope.user = {}
+            # console.log "queue.length", $scope.json-uploader.queue.length
 
           # 上传文件批量添加用户
           $scope.json-uploader = new FileUploader {
             url: "http://localhost:3000/upload-jsons"
             alias: "upload-jsons"
             queueLimit: 1
-            autoUpload: true
+            # autoUpload: true
             removeAfterUpload: true
           }
 
           $scope.json-uploader.onWhenAddingFileFailed = (item) !->
             console.log 'onWhenAddingFileFailed: ', item
           $scope.json-uploader.onAfterAddingFile = (item) !->
+            $scope.json-uploader.uploadItem item
             $scope.show-upload-progress = true
             console.log 'onAfterAddingFile: ', item
           $scope.json-uploader.onBeforeUploadItem = (item) !->
@@ -57,6 +59,9 @@ angular.module 'app.admin'
             console.log 'onErrorItem'
           $scope.json-uploader.onCancelItem = (item) !->
             console.log 'onCancelItem'
+
+          $scope.clear-json-item = !->
+            $scope.json-uploader.clearQueue!
 
           $scope.json-uploader.filters.push({
             name: 'jsonFilter'

@@ -63,7 +63,7 @@ mixin add-users-by-file-card
     md-content#upload-img(flex="100", md-whiteframe="1", layout="column", ng-class="vm.theme.bg")
       div(flex="50", layout="row", layout-align="center end")
         label.md-button.md-raised.md-accent.m-12(for="uploadJson") 请选择JSON文件
-        input(type="file", id="uploadJson", style="display:none", uploader="jsonUploader", ng-click="vm.clearJsonItem()", nv-file-select)
+        input(type="file", id="uploadJson", style="display:none", uploader="jsonUploader", ng-click="clearJsonItem()", nv-file-select)
       div(ng-show="showUploadProgress" flex="50" layout="row" layout-align="center start")
         div 图片上传进度: {{jsonUploader.progress}}%
           md-progress-linear(value="{{jsonUploader.progress}}")

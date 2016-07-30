@@ -1,0 +1,40 @@
+{
+  "user": [
+    {
+      "role": "farmer",
+      "sid": 22222222,
+      "username": "22222222",
+      "fullname": "liveipool",
+      "avatar": "assets/images/avatars/james.jpg",
+      "class": 1,
+      "group": 1,
+      "email": "94971446@qq.com",
+      "password": "123456"
+    },
+    {
+      "username": "king",
+      "fullname": "lallana",
+      "role": "admin",
+      "avatar": "assets/images/avatars/katherine.jpg",
+      "email": "admin@qq.com",
+      "password": "123456"
+    },
+    {
+      "username": "gerrard",
+      "fullname": "包子",
+      "sid": 15213434,
+      "role": "ta",
+      "avatar": "assets/images/avatars/jane.jpg",
+      "email": "linzhen@qq.com",
+      "password": "123456"
+    },
+    {
+      "username": "Lucas",
+      "fullname": "lucas",
+      "role": "teacher",
+      "avatar": "assets/images/avatars/vincent.jpg",
+      "email": "wangqing@qq.com",
+      "password": "11111111"
+    }
+  ]
+}
