@@ -12,6 +12,17 @@ angular.module 'app.student'
             homeworks = result.data
             Promise.resolve homeworks
 
+      myscore-reviews: (homework-review-service, Authentication, $state-params) ->
+        user = Authentication.get-user!
+        homework_id = $state-params.id
+        homework-review-service.get-myscore-reviews user, homework_id
+
+      group-reviews: (homework-review-service, Authentication, $state-params) ->
+        user = Authentication.get-user!
+        homework_id = $state-params.id
+        homework-review-service.get-group-reviews user, homework_id
+
+
     data:
       role: 'student'
 
@@ -19,12 +30,23 @@ angular.module 'app.student'
       'content@app':
         template-url: 'app/main/student/homework-review/homework-review.html'
         controller-as : 'vm'
-        controller: ($scope, Authentication, $state, Interaction, $state-params, homework-review-service)!->
+        controller: ($scope, $state, Interaction, Authentication, $state-params, homework-review-service, myscore-reviews, group-reviews)!->
+          console.log group-reviews
 
-          console.log "here is homework review"
+          vm = @
+
+          # get the data:
+
+          # gr means reviews in "group review" and ms means in "my score"
+          @reviews-gr = []
+          @reviews-ms = []
+          @reviews-gr = group-reviews
+          @reviews-ms = myscore-reviews
+
           @user = Authentication.get-user!
-
           @homework-id = $state-params.id
+
+          vm.reviews-ms
           @date-time = new Date()
 
           # functions of the buttons
@@ -63,70 +85,47 @@ angular.module 'app.student'
             review.editing      = false
             review.error = {}
 
-          # get the data:
 
-          # gr means reviews in "group review" and ms means in "my score"
-          @reviews-gr = []
-          @reviews-ms = []
+          test-submit-review = {
+            "reviewee": {
+            "username": "94971446",
+            "fullname": "郝肥如"
+            },
+            "reviewer": {
+            "username": "45479458",
+            "fullname": "林放高",
+            "role": "student"
+            },
+            "homework_id": 1,
+            "class": 1,
+            "group": 1
+          }
+          vm.reviews-gr.push test-submit-review
 
-          # when thenable, vm is @, be careful
-          vm = @
 
-          # first get all reviews
-          homework-review-service.get-all-reviews!
-          # then filtering by homework id
-          .then (all-reviews) ->
-            homework-review-service.reviews-filter-by-id all-reviews, vm.homework-id
-          # then filtering by @user.username, being careful about the @ and vm
-          .then (reviews-id) ->
-            homework-review-service.reviews-filter-by-username reviews-id, vm.user.username
-          # then we get what we want
-          .then (reviews-id-username) ->
-            vm.reviews-gr = reviews-id-username.gr
-            vm.reviews-ms = reviews-id-username.ms
+          for r in vm.reviews-ms
+            r.bg = 'image-div-' + (1 + parse-int 12 * Math.random!)
 
-            # test submit, no score and no comment at the beginning
-            test-submit-review = {
-              "reviewee": {
-              "username": "94971446",
-              "fullname": "郝肥如"
-              },
-              "reviewer": {
-              "username": "45479458",
-              "fullname": "林放高",
-              "role": "student"
-              },
-              "homework_id": 1,
-              "class": 1,
-              "group": 1
-            }
-            vm.reviews-gr.push test-submit-review
+          for r in vm.reviews-gr
 
-            console.log reviews-id-username
+            # every can be edited at the beginning
+            r.editing = true
 
-            for r in vm.reviews-ms
-              r.bg = 'image-div-' + (1 + parse-int 12 * Math.random!)
+            # buffer for editing score and comment
+            r.temp-score   = r.score
+            r.temp-comment = r.comment
 
-            for r in vm.reviews-gr
+            # homework image
+            r.bg = 'image-div-' + (1 + parse-int 12 * Math.random!)
 
-              # every can be edited at the beginning
-              r.editing = true
+            if r.score
+              # if have score means already submit before so can not be edited at the beginning
+              r.editing = false
 
-              # buffer for editing score and comment
-              r.temp-score   = r.score
-              r.temp-comment = r.comment
-
-              # homework image
-              r.bg = 'image-div-' + (1 + parse-int 12 * Math.random!)
-
-              if r.score
-                # if have score means already submit before so can not be edited at the beginning
-                r.editing = false
-
-                # hs means have score and ns means no score
-                # t-score means the translation of score, then put the right class on review
-                r.t-score = 'hs'
-              else
-                r.t-score = 'ns'
+              # hs means have score and ns means no score
+              # t-score means the translation of score, then put the right class on review
+              r.t-score = 'hs'
+            else
+              r.t-score = 'ns'
 
   }

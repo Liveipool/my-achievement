@@ -21,7 +21,7 @@ angular.module 'fuse'
     console.log user, homework_id
     filter = {
       "where":
-          "reviewer.username": user.username
+          "reviewee.username": user.username
           "homework_id": homework_id
     }
     
@@ -31,29 +31,12 @@ angular.module 'fuse'
     
     filter = {
       "where":
-          "reviewee.username": user.username
+          "reviewer.username": user.username
           "homework_id": homework_id
     }
 
     api-resolver.resolve 'lb_reviews@query', {"filter": filter}
     
-
-  @get-all-reviews = ->
-    if @reviews-cache
-      Promise.resolve @reviews-cache
-    else
-      @reload-reviews!
-
-  # get the reviews which are needed, using promise so can thenable filtering
-  @reviews-filter-by-id = (reviews, id) ->
-    reviews-id = [review for review in reviews when review.homework_id ~= id]
-    Promise.resolve reviews-id
-
-  # gr means group review and ms means my score
-  @reviews-filter-by-username = (reviews, username) ->
-    reviews-username-gr = [review for review in reviews when review.reviewer.username ~= username]
-    reviews-username-ms = [review for review in reviews when review.reviewee.username ~= username]
-    Promise.resolve { "gr" : reviews-username-gr, "ms" : reviews-username-ms }
 
 
   @cancle-update-review = ->
@@ -64,8 +47,11 @@ angular.module 'fuse'
 
   @add-review = (review) ->
     # TODO: add-review
-    console.log "add-review!"
-    @reload-reviews!
+    api-resolver.resolve 'lb_reviews@save', review
+    .then(result) !->
+      console.log result
+      console.log "add-review!"
+      @reload-reviews!
 
   @update-review = (review) ->
     #TODO: update-review
@@ -73,7 +59,7 @@ angular.module 'fuse'
     @reload-reviews!
 
   @validator = (review) ->
-    console.log review
+    # console.log review
 
     temp-score = parse-int review.temp-score, 10
     console.log typeof temp-score, temp-score
