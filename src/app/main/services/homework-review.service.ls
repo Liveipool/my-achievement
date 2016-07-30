@@ -3,17 +3,40 @@
 angular.module 'fuse'
 
 # student/homework-reviw
-.service 'homeworkReviewService' ($resource, $root-scope)!->
+.service 'homeworkReviewService' ($resource, $root-scope, api-resolver)!->
   @reload-reviews = ->
     that = @
     # TODO: 向服务器发出请求获取所有user信息
     # console.warn "TODO: function reload-reviews in userManager"
-    $resource('app/data/review/reviews.json').get!.$promise
-      .then (result)->
-        that.reviews-cache = result.data
-        # console.log(that.reviews-cache)
-        $root-scope.$broadcast 'reviewsUpdate' # 广播更新事件
-        Promise.resolve that.reviews-cache
+    # $resource('app/data/review/reviews.json').get!.$promise
+    #   .then (result)->
+    #     that.reviews-cache = result.data
+    #     # console.log(that.reviews-cache)
+    #     $root-scope.$broadcast 'reviewsUpdate' # 广播更新事件
+    #     Promise.resolve that.reviews-cache
+
+
+  @get-myscore-reviews = (user, homework_id)->
+    
+    console.log user, homework_id
+    filter = {
+      "where":
+          "reviewer.username": user.username
+          "homework_id": homework_id
+    }
+    
+    api-resolver.resolve 'lb_reviews@query', {"filter": filter}
+    
+  @get-group-reviews = (user, homework_id) ->
+    
+    filter = {
+      "where":
+          "reviewee.username": user.username
+          "homework_id": homework_id
+    }
+
+    api-resolver.resolve 'lb_reviews@query', {"filter": filter}
+    
 
   @get-all-reviews = ->
     if @reviews-cache
