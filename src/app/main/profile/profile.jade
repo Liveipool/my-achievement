@@ -4,7 +4,7 @@ include ./partials/basic-information.jade
 mixin top-part
   .header.md-accent-bg(layout="column", layout-align="center center", layout-gt-sm="row", layout-align-gt-sm="space-between end" ng-class="vm.bg")
     .user-info(layout="column", layout-align="center center", layout-gt-sm="row", layout-align-gt-sm="start center")
-      img.profile-image.avatar.huge(src="{{vm.user.avatar}}")
+      img.profile-image.avatar.huge(src="{{vm.avatar}}")
       .name {{vm.user.fullname}}
 
 mixin body-part

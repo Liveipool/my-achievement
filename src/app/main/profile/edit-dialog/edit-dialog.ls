@@ -1,7 +1,8 @@
 'use strict'
 
 angular.module 'app.profile'
-  .controller 'edit-dialog-controller', (Authentication, $mdDialog, FileUploader, $http, $interval, $timeout) !->
+  .controller 'edit-dialog-controller', (Authentication, $mdDialog, FileUploader, $http, $interval, $timeout, $scope) !->
+    # $scope.$emit('toparent', 'parent')
     @user = Authentication.get-user!
 
     vm = @
@@ -26,14 +27,6 @@ angular.module 'app.profile'
     @upload-row = false
     @image-invalid = false
 
-    # $http({
-    #   method: 'get'
-    #   url: 'http://localhost:3005/api/Customers?filter[where][username]=zhangshan'
-    # }).then(success = (res) !->
-    #   # console.log 'res: ', res.data[0].avatar
-    #   vm.avatar = res.data[0].avatar
-    #   )
-
     # 点击更改密码按钮触发
     @change-password = !->
       btn = $ '.change-password-container'
@@ -43,10 +36,8 @@ angular.module 'app.profile'
         item.scroll-top += 2
       , 1, 125
       @show-or-hide = !@show-or-hide
-      # console.log "oldUser: ", Authentication.get-user!
-      # Authentication.update-cookie @username .then !->
-      #   console.log "newUser: ", Authentication.get-user!.avatar
-      #   vm.avatar = Authentication.get-user!.avatar
+
+
 
     @validate-old-password = !->
       if @old-password == @user.password
@@ -104,33 +95,21 @@ angular.module 'app.profile'
 
     @picture-uploader.onAfterAddingFile = (fileItem) !->
       picture = fileItem._file
-      # console.log 'picture: ', fileItem
       vm.name = picture.name
       vm.image-invalid = false
       vm.upload-row = true
-      console.log 'onAfterAddingFile: '
 
     @picture-uploader.onWhenAddingFileFailed = !->
       vm.image-invalid = true
 
-    # @picture-uploader.onBeforeUploadItem = (item) !->
-    #   console.log 'onBeforeUploadItem: ', item
     @picture-uploader.onSuccessItem = (item, response) !->
       console.log 'onSuccessItem response: ', response
-      # console.log "oldUser: ", Authentication.get-user!
       Authentication.update-cookie vm.username .then !->
         # console.log "newUser: ", Authentication.get-user!.avatar
         vm.avatar = Authentication.get-user!.avatar
-    # @picture-uploader.onCompleteItem = (item, response) !->
-    #   console.log 'onCompleteItem response: ', response
-    # @picture-uploader.onErrorItem = (item) !->
-    #   console.log 'onErrorItem'
     # @picture-uploader.onCancelItem = (item) !->
     #   console.log 'onCancelItem'
-    # @picture-uploader.onCompleteAll = !->
-    #   console.log 'onCompleteAll'
-    # @picture-uploader.onProgressAll = !->
-    #   console.log 'onProgressAll'
+
 
     @upload-file = !->
       vm.picture-uploader.uploadAll!
@@ -152,6 +131,5 @@ angular.module 'app.profile'
     @picture-uploader.filters.push({
       name: 'pictureSizeFilter'
       fn: (item) ->
-        # console.log 'item.size: ', item.size
         item.size <= 1000000
     })
