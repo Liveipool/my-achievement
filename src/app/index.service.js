@@ -6,7 +6,7 @@
     .factory('Authentication', AuthenticationService)
     .factory('Interaction', InteractionService);
 
-  function AuthenticationService($resource, $q, $cookies) {
+  function AuthenticationService($resource, $q, $cookies, apiResolver) {
     var self = this,
         authticatedUser = null;
 
@@ -33,6 +33,25 @@
 
       },
 
+      updateCookie: function(username) {
+        var filter = {
+                        "where": {
+                          "username": username
+                        }
+                      }
+        return apiResolver.resolve('lb_users_findOne@get', {"filter":filter}).then(function(user) {
+            if (user) {
+                authticatedUser = null;
+                $cookies.remove("cookieUser");
+
+                authticatedUser = user;
+                $cookies.putObject("cookieUser", authticatedUser);
+                return Promise.resolve(authticatedUser);
+              }
+            return Promise.resolve(authticatedUser);
+          });
+      },
+
       login: function(params) {
         var filter = {
                         "where": {
@@ -40,19 +59,15 @@
                           "password": params.password
                         }
                       }
-                    
 
-        return $resource('http://localhost:3000/api/Customers/findOne', {"filter":filter}).get().$promise
-        .then(function(user) {
-          if (user) {
-              authticatedUser = user;
-              $cookies.putObject("cookieUser", authticatedUser);
+        return apiResolver.resolve('lb_users_findOne@get', {"filter":filter}).then(function(user) {
+              if (user) {
+                  authticatedUser = user;
+                  $cookies.putObject("cookieUser", authticatedUser);
+                  return Promise.resolve(authticatedUser);
+                }
               return Promise.resolve(authticatedUser);
-            }
-
-          return Promise.resolve(authticatedUser);
-        });
-
+            });
       },
 
 

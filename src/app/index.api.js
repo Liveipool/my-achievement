@@ -184,6 +184,11 @@
         api.lb_commits = $resource(loopbackApiBaseUrl + '/Commits')
         api.lb_homeworks = $resource(loopbackApiBaseUrl + '/Homeworks')
         api.lb_delete_user = $resource(loopbackApiBaseUrl + '/Customers/:id')
+
+
+        api.lb_users_findOne = $resource(loopbackApiBaseUrl + '/Customers/findOne')
+
+
         api.gfcUrl = '/'
 
         // console.log("API get services defined by GFC: ", GFC.services);
