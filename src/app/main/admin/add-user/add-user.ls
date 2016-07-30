@@ -43,22 +43,22 @@ angular.module 'app.admin'
             removeAfterUpload: true
           }
 
-          $scope.json-uploader.onWhenAddingFileFailed = (item) !->
-            console.log 'onWhenAddingFileFailed: ', item
+          # $scope.json-uploader.onWhenAddingFileFailed = (item) !->
+          #   console.log 'onWhenAddingFileFailed: ', item
           $scope.json-uploader.onAfterAddingFile = (item) !->
             $scope.json-uploader.uploadItem item
             $scope.show-upload-progress = true
             console.log 'onAfterAddingFile: ', item
-          $scope.json-uploader.onBeforeUploadItem = (item) !->
-            console.log 'onBeforeUploadItem: ', item
-          $scope.json-uploader.onSuccessItem = (item) !->
-            console.log 'onSuccessItem'
-          $scope.json-uploader.onCompleteItem = (item) !->
-            console.log 'onCompleteItem'
-          $scope.json-uploader.onErrorItem = (item) !->
-            console.log 'onErrorItem'
-          $scope.json-uploader.onCancelItem = (item) !->
-            console.log 'onCancelItem'
+          # $scope.json-uploader.onBeforeUploadItem = (item) !->
+          #   console.log 'onBeforeUploadItem: ', item
+          # $scope.json-uploader.onSuccessItem = (item) !->
+          #   console.log 'onSuccessItem'
+          # $scope.json-uploader.onCompleteItem = (item) !->
+          #   console.log 'onCompleteItem'
+          # $scope.json-uploader.onErrorItem = (item) !->
+          #   console.log 'onErrorItem'
+          # $scope.json-uploader.onCancelItem = (item) !->
+          #   console.log 'onCancelItem'
 
           $scope.clear-json-item = !->
             $scope.json-uploader.clearQueue!

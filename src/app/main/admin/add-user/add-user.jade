@@ -64,10 +64,9 @@ mixin add-users-by-file-card
       div(flex="50", layout="row", layout-align="center end")
         label.md-button.md-raised.md-accent.m-12(for="uploadJson") 请选择JSON文件
         input(type="file", id="uploadJson", style="display:none", uploader="jsonUploader", ng-click="clearJsonItem()", nv-file-select)
-      div(ng-show="showUploadProgress" flex="50" layout="row" layout-align="center start")
+      div.pt-10(ng-show="showUploadProgress" flex="50" layout="row" layout-align="center start")
         div 图片上传进度: {{jsonUploader.progress}}%
-          md-progress-linear(value="{{jsonUploader.progress}}")
-        //- TODO: 文件上传进度条与文件信息展示
+          md-progress-linear.height-10.width-120(value="{{jsonUploader.progress}}")
 
 
 page-header(location="添加用户" greeting="vm.greeting" month="2")
