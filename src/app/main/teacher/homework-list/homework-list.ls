@@ -63,6 +63,7 @@ angular.module 'app.teacher'
               @update-page hws
        
           @update-page = (hws)!->
+            console.log 'my hws', hws
             @homeworks = hws
 
 
@@ -142,6 +143,7 @@ angular.module 'app.teacher'
                           .ok '确定'
                           .cancel '取消'
                         $md-dialog.show confirm
+                          # console.warn 'test for develope'
                           .then ~> @id
                           .then homework-manager.delete-homework
                           .then !~>
@@ -163,7 +165,7 @@ angular.module 'app.teacher'
                           @hw.id = @id
                           @hw.title = @title
                           @hw.description = @description 
-
+                          # console.warn 'test for develope'
                           homework-manager.update-homework hid, @hw
                             .then !~>
                               alert = @create-alert '编辑'
