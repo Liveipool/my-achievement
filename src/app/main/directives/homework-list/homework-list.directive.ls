@@ -68,6 +68,7 @@ angular.module 'fuse'
             c.t-status = '进行中' if c.status == 'present'
             c.t-status = '未开始' if c.status == 'future'
             c.t-status = '已结束' if c.status == 'finish'
+        console.log 'finish calculate-status\' hs:', hs
         hs
 
     function status-helper classes, status
