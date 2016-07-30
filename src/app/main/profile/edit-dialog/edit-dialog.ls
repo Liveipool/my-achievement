@@ -42,7 +42,7 @@ angular.module 'app.profile'
         item.scroll-top += 2
       , 1, 125
       @show-or-hide = !@show-or-hide
-      # console.log 'queue.length: ', vm.picture-uploader.queue.length
+      console.log 'queue.length: ', vm.picture-uploader.queue.length
 
 
     @validate-old-password = !->
@@ -88,10 +88,9 @@ angular.module 'app.profile'
 
     # 上传图片
     @picture-uploader = new FileUploader {
-      # url: 'http://localhost:3000/upload-images'
-      # url: "http://localhost:3000/api/Customers/update?where[username]=zhangshan"
+      url: 'http://localhost:3000/upload-images'
       queueLimit: 1
-      removeAfterUpload: false
+      removeAfterUpload: true
       form-data: [{"avatar": "xxx"}]
       alias: 'upload-images'
     }
@@ -106,9 +105,21 @@ angular.module 'app.profile'
       vm.name = picture.name
       vm.image-invalid = false
       vm.upload-row = true
+      console.log 'onAfterAddingFile: '
 
     @picture-uploader.onWhenAddingFileFailed = !->
       vm.image-invalid = true
+
+    @picture-uploader.onBeforeUploadItem = (item) !->
+      console.log 'onBeforeUploadItem: ', item
+    @picture-uploader.onSuccessItem = (item) !->
+      console.log 'onSuccessItem'
+    @picture-uploader.onCompleteItem = (item) !->
+      console.log 'onCompleteItem'
+    @picture-uploader.onErrorItem = (item) !->
+      console.log 'onErrorItem'
+    @picture-uploader.onCancelItem = (item) !->
+      console.log 'onCancelItem'
 
     @upload-file = !->
       vm.picture-uploader.uploadAll!
