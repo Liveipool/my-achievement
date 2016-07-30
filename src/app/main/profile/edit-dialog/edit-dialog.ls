@@ -43,12 +43,10 @@ angular.module 'app.profile'
         item.scroll-top += 2
       , 1, 125
       @show-or-hide = !@show-or-hide
-      
-      # console.log 'queue.length: ', vm.picture-uploader.queue.length
-      console.log "oldUser: ", Authentication.get-user!
-      Authentication.update-cookie @username
-      console.log "newUser: ", Authentication.get-user!
-
+      # console.log "oldUser: ", Authentication.get-user!
+      # Authentication.update-cookie @username .then !->
+      #   console.log "newUser: ", Authentication.get-user!.avatar
+      #   vm.avatar = Authentication.get-user!.avatar
 
     @validate-old-password = !->
       if @old-password == @user.password
@@ -95,8 +93,8 @@ angular.module 'app.profile'
     @picture-uploader = new FileUploader {
       url: 'http://localhost:3000/upload-images'
       queueLimit: 1
-      removeAfterUpload: true
-      form-data: [{"avatar": "xxx"}]
+      removeAfterUpload: false
+      form-data: [{"username": vm.username}]
       alias: 'upload-images'
     }
 
@@ -115,16 +113,24 @@ angular.module 'app.profile'
     @picture-uploader.onWhenAddingFileFailed = !->
       vm.image-invalid = true
 
-    @picture-uploader.onBeforeUploadItem = (item) !->
-      console.log 'onBeforeUploadItem: ', item
-    @picture-uploader.onSuccessItem = (item) !->
-      console.log 'onSuccessItem'
-    @picture-uploader.onCompleteItem = (item) !->
-      console.log 'onCompleteItem'
-    @picture-uploader.onErrorItem = (item) !->
-      console.log 'onErrorItem'
-    @picture-uploader.onCancelItem = (item) !->
-      console.log 'onCancelItem'
+    # @picture-uploader.onBeforeUploadItem = (item) !->
+    #   console.log 'onBeforeUploadItem: ', item
+    @picture-uploader.onSuccessItem = (item, response) !->
+      console.log 'onSuccessItem response: ', response
+      # console.log "oldUser: ", Authentication.get-user!
+      Authentication.update-cookie vm.username .then !->
+        # console.log "newUser: ", Authentication.get-user!.avatar
+        vm.avatar = Authentication.get-user!.avatar
+    # @picture-uploader.onCompleteItem = (item, response) !->
+    #   console.log 'onCompleteItem response: ', response
+    # @picture-uploader.onErrorItem = (item) !->
+    #   console.log 'onErrorItem'
+    # @picture-uploader.onCancelItem = (item) !->
+    #   console.log 'onCancelItem'
+    # @picture-uploader.onCompleteAll = !->
+    #   console.log 'onCompleteAll'
+    # @picture-uploader.onProgressAll = !->
+    #   console.log 'onProgressAll'
 
     @upload-file = !->
       vm.picture-uploader.uploadAll!

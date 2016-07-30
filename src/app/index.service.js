@@ -41,7 +41,9 @@
                       }
         return apiResolver.resolve('lb_users_findOne@get', {"filter":filter}).then(function(user) {
             if (user) {
+                authticatedUser = null;
                 $cookies.remove("cookieUser");
+
                 authticatedUser = user;
                 $cookies.putObject("cookieUser", authticatedUser);
                 return Promise.resolve(authticatedUser);
@@ -57,8 +59,7 @@
                           "password": params.password
                         }
                       }
-                    
-        // console.log("filter: ", filter);
+
         return apiResolver.resolve('lb_users_findOne@get', {"filter":filter}).then(function(user) {
               if (user) {
                   authticatedUser = user;
