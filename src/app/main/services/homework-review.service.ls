@@ -3,34 +3,40 @@
 angular.module 'fuse'
 
 # student/homework-reviw
-.service 'homeworkReviewService' ($resource, $root-scope)!->
+.service 'homeworkReviewService' ($resource, $root-scope, api-resolver)!->
   @reload-reviews = ->
     that = @
     # TODO: 向服务器发出请求获取所有user信息
     # console.warn "TODO: function reload-reviews in userManager"
-    $resource('app/data/review/reviews.json').get!.$promise
-      .then (result)->
-        that.reviews-cache = result.data
-        # console.log(that.reviews-cache)
-        $root-scope.$broadcast 'reviewsUpdate' # 广播更新事件
-        Promise.resolve that.reviews-cache
+    # $resource('app/data/review/reviews.json').get!.$promise
+    #   .then (result)->
+    #     that.reviews-cache = result.data
+    #     # console.log(that.reviews-cache)
+    #     $root-scope.$broadcast 'reviewsUpdate' # 广播更新事件
+    #     Promise.resolve that.reviews-cache
 
-  @get-all-reviews = ->
-    if @reviews-cache
-      Promise.resolve @reviews-cache
-    else
-      @reload-reviews!
 
-  # get the reviews which are needed, using promise so can thenable filtering
-  @reviews-filter-by-id = (reviews, id) ->
-    reviews-id = [review for review in reviews when review.homework_id ~= id]
-    Promise.resolve reviews-id
+  @get-myscore-reviews = (user, homework_id)->
+    
+    console.log user, homework_id
+    filter = {
+      "where":
+          "reviewee.username": user.username
+          "homework_id": homework_id
+    }
+    
+    api-resolver.resolve 'lb_reviews@query', {"filter": filter}
+    
+  @get-group-reviews = (user, homework_id) ->
+    
+    filter = {
+      "where":
+          "reviewer.username": user.username
+          "homework_id": homework_id
+    }
 
-  # gr means group review and ms means my score
-  @reviews-filter-by-username = (reviews, username) ->
-    reviews-username-gr = [review for review in reviews when review.reviewer.username ~= username]
-    reviews-username-ms = [review for review in reviews when review.reviewee.username ~= username]
-    Promise.resolve { "gr" : reviews-username-gr, "ms" : reviews-username-ms }
+    api-resolver.resolve 'lb_reviews@query', {"filter": filter}
+    
 
 
   @cancle-update-review = ->
@@ -40,20 +46,27 @@ angular.module 'fuse'
     @reload-reviews!
 
   @add-review = (review) ->
-    # TODO: add-review
-    console.log "add-review!"
+    console.log review
+    api-resolver.resolve 'lb_reviews@save', review
+    .then (result) !->
+      console.log result
+      console.log "add-review!"
     @reload-reviews!
 
   @update-review = (review) ->
-    #TODO: update-review
     console.log "update-review!"
+    where_filter = {"reviewer.username": review.reviewer.username, "reviewee.username": review.reviewee.username, homework_id: review.homework_id}
+    where_filter =  JSON.stringify where_filter
+    url = 'http://localhost:3000/api/Reviews/update?where=' + where_filter
+    $resource(url).save review 
+    
     @reload-reviews!
 
   @validator = (review) ->
-    console.log review
+    # console.log review
 
     temp-score = parse-int review.temp-score, 10
-    console.log typeof temp-score, temp-score
+    # console.log typeof temp-score, temp-score
 
     @status = {}
     @status.error = {}
