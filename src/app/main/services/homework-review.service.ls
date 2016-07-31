@@ -32,6 +32,8 @@ angular.module 'fuse'
     reviews-username-ms = [review for review in reviews when review.reviewee.username ~= username]
     Promise.resolve { "gr" : reviews-username-gr, "ms" : reviews-username-ms }
 
+  @reviews-filter-by-reviewer-role = (reviews, rolename) ->
+    [review for review in reviews when review.reviewer.role ~= rolename]
 
   @cancle-update-review = ->
     # reload-reviews then the change is undo in the controller
