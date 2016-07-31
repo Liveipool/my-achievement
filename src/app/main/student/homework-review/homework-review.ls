@@ -29,7 +29,6 @@ angular.module 'app.student'
         controller-as : 'vm'
         controller: ($scope, $state, Interaction, Authentication, $state-params, homework-review-service, myscore-reviews, group-reviews, homework)!->
           console.log group-reviews
-          console.log homework
           vm = @
 
           # get the data:
@@ -42,9 +41,8 @@ angular.module 'app.student'
 
           @user = Authentication.get-user!
           @homework-id = $state-params.id
-
-          vm.reviews-ms
-          @date-time = new Date()
+          @date-time = homework.classes[@user.class-1].endTime
+          
 
           # functions of the buttons
           @submit = (review)->
