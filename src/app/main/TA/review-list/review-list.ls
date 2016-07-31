@@ -17,7 +17,9 @@ angular.module 'app.TA'
           auth = Authentication
           @go-to-anchor = service.go-to-anchor
 
-          @homework = _.find homeworks.data, {'id': 1}
+          #get homework according to homework_id from state-params
+          hid = parseInt $state-params.hid
+          @homework = _.find homeworks.data, {'id': hid}
 
           @user = auth.get-user!
 
@@ -32,6 +34,12 @@ angular.module 'app.TA'
           while i > 0
             @selected[i] = i.to-string!
             i--
+
+          @goToDetail = (hid, sid)!->
+            $state.go 'app.TA.review-detail', {
+              hid: hid
+              sid: sid
+            }
   }
 
 
