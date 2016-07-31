@@ -46,23 +46,27 @@ angular.module 'fuse'
     @reload-reviews!
 
   @add-review = (review) ->
-    # TODO: add-review
+    console.log review
     api-resolver.resolve 'lb_reviews@save', review
     .then(result) !->
       console.log result
       console.log "add-review!"
-      @reload-reviews!
+    @reload-reviews!
 
   @update-review = (review) ->
-    #TODO: update-review
     console.log "update-review!"
+    where_filter = {"reviewer.username": review.reviewer.username, "reviewee.username": review.reviewee.username, homework_id: review.homework_id}
+    where_filter =  JSON.stringify where_filter
+    url = 'http://localhost:3000/api/Reviews/update?where=' + where_filter
+    $resource(url).save review 
+    
     @reload-reviews!
 
   @validator = (review) ->
     # console.log review
 
     temp-score = parse-int review.temp-score, 10
-    console.log typeof temp-score, temp-score
+    # console.log typeof temp-score, temp-score
 
     @status = {}
     @status.error = {}

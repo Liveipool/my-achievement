@@ -182,7 +182,11 @@
         api.lb_users = $resource(loopbackApiBaseUrl + '/Customers')
         api.lb_reviews = $resource(loopbackApiBaseUrl + '/Reviews')
         api.lb_commits = $resource(loopbackApiBaseUrl + '/Commits')
-        api.lb_homeworks = $resource(loopbackApiBaseUrl + '/Homeworks')
+        api.lb_homeworks = $resource(loopbackApiBaseUrl + '/Homework')
+        
+        api.lb_homework_get_one = $resource(loopbackApiBaseUrl + '/Homework/:id')
+        api.lb_reviews_update = $resource(loopbackApiBaseUrl + '/Reviews/update')
+        
 
         api.gfcUrl = '/'
 

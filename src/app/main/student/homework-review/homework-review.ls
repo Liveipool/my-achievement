@@ -6,11 +6,8 @@ angular.module 'app.student'
   $state-provider.state 'app.student.homework-review', {
     url: '/homework-review/:id'
     resolve:
-      homeworks: ($resource) ->
-        $resource('app/data/homework/homeworks.json').get!.$promise
-          .then (result)->
-            homeworks = result.data
-            Promise.resolve homeworks
+      homework: (api-resolver, $state-params) ->
+        api-resolver.resolve 'lb_homework_get_one@get', {id: $state-params.id}
 
       myscore-reviews: (homework-review-service, Authentication, $state-params) ->
         user = Authentication.get-user!
@@ -30,9 +27,9 @@ angular.module 'app.student'
       'content@app':
         template-url: 'app/main/student/homework-review/homework-review.html'
         controller-as : 'vm'
-        controller: ($scope, $state, Interaction, Authentication, $state-params, homework-review-service, myscore-reviews, group-reviews)!->
+        controller: ($scope, $state, Interaction, Authentication, $state-params, homework-review-service, myscore-reviews, group-reviews, homework)!->
           console.log group-reviews
-
+          console.log homework
           vm = @
 
           # get the data:
@@ -58,7 +55,7 @@ angular.module 'app.student'
               homework-review-service.add-review review
               review.editing = false
               review.t-score = "hs"
-              review.error = {}
+              # review.error = {}
             else
               review.error = status.error
             console.log review.error
