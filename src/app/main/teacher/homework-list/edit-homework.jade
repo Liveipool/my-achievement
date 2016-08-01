@@ -38,9 +38,9 @@ mixin class-info
 
 mixin class-detail
     md-content.wrapper-bg(flex='50' layout='row')
-        div.white-bg.md-whiteframe-2dp(flex='100' layout="column" ng-repeat="class in _vm.classes" ng-if="class.class_id == _vm.classShowId")
-            +datepickers('开始日期', 'class.startTime', '_vm.startHour[$index]', '_vm.startMin[$index]')
-            +datepickers('结束日期', 'class.endTime', '_vm.endHour[$index]', '_vm.endMin[$index]')
+        div.white-bg.md-whiteframe-2dp(flex='100' layout="column")
+            +datepickers('开始日期', '_vm.classes[_vm.classShowIndex].startTime', '_vm.startHour[_vm.classShowIndex]', '_vm.startMin[_vm.classShowIndex]')
+            +datepickers('结束日期', '_vm.classes[_vm.classShowIndex].endTime', '_vm.endHour[_vm.classShowIndex]', '_vm.endMin[_vm.classShowIndex]')
        
 mixin class-detail-error
       span.error-message(ng-if='_vm.invalidId') 班级{{_vm.invalidId}}开始时间不能大于结束时间

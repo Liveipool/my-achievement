@@ -92,8 +92,20 @@ angular.module 'app.teacher'
                 @id = homework.id
                 @title = homework.title
                 @description = homework.description
-                # 当前编辑的班级班号
+                # 当前编辑的班级班号和index
                 @classShowId = @classes[0].class_id
+                @classShowIndex = 0
+
+                $scope.$watch '_vm.classShowId', (newvalue, oldvalue)!->
+                  console.log 'oldvalue', oldvalue
+                  console.log 'newvalue', newvalue
+
+                  for from 0 to $scope._vm.classes.length - 1
+                    console.log 'id',$scope._vm.classes[i$]
+                    if $scope._vm.classes[i$].class_id ~= newvalue
+                      console.log 'index', i$
+                      $scope._vm.classShowIndex = i$
+                      break  
 
                 @start-hour = []
                 @start-min = []
