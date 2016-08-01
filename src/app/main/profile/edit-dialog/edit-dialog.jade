@@ -33,7 +33,7 @@ md-dialog.contact-dialog#dialog
       div.ph-12(layout="column")
         div(layout="column")
           div(flex="100" layout="row" layout-align="center start")
-            img.md-avatar.avatar.huge(ng-src="{{vm.user.avatar}}")
+            img.md-avatar.avatar.huge(ng-src="{{vm.avatar}}")
           div.pt-12(layout="row" layout-align="center center")
             label.md-button(for="upload-avatar") 更改头像
             input#upload-avatar.hide(type="file" nv-file-select uploader="vm.pictureUploader" ng-click="vm.clearPictureItem()")
@@ -60,7 +60,16 @@ md-dialog.contact-dialog#dialog
         md-icon(md-font-icon="icon-account")
         input(type="text" name="fullname" value="{{vm.user.fullname}}" disabled)
 
-      md-input-container.mb-0
+      md-input-container.mb-0(ng-if="vm.user.role === 'student' || vm.user.role === 'ta'")
+        label(for="sid") 学号
+        md-icon(md-font-icon="icon-book")
+        input(type="text" name="sid" value="{{vm.user.sid}}" disabled)
+        //- input(type="text" name="sid" ng-model="vm.sid" required ng-pattern="/^[0-9]{8}$/")
+        //- div(ng-messages="informationForm.sid.$error")
+        //-   div(ng-message="required") 请输入学号
+        //-   div(ng-message="pattern") 请输入正确的学号
+
+      md-input-container.mb-6
         label(for="email") 邮箱
         md-icon(md-font-icon="icon-email")
         input(type="text" name="email" ng-model="vm.email" required ng-pattern="/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/")
@@ -69,18 +78,9 @@ md-dialog.contact-dialog#dialog
           div(ng-message="pattern") 请输入正确的邮箱
 
 
-      md-input-container.mb-6(ng-if="vm.user.role === 'student' || vm.user.role === 'ta'")
-        label(for="sid") 学号
-        md-icon(md-font-icon="icon-book")
-        input(type="text" name="sid" ng-model="vm.sid" required ng-pattern="/^[0-9]{8}$/")
-        div(ng-messages="informationForm.sid.$error")
-          div(ng-message="required") 请输入学号
-          div(ng-message="pattern") 请输入正确的学号
-
-
       +change-password
 
     md-dialog-actions.p-12.pt-0.wrapper-bg(layout="row" layout-align="space-between center")
-      md-button.raised(ng-click="vm.save()" ng-disabled="informationForm.email.$invalid || informationForm.sid.$invalid || vm.showOrHide && (vm.isOldPasswordInvalid || vm.isNewPasswordInvalid || isConfirmPasswordInvalid || vm.confirmPassword !== vm.newPassword || vm.newPassword == '')") 保存
+      md-button.raised(ng-click="vm.save()" ng-disabled="informationForm.email.$invalid || vm.showOrHide && (vm.isOldPasswordInvalid || vm.isNewPasswordInvalid || isConfirmPasswordInvalid || vm.confirmPassword !== vm.newPassword || vm.newPassword == '')") 保存
       md-button.raised(ng-click="vm.reset()") 重置
 

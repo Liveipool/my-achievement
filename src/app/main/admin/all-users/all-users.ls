@@ -116,7 +116,7 @@ angular.module 'app.admin'
                       .cancel '取消'
                     $md-dialog.show confirm .then !->
                       # 发送删除请求
-                      user-manager-service.delete-user $scope.user.username
+                      user-manager-service.delete-user $scope.user.id
 
                 templateUrl: 'app/main/admin/all-users/admin-user-edit.html'
                 parent: angular.element(document.body)
