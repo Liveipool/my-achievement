@@ -49,10 +49,10 @@ angular.module 'fuse'
   @reviews-filter-by-reviewer-role = (reviews, rolename) ->
     [review for review in reviews when review.reviewer.role ~= rolename]
 
-  @cancle-update-review = ->
+  @cancel-update-review = ->
     # reload-reviews then the change is undo in the controller
     # acctually do nothing is OK
-    console.log "cancle-update-review!"
+    console.log "cancel-update-review!"
     @reload-reviews!
 
   @add-review = (review) ->
