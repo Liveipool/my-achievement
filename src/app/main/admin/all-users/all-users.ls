@@ -54,10 +54,9 @@ angular.module 'app.admin'
 
             # 根据班别分开学生
             $scope.students.sort (a, b)->
-              # console.log "a: ", a
               priority = a.class.to-string!.locale-compare b.class.to-string!
               if priority ~= 0
-                a.group.to-string!.locale-compare b.to-string!.group
+                a.group.to-string!.locale-compare b.group.to-string!
               else
                 priority
 
@@ -85,7 +84,7 @@ angular.module 'app.admin'
                   #     $scope.user = user
 
                   #使用事件，用属性把值传回来
-                  $scope.user = JSON.parse(ev.current-target.attributes['user'].value);
+                  $scope.user = JSON.parse ev.current-target.attributes['user'].value
                   
 
                   $scope.edit-user = !->

@@ -41,10 +41,6 @@ mixin user-info
             input(ng-model='user.group')
         div(flex="25", layout="row")
           md-input-container.md-block.m-bottom-0(flex)
-            label 原密码
-            md-icon.valid-color(md-font-icon="icon-key-variant")
-            input(ng-model='user.password', disabled)
-          md-input-container.md-block.m-bottom-0(flex)
             label 新密码
             md-icon.valid-color(md-font-icon="icon-key-variant")
             input(type="password", ng-model='user.newpassword')
