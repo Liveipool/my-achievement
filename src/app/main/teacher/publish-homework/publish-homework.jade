@@ -1,6 +1,6 @@
 mixin container-header
     header.p-24
-        .title 作业{{vm.currentHwNum}}
+        .title 作业{{vm.hwId}}
 
 mixin form
     form(ng-submit='vm.Submit()' name='form')
@@ -28,12 +28,13 @@ mixin class-detail
             div.white-bg.md-whiteframe-2dp(layout="column" flex="100")
                 header.md-accent-bg.ph-24.pv-12
                     span 班级{{class.classId}}
+                div.empty(flex='10')
                 +datepickers('开始日期', 'class.startTime', 'vm.startHour[$index]', 'vm.startMin[$index]')
                 +datepickers('结束日期', 'class.endTime', 'vm.endHour[$index]', 'vm.endMin[$index]')
                 +error
 
 mixin datepickers(label, ngModelDay, ngModelHour, ngModelMin)
-    div.pv-12.pr-24(layout='row')
+    div.pv-12.pr-24(flex='40' layout='row')
         md-input-container(flex='50' layout="row")
             label=label
             md-datepicker.datepicker.pr-0(md-placeholder="日期" ng-model=ngModelDay required flex="100")
@@ -52,7 +53,8 @@ mixin buttons
         md-button.md-raised.margin-lf-rt-3(ng-click='vm.Reset()') 重置
 
 mixin error
-    span.error-message(ng-show='vm.dateInvalid[$index]') 开始时间不能大于结束时间
+    div.error-message(flex='10') 
+        span(ng-if='vm.dateInvalid[$index]') 开始时间不能大于结束时间
 
 
 //--------------------------  主页面  ----------------------------

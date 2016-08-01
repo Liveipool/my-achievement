@@ -179,12 +179,23 @@
 
         //db base url
         var loopbackApiBaseUrl = 'http://localhost:3000/api'
+
+        //db url
         api.lb_users = $resource(loopbackApiBaseUrl + '/Customers')
         api.lb_reviews = $resource(loopbackApiBaseUrl + '/Reviews')
         api.lb_commits = $resource(loopbackApiBaseUrl + '/Commits')
-        api.lb_homeworks = $resource(loopbackApiBaseUrl + '/Homeworks')
+        api.lb_homeworks = $resource(loopbackApiBaseUrl + '/Homework')
 
+        // db user special operation url
+        api.lb_delete_user = $resource(loopbackApiBaseUrl + '/Customers/:id')
         api.lb_users_findOne = $resource(loopbackApiBaseUrl + '/Customers/findOne')
+
+        //db homework special operation url
+        api.lb_homework_get_one = $resource(loopbackApiBaseUrl + '/Homework/:id')
+
+        //db reviews special operation url
+        api.lb_reviews_update = $resource(loopbackApiBaseUrl + '/Reviews/update')
+        
 
         api.gfcUrl = '/'
 

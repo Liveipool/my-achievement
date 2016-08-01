@@ -54,9 +54,10 @@ angular.module 'app.admin'
 
             # 根据班别分开学生
             $scope.students.sort (a, b)->
-              priority = a.class.locale-compare b.class
+              # console.log "a: ", a
+              priority = a.class.to-string!.locale-compare b.class.to-string!
               if priority ~= 0
-                a.group.locale-compare b.group
+                a.group.to-string!.locale-compare b.to-string!.group
               else
                 priority
 
@@ -91,10 +92,10 @@ angular.module 'app.admin'
                     $scope.user ||= {}
                     invalid-arr = valid-manager-service.edit-user-valid $scope.user
                     if invalid-arr.length ~= 0
-                      # 发送修改请求
                       if $scope.user.newpassword
                         $scope.user.password = $scope.user.newpassword
                       user-manager-service.edit-user $scope.user
+                      $md-dialog.hide!
                     else
                       $md-toast.show(
                         $md-toast.simple!
@@ -116,7 +117,7 @@ angular.module 'app.admin'
                       .cancel '取消'
                     $md-dialog.show confirm .then !->
                       # 发送删除请求
-                      user-manager-service.delete-user $scope.user.username
+                      user-manager-service.delete-user $scope.user.id
 
                 templateUrl: 'app/main/admin/all-users/admin-user-edit.html'
                 parent: angular.element(document.body)
