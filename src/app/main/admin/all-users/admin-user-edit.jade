@@ -14,12 +14,12 @@ mixin user-info
           md-input-container.min-width-500.md-block(flex-sm)
             label 用户名
             md-icon.valid-color(md-font-icon="icon-account")
-            input(ng-model='user.username', ng-required="true", disabled="false")
+            input(ng-model='user.username')
         div(flex="25", layout="row")
           md-input-container.md-block(flex)
             label 姓名
             md-icon.valid-color(md-font-icon="icon-worker")
-            input(ng-model='user.fullname', ng-required="true")
+            input(ng-model='user.fullname')
           div.p-6
           md-input-container.md-block(flex)
             label 权限
@@ -29,12 +29,12 @@ mixin user-info
           md-input-container.md-block(flex)
             label 邮箱
             md-icon.valid-color(md-font-icon="icon-email")
-            input(ng-model='user.email', type="email", ng-required="true")
+            input(ng-model='user.email')
         div(flex="25", layout="row", ng-show="user.role == 'student'")
           md-input-container.md-block(flex)
             label 班级
             md-icon.valid-color(md-font-icon="icon-account-multiple")
-            input(ng-model="user.class", ng-required="true")
+            input(ng-model="user.class")
           div.p-6
           md-input-container.md-block(flex)
             label 小组
@@ -43,7 +43,7 @@ mixin user-info
           md-input-container.md-block.m-bottom-0(flex)
             label 原密码
             md-icon.valid-color(md-font-icon="icon-key-variant")
-            input(type="", ng-model='user.password', disabled="false")
+            input(ng-model='user.password', disabled)
           md-input-container.md-block.m-bottom-0(flex)
             label 新密码
             md-icon.valid-color(md-font-icon="icon-key-variant")

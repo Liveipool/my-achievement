@@ -20,7 +20,7 @@ angular.module 'fuse'
     for key, value of user
       if key not in fields
         delete user[key] 
-    console.log  user
+    # console.log  user
     user
 
 
@@ -45,7 +45,7 @@ angular.module 'fuse'
   @delete-user = (modelId)->
     # TODO: 向服务器发出请求删除用户
     that = @
-    console.warn "TODO: function 'delete-user' " + modelId + " in userManager."
+    # console.warn "TODO: function 'delete-user' " + modelId + " in userManager."
     api-resolver.resolve 'lb_delete_user@delete' , {'id': modelId}
     # $resource('http://0.0.0.0:3000/api/Customers/'+modelId).delete!.$promise
       .then (result)->
@@ -56,12 +56,12 @@ angular.module 'fuse'
 
   @add-user = (new-user)->
     # TODO: 向服务器发出请求新增用户
-    console.warn "TODO: function 'add-user' " + new-user + " in userManager."
+    # console.warn "TODO: function 'add-user' " + new-user + " in userManager."
     that = @
     # deep copy
     copy-user = JSON.parse(JSON.stringify(new-user))
     copy-user = delete-other-field fields, copy-user
-    console.log copy-user
+    # console.log copy-user
     api-resolver.resolve 'lb_users@save' , copy-user
       .then (user)->
         console.log 'add success'
@@ -71,7 +71,7 @@ angular.module 'fuse'
   @edit-user = (user)->
     # TODO: 向服务器发出请求编辑用户
     that = @
-    console.warn "TODO: function 'edit-user' " + user + " in userManager."
+    # console.warn "TODO: function 'edit-user' " + user + " in userManager."
 
     filter = 
       "where" :
@@ -81,7 +81,7 @@ angular.module 'fuse'
     # deep copy
     copy-user = JSON.parse(JSON.stringify(user))
     copy-user = delete-other-field fields, copy-user
-    console.log copy-user
+    # console.log copy-user
     $resource('http://0.0.0.0:3000/api/Customers/update?where=%7B%22id%22%3A%22'+copy-user.id+'%22%7D').save(copy-user).$promise
       .then (user)->
         console.log ('edit-user' + ' success')
@@ -98,5 +98,3 @@ angular.module 'fuse'
       .then (user) ->
         console.log 'find-user-by-username' + "  success"
         Promise.resolve user
-    
-

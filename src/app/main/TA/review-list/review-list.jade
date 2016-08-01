@@ -8,25 +8,20 @@ mixin table-container
         thead
           th 学号
           th 姓名
-          th 小组
-          th 评分
-        tbody(ng-repeat="student in group.members")
+          th ta评分
+          th 老师评分
+        tbody(ng-repeat="student in group.members" ng-click="vm.goToDetail(vm.homework.id, student.sid)")
           td {{student.sid}}
           td {{student.fullname}}
-          td 小组{{student.group}}
-          td 90分
+          td {{student.taScore}}
+          td {{student.teacherScore}}
 
 mixin chart
   div.p-24.h-h
     .md-title 成绩
   div.p-24(layout="row" layout-align="center")
     div
-      c3chart(bindto-id="pie-chart{{class.id}}")
-        chart-column(column-id="60-70" column-values="40" column-type="pie")
-        chart-column(column-id="70-80" column-values="70" column-type="pie")
-        chart-column(column-id="80-90" column-values="20" column-type="pie")
-        chart-column(column-id="90-100" column-values="70" column-type="pie")
-        chart-pie(expand="true")
+      c3chart(bindto-id="pie-chart{{class.id}}" chart-data="vm.datapoints" chart-columns="vm.datacolumns")
 
 mixin tab-content
   md-content.wrapper-bg.p-12(layout="row" layout-xs="column")
@@ -55,7 +50,7 @@ page-header(location="评审列表" greeting="vm.user.fullname" month="2")
 #review-list
   md-content(layout="column")
     md-tabs.white-bg(md-dynamic-height)
-      md-tab(label="班级{{$index + 1}}" ng-repeat="class in vm.classes")
+      md-tab(label="班级{{$index + 1}}" ng-repeat="class in vm.classes" ng-click="vm.pieChange($event)" pie-id="{{class.id}}")
         +tab-content
 
 

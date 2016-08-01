@@ -9,7 +9,7 @@ mixin group-title-due-info-ms
 	.group-title-due-info.p-12(layout='row' layout-align="space-between center")
 		.group.md-title group {{vm.user.group}}
 		.title.md-title 第{{vm.homeworkId}}次作业
-		.due.md-subhead {{vm.dateTime}}
+		.due.md-subhead {{vm.dateTime | date: 'yyyy-MM-dd  hh:mm'}}
 
 mixin review-ms
 	.review.white-bg.md-whiteframe-1dp(class="R-hs-pl" layout="row")
