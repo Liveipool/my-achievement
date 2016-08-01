@@ -98,5 +98,3 @@ angular.module 'fuse'
       .then (user) ->
         console.log 'find-user-by-username' + "  success"
         Promise.resolve user
-    
-

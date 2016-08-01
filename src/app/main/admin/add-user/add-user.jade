@@ -3,29 +3,29 @@ mixin user-info-inputs
   div(layout="column")
     div(flex="25", layout="row")
       md-input-container.md-block(flex)
-        label 用户名
+        label 用户名(8位学号)
         md-icon.valid-color(md-font-icon="icon-account")
-        input(ng-model='user.username', ng-required="true")
+        input(ng-model='user.username')
     div(flex="25", layout="row")
       md-input-container.md-block(flex)
-        label 姓名
+        label 正确姓名
         md-icon.valid-color(md-font-icon="icon-worker")
-        input(ng-model='user.fullname', ng-required="true")
+        input(ng-model='user.fullname')
       div.p-6
       md-input-container.md-block(flex)
         label 权限
-        md-select(ng-model="user.role", ng-required="true")
+        md-select(ng-model="user.role")
           md-option(value="{{op}}", ng-repeat="op in ['teacher', 'ta', 'student']") {{op}}
     div(flex="25", layout="row")
       md-input-container.md-block(flex)
         label 邮箱
         md-icon.valid-color(md-font-icon="icon-email")
-        input(ng-model='user.email', type="email", ng-required="true")
+        input(ng-model='user.email')
     div(flex="25", layout="row", ng-show="user.role == 'student'")
       md-input-container.md-block(flex)
         label 班级
         md-icon.valid-color(md-font-icon="icon-account-multiple")
-        input(ng-model='user.class', ng-required="true")
+        input(ng-model='user.class')
       div.p-6
       md-input-container.md-block(flex)
         label 小组
@@ -34,11 +34,11 @@ mixin user-info-inputs
       md-input-container.m-bottom-0(flex)
         label 密码
         md-icon.valid-color(md-font-icon="icon-key-variant")
-        input(type="password", ng-model='user.password', ng-required="true")
+        input(type="password", ng-model='user.password')
       div.p-6
       md-input-container.m-bottom-0(flex)
         label 重复密码
-        input(type="password", ng-model='user.repassword', ng-required="true")
+        input(type="password", ng-model='user.repassword')
 
 //- 手动添加用户
 mixin add-one-user-card

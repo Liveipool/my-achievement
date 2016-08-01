@@ -8,7 +8,8 @@ angular.module 'fuse'
   @email-valid = (email)->
     # 参照 http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
     # 中 Here's the example of regular expresion that accepts unicode:
-    re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+    # re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+    re = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
     valid = re.test email
     if !valid
       @invalid-arr ||= []
@@ -23,19 +24,27 @@ angular.module 'fuse'
     valid
 
   @username-valid = (username)->
-    valid = (username and username !~= "")
+    # valid = (username and username !~= "")
+    re = /^\d{8}$/
+    valid = re.test username
     if !valid
       @invalid-arr ||= []
       @invalid-arr.push "用户名框"
     valid
 
-  @password-valid = (pw, repw)->
-    valid = (pw and pw !~= "" and pw ~= repw)
-    console.log pw
-    console.log repw
+  @password-valid = (pw)->
+    valid = (pw and pw !~= "")
     if !valid
       @invalid-arr ||= []
       @invalid-arr.push "密码框"
+    valid
+
+  @repeat-password-valid = (pw, repw)->
+    # valid = (pw and pw !~= "" and pw ~= repw)
+    valid = (pw === repw)
+    if !valid
+      @invalid-arr ||= []
+      @invalid-arr.push "重复密码框"
     valid
 
   @role-valid = (role)->
@@ -57,7 +66,8 @@ angular.module 'fuse'
   @add-user-valid = (user)->
     @invalid-arr = []
     @uniform-valid user
-    @password-valid user.password, user.repassword
+    @password-valid user.password
+    @repeat-password-valid user.password, user.repassword
     @invalid-arr
 
   @edit-user-valid = (user)->

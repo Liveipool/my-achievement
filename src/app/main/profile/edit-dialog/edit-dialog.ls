@@ -64,6 +64,8 @@ angular.module 'app.profile'
       if @new-password !== ""
         @user.password = @new-password
       user-manager-service.edit-user vm.user
+      Authentication.update-cookie vm.username .then !->
+        vm.user = Authentication.get-user!
       $mdDialog.hide!
 
     @reset = !->
