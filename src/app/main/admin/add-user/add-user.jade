@@ -3,7 +3,7 @@ mixin user-info-inputs
   div(layout="column")
     div(flex="25", layout="row")
       md-input-container.md-block(flex)
-        label 用户名(8位学号)
+        label 用户名(学生用户名为8位学号)
         md-icon.valid-color(md-font-icon="icon-account")
         input(ng-model='user.username')
     div(flex="25", layout="row")
@@ -65,7 +65,7 @@ mixin add-users-by-file-card
         label.md-button.md-raised.md-accent.m-12(for="uploadJson") 请选择JSON文件
         input(type="file", id="uploadJson", style="display:none", uploader="jsonUploader", ng-click="clearJsonItem()", nv-file-select)
       div.pt-10(ng-show="showUploadProgress" flex="50" layout="row" layout-align="center start")
-        div 图片上传进度: {{jsonUploader.progress}}%
+        div 文件上传进度: {{jsonUploader.progress}}%
           md-progress-linear.height-10.width-120(value="{{jsonUploader.progress}}")
 
 

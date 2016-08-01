@@ -92,10 +92,10 @@ angular.module 'app.admin'
                     $scope.user ||= {}
                     invalid-arr = valid-manager-service.edit-user-valid $scope.user
                     if invalid-arr.length ~= 0
-                      # 发送修改请求
                       if $scope.user.newpassword
                         $scope.user.password = $scope.user.newpassword
                       user-manager-service.edit-user $scope.user
+                      $md-dialog.hide!
                     else
                       $md-toast.show(
                         $md-toast.simple!

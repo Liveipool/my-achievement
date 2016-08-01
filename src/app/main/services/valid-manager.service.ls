@@ -24,9 +24,9 @@ angular.module 'fuse'
     valid
 
   @username-valid = (username)->
-    # valid = (username and username !~= "")
-    re = /^\d{8}$/
-    valid = re.test username
+    # re = /^\d{8}$/
+    # valid = re.test username
+    valid = (username and username !~= "")
     if !valid
       @invalid-arr ||= []
       @invalid-arr.push "用户名框"
