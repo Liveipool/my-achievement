@@ -1,4 +1,4 @@
-(function() {
+  (function() {
   'use strict';
 
   angular
@@ -56,13 +56,13 @@
         var filter = {
                         "where": {
                           "username": params.username,
-                          "password": params.password
+                          "password": md5(params.password)
                         }
                       }
 
-        return apiResolver.resolve('lb_users_findOne@get', {"filter":filter}).then(function(user) {
-              if (user) {
-                  authticatedUser = user;
+        return apiResolver.resolve('lb_users@query', {"filter":filter}).then(function(user) {
+              if (user.length) {
+                  authticatedUser = user[0];
                   $cookies.putObject("cookieUser", authticatedUser);
                   return Promise.resolve(authticatedUser);
                 }
