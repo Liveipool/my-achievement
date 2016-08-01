@@ -8,6 +8,24 @@ angular.module 'app.teacher', []
     data:
       role: 'teacher'
   }
+.service 'homeworkManager', ($resource, $root-scope)!->
+  # 增删查改操作
+  Homework = $resource('http://localhost:3000/api/Homework/:id', null,
+    { 
+        'insert': { method : 'POST'},
+        'delete': { method : 'DELETE'},
+        'get': { method : 'GET'},
+        'update': { method : 'PUT'}
+    }); 
+  
+  # 重新获取数据、存入cache
+  @reload-homeworks = ~>
+    that = @
+    $resource('http://localhost:3000/api/Homework').query!.$promise
+      .then (result)->
+        that.homework-cache = result
+        $root-scope.$broadcast 'homeworkUpdate' # 广播更新事件
+        Promise.resolve that.homework-cache
 
 .service 'homeworkManager', ($resource, $root-scope)!->
   # 增删查改操作
@@ -70,17 +88,13 @@ angular.module 'app.teacher', []
           .then (result) ~>
             console.log 'max', result
             @homework-id-num = {}
-
-            console.warn "fake data for develope!"
-
-            # if result.length != 0
-            #   @homework-id-num.id = result[0].id + 1
-            #   @homework-id-num.num = result[0].classes.length
-            # else
-            #   @homework-id-num.id = 1
-            #   @homework-id-num.num = 2
-            # Promise.resolve @homework-id-num
-            Promise.resolve {id: 30, num: 2}
+            if result.length != 0
+              @homework-id-num.id = result[0].id + 1
+              @homework-id-num.num = result[0].classes.length
+            else
+              @homework-id-num.id = 1
+              @homework-id-num.num = 2
+            Promise.resolve @homework-id-num
 
 .directive 'urlValidator', ->
     # 参考http://stackoverflow.com/questions/161738/what-is-the-best-regular-expression-to-check-if-a-string-is-a-valid-url

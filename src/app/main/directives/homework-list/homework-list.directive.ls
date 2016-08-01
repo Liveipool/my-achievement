@@ -62,13 +62,16 @@ angular.module 'fuse'
               h.t-status = '已结束'
         for h in hs
           h.bg = 'image-div-' + (1 + parse-int 12 * Math.random!)
-          h.description = 'https://' + h.description if not /http/.test h.description
+          unless /http/.test h.description
+            unless /https/.test h.description
+              h.description = 'http://' + h.description
+
           # avoid missing the 'http'
           for c in h.classes
             c.t-status = '进行中' if c.status == 'present'
             c.t-status = '未开始' if c.status == 'future'
             c.t-status = '已结束' if c.status == 'finish'
-        console.log 'finish calculate-status\' hs:', hs
+        # console.log 'finish calculate-status\' hs:', hs
         hs
 
     function status-helper classes, status

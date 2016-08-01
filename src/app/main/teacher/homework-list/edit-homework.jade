@@ -28,23 +28,25 @@ mixin class-info
               div(ng-message='required') 链接不能为空！
               div(ng-message='url-characters') 链接格式错误！
 
-        div.pl-20(flex='10' layout='row')
+        div(flex='10' layout='row')
             div(flex='15')
                 label class
-                md-select(ng-model='_vm.classShowId' aria-label='classShowId')
+                md-select.m-0(ng-model='_vm.classShowId' aria-label='classShowId')
                     md-option(ng-repeat='classId in _vm.classIds' value='{{classId}}') {{classId}}
         +class-detail
+        +class-detail-error
 
 mixin class-detail
-    md-content.wrapper-bg(flex='50' layout-wrap)
-        div(ng-repeat="class in _vm.classes")
-            div.white-bg.md-whiteframe-2dp(layout="column" ng-show="class.class_id == _vm.classShowId")
-                +datepickers('开始日期', 'class.startTime', '_vm.startHour[$index]', '_vm.startMin[$index]')
-                +datepickers('结束日期', 'class.endTime', '_vm.endHour[$index]', '_vm.endMin[$index]')
-                span.error-message(ng-show='_vm.dateInvalid[$index]') 班级{{class.class_id}}开始时间不能大于结束时间
+    md-content.wrapper-bg(flex='50' layout='row')
+        div.white-bg.md-whiteframe-2dp(flex='100' layout="column")
+            +datepickers('开始日期', '_vm.classes[_vm.classShowIndex].startTime', '_vm.startHour[_vm.classShowIndex]', '_vm.startMin[_vm.classShowIndex]')
+            +datepickers('结束日期', '_vm.classes[_vm.classShowIndex].endTime', '_vm.endHour[_vm.classShowIndex]', '_vm.endMin[_vm.classShowIndex]')
+       
+mixin class-detail-error
+      span.error-message(ng-if='_vm.invalidId') 班级{{_vm.invalidId}}开始时间不能大于结束时间
 
 mixin datepickers(label, ngModelDay, ngModelHour, ngModelMin)
-    div.pv-12.pr-24(flex='45' layout='row')
+    div.pv-12.pr-24(flex='50' layout='row')
         md-input-container(flex='50' layout="row")
             label=label
             md-datepicker.datepicker.pr-0(md-placeholder="日期" ng-model=ngModelDay flex="100" required)
@@ -57,8 +59,6 @@ mixin datepickers(label, ngModelDay, ngModelHour, ngModelMin)
             md-select(ng-model=ngModelMin)
                 md-option(ng-repeat='min in _vm.mins' value='{{min}}') {{min}}
 
-
-
 mixin submit-button
   md-dialog-actions.white-bg.p-12(layout="row", md-whiteframe="2", style="min-height: 50px")
     div(flex, layout="row", layout-align="start")
@@ -67,11 +67,9 @@ mixin submit-button
       md-button.md-raised.md-warn(ng-click="deleteHomework($event)") 删除作业
       md-button.md-raised.md-accent.m-0(type='submit' ng-disabled='form.$invalid') 确定
 
-
 //- 弹窗页面
-#edit-homework-dialog(layout="column", ng-cloak)
+md-dialog#edit-homework-dialog(aria-label='edit homework' ng-cloak)
   +edit-header
-
   form(name='form' ng-submit="editHomework()" novalidate)
     +class-info
     +submit-button
