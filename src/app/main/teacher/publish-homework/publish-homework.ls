@@ -21,11 +21,11 @@ angular.module 'app.teacher'
 
                 homework-manager.get-current-id-num!
                   .then (result)!~>
-                    @current-hw-num = result.id
+                    @hw-id = result.id
                     @class-num = result.num
 
-                    console.log @current-hw-num
-                    console.log @class-num
+                    # console.log @hw-id
+                    # console.log @class-num
 
                     @class-detail = []
                     for from 0 to @class-num - 1
@@ -54,7 +54,7 @@ angular.module 'app.teacher'
                     # validator bools
                     @date-invalid = []
 
-                    $scope.init-time = !~>
+                    $scope.init-time= !~>
                       for from 0 to @class-num - 1
                         @date-invalid[i$] = false
                         @start-hour[i$] = 0
@@ -65,31 +65,31 @@ angular.module 'app.teacher'
 
                     # 从页面获取的数据
                     @hw-obj =
-                      id: @current-hw-num
+                      id: @hw-id
                       title: ""
                       description: ""
                       classes: @class-detail
 
-                    console.log @hw-obj
+                    # console.log @hw-obj
 
                 @Submit = !->
-                   console.log 'Submit'
-                   console.log "new-obj: ", @hw-obj
+                   # console.log 'Submit'
+                   # console.log "new-obj: ", @hw-obj
                    if @validator!
                       homework-manager.insert-homework @hw-obj
                         .then !->
                         $state.go 'app.teacher.homework-list'
 
                 @Reset = !~>
-                  console.log 'Reset'
-                  @hw-obj.title = ''
+                  # console.log 'Reset'
+                  @hw-obj.title = '作业'+ @hw-obj.id +':'
                   @hw-obj.description = ''
                   for each-class in @hw-obj.classes
                     for k of each-class
                       if k != 'status' && k != 'classId'
                         each-class[k] = ""
                   $scope.init-time!
-                  console.log @hw-obj
+                  # console.log @hw-obj
 
                 @parse-class-detail = (class-detail) !->
                   for item in class-detail
@@ -104,7 +104,7 @@ angular.module 'app.teacher'
                       @parse-class-detail @hw-obj.classes
                       if item.start-time >= item.end-time
                         @date-invalid[i$] = true
-                        console.log "data invalid: ", i$
+                        # console.log "data invalid: ", i$
                         valid = false
                       else @date-invalid[i$] = false
                   valid
