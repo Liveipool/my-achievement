@@ -1,10 +1,9 @@
 'use strict'
 
 angular.module 'app.profile'
-  .controller 'edit-dialog-controller', (Authentication, $mdDialog, FileUploader, $http, $interval, $timeout, $scope) !->
+  .controller 'edit-dialog-controller', (Authentication, $mdDialog, FileUploader, $http, $interval, $timeout, $scope, user-manager-service) !->
     # $scope.$emit('toparent', 'parent')
     @user = Authentication.get-user!
-
     vm = @
     @raw-data =
       sid: @user.sid
@@ -37,8 +36,6 @@ angular.module 'app.profile'
       , 1, 125
       @show-or-hide = !@show-or-hide
 
-
-
     @validate-old-password = !->
       if @old-password == @user.password
         @is-old-password-correct = true
@@ -64,9 +61,9 @@ angular.module 'app.profile'
 
     @save = !->
       @user.email = @email
-      @user.sid = @sid
       if @new-password !== ""
         @user.password = @new-password
+      user-manager-service.edit-user vm.user
       $mdDialog.hide!
 
     @reset = !->
@@ -109,7 +106,6 @@ angular.module 'app.profile'
         vm.avatar = Authentication.get-user!.avatar
     # @picture-uploader.onCancelItem = (item) !->
     #   console.log 'onCancelItem'
-
 
     @upload-file = !->
       vm.picture-uploader.uploadAll!
