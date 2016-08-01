@@ -15,24 +15,34 @@ angular.module 'app.admin'
 
           $scope.add-user = !->
             $scope.user ||= {}
+            # console.log "$scope.user: ", $scope.user
             invalid-arr = valid-manager-service.add-user-valid $scope.user
             if invalid-arr.length ~= 0
               # 发送新增请求
               user-manager-service.add-user $scope.user
-            else
               $md-toast.show(
                 $md-toast.simple!
-                  .textContent invalid-arr.join(',') + '不合法，请仔细查看！'
+                  .textContent ' 添加成功！'
                   .action 'OK'
                   .highlightAction true
                   .highlightClass 'md-warn'
                   .position 'top right'
-                  .hide-delay 5000
+                  .hide-delay 3000
+              )
+              $scope.user = {}
+            else
+              $md-toast.show(
+                $md-toast.simple!
+                  .textContent invalid-arr.join(',') + ' 不合法，请仔细查看！'
+                  .action 'OK'
+                  .highlightAction true
+                  .highlightClass 'md-warn'
+                  .position 'top right'
+                  .hide-delay 3000
               )
 
           $scope.reset-user = !->
             $scope.user = {}
-            # console.log "queue.length", $scope.json-uploader.queue.length
 
           # 上传文件批量添加用户
           $scope.json-uploader = new FileUploader {
@@ -43,22 +53,10 @@ angular.module 'app.admin'
             removeAfterUpload: true
           }
 
-          # $scope.json-uploader.onWhenAddingFileFailed = (item) !->
-          #   console.log 'onWhenAddingFileFailed: ', item
           $scope.json-uploader.onAfterAddingFile = (item) !->
             $scope.json-uploader.uploadItem item
             $scope.show-upload-progress = true
-            console.log 'onAfterAddingFile: ', item
-          # $scope.json-uploader.onBeforeUploadItem = (item) !->
-          #   console.log 'onBeforeUploadItem: ', item
-          # $scope.json-uploader.onSuccessItem = (item) !->
-          #   console.log 'onSuccessItem'
-          # $scope.json-uploader.onCompleteItem = (item) !->
-          #   console.log 'onCompleteItem'
-          # $scope.json-uploader.onErrorItem = (item) !->
-          #   console.log 'onErrorItem'
-          # $scope.json-uploader.onCancelItem = (item) !->
-          #   console.log 'onCancelItem'
+            # console.log 'onAfterAddingFile: ', item
 
           $scope.clear-json-item = !->
             $scope.json-uploader.clearQueue!
@@ -72,7 +70,6 @@ angular.module 'app.admin'
           $scope.json-uploader.filters.push({
             name: 'jsonSizeFilter'
             fn: (item) ->
-              # console.log 'item.size: ', item.size
               item.size <= 50000
           })
   }
