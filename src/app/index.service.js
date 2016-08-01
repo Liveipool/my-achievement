@@ -56,7 +56,7 @@
         var filter = {
                         "where": {
                           "username": params.username,
-                          "password": params.password
+                          "password": md5(params.password)
                         }
                       }
 
