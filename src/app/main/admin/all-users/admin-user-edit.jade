@@ -29,7 +29,7 @@ mixin user-info
           md-input-container.md-block(flex)
             label 邮箱
             md-icon.valid-color(md-font-icon="icon-email")
-            input(ng-model='user.email', type="email", ng-required="true")
+            input(ng-model='user.email', ng-required="true")
         div(flex="25", layout="row", ng-show="user.role == 'student'")
           md-input-container.md-block(flex)
             label 班级
