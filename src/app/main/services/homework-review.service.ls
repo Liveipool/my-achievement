@@ -37,7 +37,17 @@ angular.module 'fuse'
 
     api-resolver.resolve 'lb_reviews@query', {"filter": filter}
     
+  @get-homework-reviews = (homework_id) ->
 
+    filter = {
+      "where":
+        "homework_id": homework_id
+    }
+
+    api-resolver.resolve 'lb_reviews@query', {"filter": filter}
+
+  @reviews-filter-by-reviewer-role = (reviews, rolename) ->
+    [review for review in reviews when review.reviewer.role ~= rolename]
 
   @cancle-update-review = ->
     # reload-reviews then the change is undo in the controller
