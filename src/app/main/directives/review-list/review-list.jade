@@ -1,0 +1,53 @@
+
+mixin group-review
+    //- +group-title-due-info
+    .review-container.p-12(flex layout="column" ng-repeat="review in reviews")
+        +review
+
+mixin group-title-due-info
+    .group-title-due-info.p-12(flex layout='row' layout-align="space-between center")
+        .group.md-title 小组{{vm.reviewsGr[0].group}}
+        .title.md-title 第{{vm.homeworkId}}次作业
+        .due.md-subhead 截止时间: {{vm.dateTime | date: 'yyyy-MM-dd  HH:mm' }}
+
+mixin review
+    .review.white-bg.md-whiteframe-1dp(class="{{'R-' + review.tScore + '-pl'}}" layout="row")
+        +review-image
+        +review-user-info
+        +review-comment
+        +review-score
+
+mixin review-image
+    div(flex='20' layout="column")
+        .image-div(ng-class="review.bg" flex)
+
+mixin review-user-info
+    .user-info-container(flex='15' layout="column" layout-align="center center")
+        .name.md-subhead {{review.reviewee.fullname}}
+        .sid.md-subhead {{review.reviewee.username}}
+
+mixin review-comment
+    .comment-container(flex='50' layout="row" layout-align="center center")
+        //- the way when comment displaying is the same as in the my score
+        .review-ms-comment.md-subhead.p-12.scrollable(ng-hide="review.editing" ng-model="review.comment" ms-scroll)
+            div {{review.comment}}
+        textarea.md-subhead.scrollable(ng-class="review.error.comment" ng-show="review.editing" placeholder="请添加不少于50字的评审意见" wrap="virtual" ng-model="review.tempComment" ms-scroll)
+
+mixin review-score
+    .score-container(layout="column" flex)
+
+        input.md-subhead(ng-class="review.error.score" placeholder="请评分0~100" type="text" ng-model="review.tempScore" ng-disabled="!review.editing")
+
+        div(flex layout="column" layout-align="center")
+            .submit-score.p-12(layout="column" layout-align="center center" ng-show="!review.score" )
+                md-button.md-raised.submit(ng-click="submit(review)") 提交
+
+            .edit-score.p-12(layout="column" layout-align="center center" ng-show="!review.editing && review.score")
+                md-button.md-raised.edit(ng-click="edit(review)") 修改
+
+            .editing-score.p-10(layout="column" layout-align="center center" ng-show="review.editing && review.score")
+                md-button.md-raised.update(ng-click="update(review)") 更新
+                md-button.mt-6.cancel(ng-click="cancel(review)") 取消
+
+
++group-review
