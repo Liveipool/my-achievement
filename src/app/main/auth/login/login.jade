@@ -24,7 +24,7 @@
               span(translate='LOGIN.ERRORS.PASSWORD_REQUIRED') Password field is required
 
         .remember-forgot-password(layout='row', layout-xs='column', layout-align='space-between center')
-          md-checkbox.remember-me(ng-model='data.cb1', aria-label='Remember Me')
+          md-checkbox.remember-me(ng-model='isAuto', aria-label='Remember Me')
             span(translate='LOGIN.REMEMBER_ME') Remember Me
           a.forgot-password.md-accent-color(ui-sref='app.pages_auth_forgot-password', translate='LOGIN.FORGOT_PASSWORD') Forgot Password?
 

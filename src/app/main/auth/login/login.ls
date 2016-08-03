@@ -16,6 +16,7 @@ angular.module 'app.auth.login', []
         template-url            : 'app/main/auth/login/login.html'
         controller-as           : 'vm'
         controller              : ($scope, $root-scope, Authentication, $state)->
+          $scope.isAuto = false
           $scope.$on '$stateChangeSuccess', (event, to-state, to-params, from-state)!->
 
             console.log '退出登录!'
@@ -28,11 +29,10 @@ angular.module 'app.auth.login', []
               if ancestor-paths and ancestor-paths[0] is 'app' and from-state-path isnt 'app.login'
                 Authentication.logout!
 
-          login: -> Authentication.login @form .then (user)~>
+          login: -> Authentication.login @form, $scope.isAuto .then (user)~>
             console.log user
             if user
               @invalid-user = false
-
               dest = Authentication.filter-route user
               $state.go dest
             else
