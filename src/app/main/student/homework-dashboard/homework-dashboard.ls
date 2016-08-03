@@ -146,15 +146,19 @@ angular.module 'app.student'
                   $mdDialog.hide!
 
                 homeworkPictureUploader = $scope.homeworkPictureUploader = new FileUploader {
-                  # url: 'upload.php',
-                  queueLimit: 1,
+                  url: 'http://localhost:3000/upload-homework-pictures'
+                  alias: 'upload-homework-pictures'
+                  queueLimit: 1
                   removeAfterUpload: false
+                  form-data: [{"homework_id": id}]
                 }
 
                 homeworkCodeUploader = $scope.homeworkCodeUploader = new FileUploader {
-                  # url: 'upload.php',
+                  url: 'http://localhost:3000/upload-homework-codes'
+                  alias: 'upload-homework-codes'
                   queueLimit: 1,
                   removeAfterUpload: false
+                  form-data: [{"homework_id": id}]
                 }
 
                 $scope.clearHomeworkPictureItem = !->
@@ -181,19 +185,31 @@ angular.module 'app.student'
                   homeworkCodeUploader.uploadAll();
 
                 homeworkPictureUploader.filters.push({
-                    name: 'homeworkPictureFilter',
+                    name: 'homeworkPictureTypeFilter',
                     fn: (item) ->
                       type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 4) + '|';
                       '|jpg|png|'.indexOf(type) !== -1
                 });
 
                 homeworkCodeUploader.filters.push({
-                    name: 'homeworkCodeFilter',
+                    name: 'homeworkCodeTypeFilter',
                     fn: (item) ->
                       type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 4) + '|';
                       '|zip|rar|'.indexOf(type) !== -1
                 });
 
+                homeworkPictureUploader.filters.push({
+                  name: 'homeworkPictureSizeFilter'
+                  fn: (item) ->
+                    item.size <= 1000000
+                })
+
+                homeworkCodeUploader.filters.push({
+                  name: 'homeworkCodeSizeFilter'
+                  fn: (item) ->
+                    item.size <= 50000000  # 暂时设定50MB
+                })
+                   
             }
 
   }

@@ -62,7 +62,7 @@ angular.module 'app.admin'
             $scope.json-uploader.clearQueue!
 
           $scope.json-uploader.filters.push({
-            name: 'jsonFilter'
+            name: 'jsonTypeFilter'
             fn: (item) ->
               type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 5) + '|';
               '|json|'.indexOf(type) !== -1

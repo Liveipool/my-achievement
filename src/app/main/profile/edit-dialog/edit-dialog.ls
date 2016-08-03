@@ -120,7 +120,7 @@ angular.module 'app.profile'
       vm.upload-row = false
 
     @picture-uploader.filters.push({
-      name: 'pictureFilter'
+      name: 'pictureTypeFilter'
       fn: (item) ->
         type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 4) + '|';
         '|jpg|png|'.indexOf(type) !== -1
