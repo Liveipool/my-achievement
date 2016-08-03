@@ -52,7 +52,7 @@
           });
       },
 
-      login: function(params) {
+      login: function(params, isAuto) {
         var filter = {
                         "where": {
                           "username": params.username,
@@ -63,7 +63,14 @@
         return apiResolver.resolve('lb_users@query', {"filter":filter}).then(function(user) {
               if (user.length) {
                   authticatedUser = user[0];
-                  $cookies.putObject("cookieUser", authticatedUser);
+                  var  nowdate = new Date()
+                  nowdate.setDate(nowdate.getDate()+7)
+                  if (isAuto) {
+                    $cookies.putObject("cookieUser", authticatedUser,{expires:nowdate});
+                  } else {
+                    $cookies.putObject("cookieUser", authticatedUser)
+                  }
+                  
                   return Promise.resolve(authticatedUser);
                 }
               return Promise.resolve(authticatedUser);
