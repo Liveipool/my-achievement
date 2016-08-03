@@ -88,9 +88,6 @@ angular.module 'app.student'
               i++
             _string += arr[i]
             return _string
-
-          # console.log "sda"
-          # console.log homework-detail
           
           vm = @
           vm.user = Authentication.get-user!
@@ -138,8 +135,9 @@ angular.module 'app.student'
               templateUrl: 'app/main/student/homework-dashboard/submitDialog.html',
               parent: angular.element(document.body),
               clickOutsideToClose: false,
-              controller: ($scope, $mdDialog, FileUploader, $interval) !->
+              controller: ($scope, $mdDialog, FileUploader, $interval, $http) !->
                 $scope.id = id
+                $scope.githubAddress = ""
                 $scope.showProgress = false
 
                 $scope.cancel = !->
@@ -150,7 +148,7 @@ angular.module 'app.student'
                   alias: 'upload-homework-pictures'
                   queueLimit: 1
                   removeAfterUpload: false
-                  form-data: [{"homework_id": id}]
+                  form-data: [{"homework_id": $scope.id}]
                 }
 
                 homeworkCodeUploader = $scope.homeworkCodeUploader = new FileUploader {
@@ -158,7 +156,7 @@ angular.module 'app.student'
                   alias: 'upload-homework-codes'
                   queueLimit: 1,
                   removeAfterUpload: false
-                  form-data: [{"homework_id": id}]
+                  form-data: [{"homework_id": $scope.id}]
                 }
 
                 $scope.clearHomeworkPictureItem = !->
@@ -173,16 +171,13 @@ angular.module 'app.student'
                 homeworkCodeUploader.onAfterAddingFile = (fileItem) !->
                   $scope.homeworkCode = fileItem._file
 
-                # homeworkPictureUploader.onSuccessItem = (fileItem) !->
-                #   console.log "homeworkPicture"
-
-                # homeworkCodeUploader.onSuccessItem = (fileItem) !->
-                #   console.log "homeworkCode"
-
                 $scope.uploadFile = !->
                   $scope.showProgress = true
-                  homeworkPictureUploader.uploadAll();
-                  homeworkCodeUploader.uploadAll();
+                  homeworkPictureUploader.uploadAll!
+                  homeworkCodeUploader.uploadAll!
+                  # console.log "githubAddress: ", $scope.githubAddress
+                  # if $scope.githubAddress
+                  #   homeworkCommitService.edit-commit(id) #这个service还没写好
 
                 homeworkPictureUploader.filters.push({
                     name: 'homeworkPictureTypeFilter',

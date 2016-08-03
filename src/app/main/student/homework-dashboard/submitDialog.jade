@@ -28,17 +28,20 @@ md-dialog(aria-label="submitDialog")
           div(layout="row")
             md-input-container.m-0(flex)
               label 请输入你的github地址
-              input(type="url")
+              input(type="text" ng-model="githubAddress")
 
         div.progress(ng-show="showProgress")
           div.pictureProgress.m-12 图片上传进度: {{homeworkPictureUploader.progress}}%
-            md-progress-linear(md-mode="determinate" value="{{homeworkPictureUploader.progress}}")
+            md-progress-linear(value="{{homeworkPictureUploader.progress}}")
           div.coreProgress.m-12 文件上传进度: {{homeworkCodeUploader.progress}}%
-            md-progress-linear(md-mode="determinate" value="{{homeworkCodeUploader.progress}}")
+            md-progress-linear(value="{{homeworkCodeUploader.progress}}")
+          div.coreProgress.m-12 Github地址上传进度: 100%
+            md-progress-linear(value="100")
+
     md-dialog-actions(layout="row")
       md-button.md-raised.md-primary.md-red-300-bg(ng-click="cancel()")
         md-icon(md-font-icon="icon-close")
         span 取消
-      md-button.md-raised.md-primary.md-green-300-bg(ng-click="uploadFile()" ng-disabled="!homeworkPictureUploader.queue.length || !homeworkCodeUploader.queue.length")
+      md-button.md-raised.md-primary.md-green-300-bg(ng-click="uploadFile()" ng-disabled="!(homeworkPictureUploader.queue.length && homeworkCodeUploader.queue.length || githubAddress !== '')")
         md-icon(md-font-icon="icon-upload")
         span 上传
