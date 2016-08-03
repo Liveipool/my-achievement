@@ -145,44 +145,50 @@ angular.module 'app.student'
                 $scope.cancel = !->
                   $mdDialog.hide!
 
-                pictureUploader = $scope.pictureUploader = new FileUploader {
+                homeworkPictureUploader = $scope.homeworkPictureUploader = new FileUploader {
                   # url: 'upload.php',
                   queueLimit: 1,
                   removeAfterUpload: false
                 }
 
-                coreUploader = $scope.coreUploader = new FileUploader {
+                homeworkCodeUploader = $scope.homeworkCodeUploader = new FileUploader {
                   # url: 'upload.php',
                   queueLimit: 1,
                   removeAfterUpload: false
                 }
 
-                $scope.clearPictureItem = !->
-                  pictureUploader.clearQueue!
+                $scope.clearHomeworkPictureItem = !->
+                  homeworkPictureUploader.clearQueue!
 
-                $scope.clearCoreItem = !->
-                  coreUploader.clearQueue!
+                $scope.clearHomeworkCodeItem = !->
+                  homeworkCodeUploader.clearQueue!
 
-                pictureUploader.onAfterAddingFile = (fileItem) !->
-                  $scope.picture = fileItem._file
+                homeworkPictureUploader.onAfterAddingFile = (fileItem) !->
+                  $scope.homeworkPicture = fileItem._file
 
-                coreUploader.onAfterAddingFile = (fileItem) !->
-                  $scope.core = fileItem._file
+                homeworkCodeUploader.onAfterAddingFile = (fileItem) !->
+                  $scope.homeworkCode = fileItem._file
+
+                # homeworkPictureUploader.onSuccessItem = (fileItem) !->
+                #   console.log "homeworkPicture"
+
+                # homeworkCodeUploader.onSuccessItem = (fileItem) !->
+                #   console.log "homeworkCode"
 
                 $scope.uploadFile = !->
                   $scope.showProgress = true
-                  pictureUploader.uploadAll();
-                  coreUploader.uploadAll();
+                  homeworkPictureUploader.uploadAll();
+                  homeworkCodeUploader.uploadAll();
 
-                pictureUploader.filters.push({
-                    name: 'pictureFilter',
+                homeworkPictureUploader.filters.push({
+                    name: 'homeworkPictureFilter',
                     fn: (item) ->
                       type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 4) + '|';
                       '|jpg|png|'.indexOf(type) !== -1
                 });
 
-                coreUploader.filters.push({
-                    name: 'coreFilter',
+                homeworkCodeUploader.filters.push({
+                    name: 'homeworkCodeFilter',
                     fn: (item) ->
                       type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 4) + '|';
                       '|zip|rar|'.indexOf(type) !== -1
