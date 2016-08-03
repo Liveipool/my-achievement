@@ -73,5 +73,6 @@ angular.module 'fuse'
   @edit-user-valid = (user)->
     @invalid-arr = []
     @uniform-valid user
-    @password-valid user.newpassword, user.repassword if !(!user.newpassword and !user.repassword)
+    @password-valid user.newpassword if user.newpassword
+    @repeat-password-valid user.newpassword, user.repassword if (user.newpassword or user.repassword)
     @invalid-arr
