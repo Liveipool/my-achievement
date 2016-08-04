@@ -130,12 +130,13 @@ angular.module 'app.student'
           $scope.jump = (description)!->
             window.open description   # description必须为绝对地址
 
-          $scope.showSubmitDialog = (id)!->
+          $scope.showSubmitDialog = (id, name)!->
             $mdDialog.show {
               templateUrl: 'app/main/student/homework-dashboard/submitDialog.html',
               parent: angular.element(document.body),
               clickOutsideToClose: false,
               controller: ($scope, $mdDialog, FileUploader, $interval, $http) !->
+                $scope.name = name
                 $scope.id = id
                 $scope.githubAddress = ""
                 $scope.showProgress = false
@@ -148,7 +149,7 @@ angular.module 'app.student'
                   alias: 'upload-homework-pictures'
                   queueLimit: 1
                   removeAfterUpload: false
-                  form-data: [{"homework_id": $scope.id}]
+                  form-data: [{"homework_id": $scope.id, "username": $scope.name}]
                 }
 
                 homeworkCodeUploader = $scope.homeworkCodeUploader = new FileUploader {
@@ -156,7 +157,7 @@ angular.module 'app.student'
                   alias: 'upload-homework-codes'
                   queueLimit: 1,
                   removeAfterUpload: false
-                  form-data: [{"homework_id": $scope.id}]
+                  form-data: [{"homework_id": $scope.id, "username": $scope.name, "github": $scope.githubAddress}]
                 }
 
                 $scope.clearHomeworkPictureItem = !->
@@ -171,13 +172,13 @@ angular.module 'app.student'
                 homeworkCodeUploader.onAfterAddingFile = (fileItem) !->
                   $scope.homeworkCode = fileItem._file
 
+                homeworkCodeUploader.onBeforeUploadItem = (fileItem) !->
+                  fileItem.form-data[0].github = $scope.githubAddress
+
                 $scope.uploadFile = !->
                   $scope.showProgress = true
                   homeworkPictureUploader.uploadAll!
                   homeworkCodeUploader.uploadAll!
-                  # console.log "githubAddress: ", $scope.githubAddress
-                  # if $scope.githubAddress
-                  #   homeworkCommitService.edit-commit(id) #这个service还没写好
 
                 homeworkPictureUploader.filters.push({
                     name: 'homeworkPictureTypeFilter',

@@ -102,12 +102,8 @@ angular.module 'app.profile'
       vm.image-invalid = true
 
     @picture-uploader.onSuccessItem = (item, response) !->
-      console.log 'onSuccessItem response: ', response
       Authentication.update-cookie vm.username .then !->
-        # console.log "newUser: ", Authentication.get-user!.avatar
         vm.avatar = Authentication.get-user!.avatar
-    # @picture-uploader.onCancelItem = (item) !->
-    #   console.log 'onCancelItem'
 
     @upload-file = !->
       vm.picture-uploader.uploadAll!

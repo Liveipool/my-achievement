@@ -34,7 +34,7 @@ mixin menu-item
       md-icon(md-font-icon="icon-book")
       span 作业链接
   md-menu-item(ng-if="homework.classes[0].status === 'present'")
-    md-button(ng-click="showSubmitDialog(homework.id)")
+    md-button(ng-click="showSubmitDialog(homework.id, vm.user.username)")
       md-icon(md-font-icon="icon-cloud-upload")
       span 提交作业
   md-menu-item(ng-if="homework.classes[0].status === 'present'")
