@@ -11,34 +11,37 @@ md-dialog(aria-label="submitDialog")
         form(layout="column" layout-align="space-around center")
           div(layout="row" layout-align="space-around center")
             md-input-container.m-0(flex)
-              label 请选择作业缩略图 (jpg/png)
-              input(type="text" ng-model="picture.name" disabled)
+              label 请选择作业的缩略图 (jpg/png <1MB)
+              input(type="text" ng-model="homeworkPicture.name" disabled)
             div.pb-12
-              label.pointer.m-0.icon-camera.md-headline(for="uploadPicture")
-                input(hide type="file" id="uploadPicture" nv-file-select uploader="pictureUploader" ng-click="clearPictureItem()")
+              label.pointer.m-0.icon-camera.md-headline(for="uploadHomeworkPicture")
+                input(hide type="file" id="uploadHomeworkPicture" nv-file-select uploader="homeworkPictureUploader" ng-click="clearHomeworkPictureItem()")
 
           div(layout="row" layout-align="space-around center")
             md-input-container.m-0(flex)
               label 请选择你的代码文件 (zip/rar)
-              input(type="text" ng-model="core.name" disabled)
+              input(type="text" ng-model="homeworkCode.name" disabled)
             div.pb-24
-              label.pointer.m-0.icon-folder-multiple.md-headline(for="uploadCore")
-                input(hide type="file" id="uploadCore" nv-file-select uploader="coreUploader" ng-click="clearCoreItem()")
+              label.pointer.m-0.icon-folder-multiple.md-headline(for="uploadHomeworkCode")
+                input(hide type="file" id="uploadHomeworkCode" nv-file-select uploader="homeworkCodeUploader" ng-click="clearHomeworkCodeItem()")
 
           div(layout="row")
             md-input-container.m-0(flex)
               label 请输入你的github地址
-              input(type="url")
+              input(type="text" ng-model="githubAddress")
 
         div.progress(ng-show="showProgress")
-          div.pictureProgress.m-12 图片上传进度: {{pictureUploader.progress}}%
-            md-progress-linear(md-mode="determinate" value="{{pictureUploader.progress}}")
-          div.coreProgress.m-12 文件上传进度: {{coreUploader.progress}}%
-            md-progress-linear(md-mode="determinate" value="{{coreUploader.progress}}")
+          div.pictureProgress.m-12 图片上传进度: {{homeworkPictureUploader.progress}}%
+            md-progress-linear(value="{{homeworkPictureUploader.progress}}")
+          div.coreProgress.m-12 文件上传进度: {{homeworkCodeUploader.progress}}%
+            md-progress-linear(value="{{homeworkCodeUploader.progress}}")
+          //- div.coreProgress.m-12 Github地址上传进度: 100%
+          //-   md-progress-linear(value="100")
+
     md-dialog-actions(layout="row")
       md-button.md-raised.md-primary.md-red-300-bg(ng-click="cancel()")
         md-icon(md-font-icon="icon-close")
         span 取消
-      md-button.md-raised.md-primary.md-green-300-bg(ng-click="uploadFile()" ng-disabled="!pictureUploader.queue.length || !coreUploader.queue.length")
+      md-button.md-raised.md-primary.md-green-300-bg(ng-click="uploadFile()" ng-disabled="!homeworkPictureUploader.queue.length || !homeworkCodeUploader.queue.length")
         md-icon(md-font-icon="icon-upload")
         span 上传

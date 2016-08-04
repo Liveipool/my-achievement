@@ -88,9 +88,6 @@ angular.module 'app.student'
               i++
             _string += arr[i]
             return _string
-
-          # console.log "sda"
-          # console.log homework-detail
           
           vm = @
           vm.user = Authentication.get-user!
@@ -133,61 +130,82 @@ angular.module 'app.student'
           $scope.jump = (description)!->
             window.open description   # description必须为绝对地址
 
-          $scope.showSubmitDialog = (id)!->
+          $scope.showSubmitDialog = (id, name)!->
             $mdDialog.show {
               templateUrl: 'app/main/student/homework-dashboard/submitDialog.html',
               parent: angular.element(document.body),
               clickOutsideToClose: false,
-              controller: ($scope, $mdDialog, FileUploader, $interval) !->
+              controller: ($scope, $mdDialog, FileUploader, $interval, $http) !->
+                $scope.name = name
                 $scope.id = id
+                $scope.githubAddress = ""
                 $scope.showProgress = false
 
                 $scope.cancel = !->
                   $mdDialog.hide!
 
-                pictureUploader = $scope.pictureUploader = new FileUploader {
-                  # url: 'upload.php',
-                  queueLimit: 1,
+                homeworkPictureUploader = $scope.homeworkPictureUploader = new FileUploader {
+                  url: 'http://localhost:3000/upload-homework-pictures'
+                  alias: 'upload-homework-pictures'
+                  queueLimit: 1
                   removeAfterUpload: false
+                  form-data: [{"homework_id": $scope.id, "username": $scope.name}]
                 }
 
-                coreUploader = $scope.coreUploader = new FileUploader {
-                  # url: 'upload.php',
+                homeworkCodeUploader = $scope.homeworkCodeUploader = new FileUploader {
+                  url: 'http://localhost:3000/upload-homework-codes'
+                  alias: 'upload-homework-codes'
                   queueLimit: 1,
                   removeAfterUpload: false
+                  form-data: [{"homework_id": $scope.id, "username": $scope.name, "github": $scope.githubAddress}]
                 }
 
-                $scope.clearPictureItem = !->
-                  pictureUploader.clearQueue!
+                $scope.clearHomeworkPictureItem = !->
+                  homeworkPictureUploader.clearQueue!
 
-                $scope.clearCoreItem = !->
-                  coreUploader.clearQueue!
+                $scope.clearHomeworkCodeItem = !->
+                  homeworkCodeUploader.clearQueue!
 
-                pictureUploader.onAfterAddingFile = (fileItem) !->
-                  $scope.picture = fileItem._file
+                homeworkPictureUploader.onAfterAddingFile = (fileItem) !->
+                  $scope.homeworkPicture = fileItem._file
 
-                coreUploader.onAfterAddingFile = (fileItem) !->
-                  $scope.core = fileItem._file
+                homeworkCodeUploader.onAfterAddingFile = (fileItem) !->
+                  $scope.homeworkCode = fileItem._file
+
+                homeworkCodeUploader.onBeforeUploadItem = (fileItem) !->
+                  fileItem.form-data[0].github = $scope.githubAddress
 
                 $scope.uploadFile = !->
                   $scope.showProgress = true
-                  pictureUploader.uploadAll();
-                  coreUploader.uploadAll();
+                  homeworkPictureUploader.uploadAll!
+                  homeworkCodeUploader.uploadAll!
 
-                pictureUploader.filters.push({
-                    name: 'pictureFilter',
+                homeworkPictureUploader.filters.push({
+                    name: 'homeworkPictureTypeFilter',
                     fn: (item) ->
                       type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 4) + '|';
                       '|jpg|png|'.indexOf(type) !== -1
                 });
 
-                coreUploader.filters.push({
-                    name: 'coreFilter',
+                homeworkCodeUploader.filters.push({
+                    name: 'homeworkCodeTypeFilter',
                     fn: (item) ->
                       type = '|' + item.name.slice(item.name.lastIndexOf('.') + 1,item.name.lastIndexOf('.') + 4) + '|';
                       '|zip|rar|'.indexOf(type) !== -1
                 });
 
+                homeworkPictureUploader.filters.push({
+                  name: 'homeworkPictureSizeFilter'
+                  fn: (item) ->
+                    item.size <= 1000000
+                })
+
+                homeworkCodeUploader.filters.push({
+                  name: 'homeworkCodeSizeFilter'
+                  fn: (item) ->
+                    item.size <= 50000000  # 暂时设定50MB
+                })
+                   
             }
 
   }
